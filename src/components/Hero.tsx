@@ -35,7 +35,7 @@ export const Hero: React.FC = () => {
 
           {/* Subtitle */}
           <p className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
-            L’alliance ultime du <strong className="text-white font-medium">GPS haute fidélité</strong>, de la <strong className="text-white font-medium">météo de vol en temps réel</strong> et de la <strong className="text-white font-medium">physiologie d'effort</strong>. Préparez vos traces, anticipez les vents contraires et ne subissez plus jamais la défaillance.
+            L’alliance ultime du <strong className="text-white font-medium">GPS haute fidélité</strong>, de la <strong className="text-white font-medium">météo</strong> et de la <strong className="text-white font-medium">physiologie d'effort</strong>. Préparez vos traces, anticipez les vents contraires et ne subissez plus jamais la défaillance.
           </p>
 
           {/* Action CTAs */}

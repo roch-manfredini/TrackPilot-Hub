@@ -86,7 +86,7 @@ export const TECH_PILLARS: TechPillar[] = [
   },
   {
     id: 'weather',
-    title: 'Météo de Vol Prédictive',
+    title: 'Météo Prédictive',
     subtitle: 'Vent, pluie & rafales synchronisés',
     description: 'Une météo globale ne sert à rien sur un col 3 heures après votre départ. TrackPilot projette votre vitesse estimée et calcule la direction exacte du vent relatif, les rafales et les précipitations au moment précis où vous franchirez chaque point.',
     iconName: 'Wind',
