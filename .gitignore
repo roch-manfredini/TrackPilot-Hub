@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 *.tsbuildinfo
+.firebase
 
 # Editor directories and files
 .vscode/*
