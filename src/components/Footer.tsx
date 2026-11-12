@@ -48,7 +48,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
               title="Contacter l'équipe"
             >
               <Mail className="w-3.5 h-3.5 text-teal-400" />
-              <span>trackpilot@orange.fr</span>
+              <span>contact@trackpilot.fit</span>
             </button>
           </div>
 

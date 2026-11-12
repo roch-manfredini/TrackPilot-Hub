@@ -3,7 +3,7 @@ import { Mail, Send, Copy, Check, MessageSquare, Sparkles } from 'lucide-react';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const email = 'trackpilot@orange.fr';
+  const email = 'contact@trackpilot.fit';
 
   const handleCopy = () => {
     navigator.clipboard.writeText(email);

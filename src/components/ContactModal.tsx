@@ -8,7 +8,7 @@ interface ContactModalProps {
 
 export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
-  const email = 'trackpilot@orange.fr';
+  const email = 'contact@trackpilot.fit';
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
