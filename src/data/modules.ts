@@ -66,15 +66,16 @@ export const TECH_PILLARS: TechPillar[] = [
   },
   {
     id: 'import',
-    title: 'Import Universel GPX & FIT',
-    subtitle: 'Pensé pour s’intégrer avec vos appareils habituels',
-    description: 'Glissez votre trace directement dans le navigateur. Vos données restent chez vous, sur votre ordinateur ou votre téléphone : aucun compte obligatoire, aucun envoi de vos parcours personnels sur un serveur tiers.',
+    title: 'Import & Nettoyage des Traces GPX/FIT',
+    subtitle: 'Vos parcours épurés de toute donnée privée ou sensible',
+    description: 'Créez votre compte pour gérer et retrouver vos parcours en toute simplicité. Lorsque vous chargez un fichier GPX ou FIT, TrackPilot nettoie automatiquement l’ensemble de vos données privées : les métadonnées personnelles, données cardiaques, puissances et capteurs sont purgés pour ne conserver strictement que la trace géographique et son altitude.',
     iconName: 'Layers',
-    badge: 'Vie privée respectée',
+    badge: 'Données Assainies',
     technicalDetails: [
-      'Traitement local directement dans votre navigateur web',
-      'Compatible avec les exports de vos applications préférées (Garmin, Strava, Komoot...)',
-      'Zéro traçage, vos fichiers personnels restent les vôtres'
+      'Suppression automatique des métadonnées privées et des données biométriques (FC, watts, cadence)',
+      'Conservation exclusive du tracé géographique utile et du profil altimétrique',
+      'Stockage sécurisé associé à votre compte pour synchroniser vos sorties sur tous vos appareils',
+      'Compatible avec les exports de tous vos appareils habituels (Garmin, Wahoo, Strava, Komoot...)'
     ]
   },
   {

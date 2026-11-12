@@ -93,7 +93,7 @@ export const TechPillars: React.FC = () => {
               Prêt à tester ces 6 piliers sur votre prochaine sortie vélo ?
             </h4>
             <p className="text-sm text-slate-300 mt-1">
-              Aucune inscription requise. Tracez un itinéraire ou glissez votre fichier GPX pour lancer l’analyse.
+              Testez librement dès maintenant : tracez un itinéraire ou chargez votre fichier GPX pour lancer l’analyse.
             </p>
           </div>
           <a

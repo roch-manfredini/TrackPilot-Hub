@@ -14,8 +14,8 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
     },
     {
       icon: <Lock className="w-5 h-5 text-teal-400" />,
-      title: "Vie Privée Respectée (Local-First)",
-      description: "Vos traces et vos données personnelles vous appartiennent. TrackPilot effectue tous les calculs directement dans votre navigateur web, sans jamais stocker vos fichiers sur un serveur distant."
+      title: "Vie Privée & Données Assainies",
+      description: "Pour sauvegarder et retrouver vos parcours, un compte est nécessaire. À chaque chargement de GPX, TrackPilot nettoie automatiquement vos traces de toutes leurs données privées et biométriques (fréquence cardiaque, puissance, capteurs personnels). Seul l'itinéraire géographique utile est conservé."
     },
     {
       icon: <RefreshCw className="w-5 h-5 text-sky-400" />,

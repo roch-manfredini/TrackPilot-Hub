@@ -63,7 +63,7 @@ export const Hero: React.FC = () => {
           <div className="mt-10 pt-6 border-t border-white/[0.06] flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs text-slate-400 font-mono">
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-brand-400" />
-              <span>Vos traces restent sur votre appareil</span>
+              <span>Traces nettoyées de toute donnée privée</span>
             </div>
             <div className="flex items-center gap-2">
               <Cpu className="w-4 h-4 text-brand-400" />
