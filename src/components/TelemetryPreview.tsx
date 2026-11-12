@@ -14,18 +14,18 @@ interface RoutePoint {
 }
 
 const ROUTE_DATA: RoutePoint[] = [
-  { km: 0, alt: 240, gradient: 1.2, windSpeed: 14, windDirection: 'face', windAngle: 15, fuelRate: 50, waterDist: 0, waterName: 'Départ - Fontaine du village' },
-  { km: 15, alt: 420, gradient: 3.5, windSpeed: 16, windDirection: 'face', windAngle: 25, fuelRate: 60, waterDist: 1200, waterName: 'Source des Pins (km 16.2)' },
-  { km: 32, alt: 890, gradient: 7.8, windSpeed: 24, windDirection: 'side', windAngle: 75, fuelRate: 75, waterDist: 400, waterName: 'Cimetière communal (Eau potable)' },
-  { km: 48, alt: 1420, gradient: 9.4, windSpeed: 28, windDirection: 'face', windAngle: -10, fuelRate: 85, waterDist: 3100, waterName: 'Chalet Reynard (km 51)' },
-  { km: 64, alt: 1912, gradient: 10.2, windSpeed: 34, windDirection: 'face', windAngle: 5, fuelRate: 90, waterDist: 800, waterName: 'Sommet - Bar / Fontaine' },
-  { km: 78, alt: 1250, gradient: -6.5, windSpeed: 22, windDirection: 'tail', windAngle: 170, fuelRate: 40, waterDist: 500, waterName: 'Lavoir de la Vallée' },
-  { km: 95, alt: 780, gradient: -2.1, windSpeed: 18, windDirection: 'tail', windAngle: 165, fuelRate: 45, waterDist: 2200, waterName: 'Fontaine du Marché' },
-  { km: 114, alt: 310, gradient: 0.5, windSpeed: 12, windDirection: 'side', windAngle: 90, fuelRate: 50, waterDist: 0, waterName: 'Arrivée' },
+  { km: 0, alt: 300, gradient: 2.1, windSpeed: 14, windDirection: 'face', windAngle: 15, fuelRate: 50, waterDist: 0, waterName: 'Départ - Fontaine de Bédoin' },
+  { km: 5.5, alt: 540, gradient: 8.5, windSpeed: 18, windDirection: 'face', windAngle: 25, fuelRate: 70, waterDist: 800, waterName: 'Virage de Saint-Estève' },
+  { km: 11, alt: 1080, gradient: 9.8, windSpeed: 22, windDirection: 'side', windAngle: 65, fuelRate: 85, waterDist: 1500, waterName: 'Pavillon de Roland (km 11)' },
+  { km: 15.2, alt: 1440, gradient: 7.2, windSpeed: 28, windDirection: 'face', windAngle: -10, fuelRate: 85, waterDist: 200, waterName: 'Chalet Reynard (km 15.2)' },
+  { km: 21.5, alt: 1912, gradient: 10.5, windSpeed: 38, windDirection: 'face', windAngle: 5, fuelRate: 90, waterDist: 0, waterName: 'Sommet du Mont Ventoux (1 912 m)' },
+  { km: 27, alt: 1410, gradient: -7.5, windSpeed: 24, windDirection: 'tail', windAngle: 170, fuelRate: 40, waterDist: 600, waterName: 'Station du Mont Serein' },
+  { km: 37, alt: 480, gradient: -4.5, windSpeed: 16, windDirection: 'tail', windAngle: 160, fuelRate: 40, waterDist: 300, waterName: 'Source du Groseau' },
+  { km: 42.4, alt: 330, gradient: 0.2, windSpeed: 12, windDirection: 'side', windAngle: 90, fuelRate: 50, waterDist: 0, waterName: 'Arrivée - Malaucène' },
 ];
 
 export const TelemetryPreview: React.FC = () => {
-  const [activeIdx, setActiveIdx] = useState<number>(3); // Default at Col climb
+  const [activeIdx, setActiveIdx] = useState<number>(3); // Default at Chalet Reynard climb
   const current = ROUTE_DATA[activeIdx];
 
   // SVG dimensions for elevation profile
@@ -34,7 +34,7 @@ export const TelemetryPreview: React.FC = () => {
   const paddingX = 40;
   const paddingY = 20;
 
-  const maxKm = 114;
+  const maxKm = 42.4;
   const minAlt = 200;
   const maxAlt = 2000;
 
@@ -58,7 +58,7 @@ export const TelemetryPreview: React.FC = () => {
               <span className="text-xs uppercase font-mono tracking-widest text-brand-400 font-semibold">Exemple de Carnet de Route</span>
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse"></span>
             </div>
-            <h4 className="text-sm font-bold text-white tracking-tight">Sommet du Mont Ventoux — Traversée Sud-Nord (114.2 km)</h4>
+            <h4 className="text-sm font-bold text-white tracking-tight">Sommet du Mont Ventoux — Traversée Sud-Nord (42.4 km)</h4>
           </div>
         </div>
 
@@ -92,7 +92,7 @@ export const TelemetryPreview: React.FC = () => {
             <span className="text-xs text-slate-400 font-medium">m</span>
           </div>
           <div className="text-[11px] text-slate-400 mt-1 flex items-center justify-between">
-            <span>D+ Total : <strong className="text-slate-200 tabular-nums">2 450 m</strong></span>
+            <span>D+ Total : <strong className="text-slate-200 tabular-nums">1 620 m</strong></span>
           </div>
         </div>
 
