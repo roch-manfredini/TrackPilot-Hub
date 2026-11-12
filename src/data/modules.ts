@@ -12,11 +12,11 @@ export const MODULES: ModuleInfo[] = [
     description: 'Glissez simplement votre fichier GPX ou FIT pour découvrir les points clés de votre itinéraire : le vent prévu au fil des kilomètres, des repères de rythme adaptés à votre niveau et l’emplacement des points d’eau.',
     url: 'https://cycling.trackpilot.fit',
     highlights: [
+      'Studio de tracé vectoriel assisté par routage magnétique (BRouter)',
+      'Guidage GPS dynamique plein écran avec cache 100% hors-ligne (zéro réseau)',
       'Visualisation du vent relatif (face, côté, dos) le long du parcours',
-      'Repères d’allure et d’effort selon votre forme et vos habitudes',
-      'Conseils simples pour l’hydratation et les apports d’énergie',
-      'Repérage des fontaines et points d’eau potable utiles',
-      'Export facile vers vos compteurs habituels (Garmin, Wahoo, Karoo...)'
+      'Repérage des fontaines et points d’eau potable utiles (OSM)',
+      'Conseils personnalisés d’hydratation, d’énergie et export compteurs'
     ],
     metrics: [
       { label: 'Météo', value: 'Sur le parcours' },
@@ -51,8 +51,22 @@ export const MODULES: ModuleInfo[] = [
 
 export const TECH_PILLARS: TechPillar[] = [
   {
+    id: 'mapping',
+    title: 'Création de Trace & Studio Vectoriel',
+    subtitle: 'Dessiner, ajuster et perfectionner au mètre près',
+    description: 'Un véritable atelier de dessin cartographique dans votre navigateur. Épaulé par le moteur de routage BRouter et son aimantation magnétique intelligente (Snap), tracez vos parcours d’un simple clic. Les profils dédiés (Route fluide, Gravel, Voies cyclables sécurisées ou Ligne droite libre) s’adaptent à vos envies, avec déplacement fluide des waypoints et profil altimétrique calculé en temps réel.',
+    iconName: 'Route',
+    badge: 'Routage BRouter & Snap',
+    technicalDetails: [
+      'Aimantation magnétique adaptative : Asphalte, Gravel, Pistes sécurisées ou Tracé libre',
+      'Profil altimétrique interactif et dénivelé cumulé (D+) calculés en direct à chaque point',
+      'Fonctions d’atelier en 1 clic : rebouclage automatique, aller-retour, inversion et Undo/Redo infini',
+      'Passerelle instantanée vers le Cockpit de vol ou export GPX haute précision'
+    ]
+  },
+  {
     id: 'import',
-    title: 'Import Simple GPX & FIT',
+    title: 'Import Universel GPX & FIT',
     subtitle: 'Pensé pour s’intégrer avec vos appareils habituels',
     description: 'Glissez votre trace directement dans le navigateur. Vos données restent chez vous, sur votre ordinateur ou votre téléphone : aucun compte obligatoire, aucun envoi de vos parcours personnels sur un serveur tiers.',
     iconName: 'Layers',
@@ -77,16 +91,17 @@ export const TECH_PILLARS: TechPillar[] = [
     ]
   },
   {
-    id: 'nutrition',
-    title: 'Repères d’Énergie & d’Hydratation',
-    subtitle: 'Des conseils simples pour doser son effort',
-    description: 'Pour éviter le coup de pompe sur les sorties longues, TrackPilot vous donne des repères indicatifs simples de glucides et d’eau par heure, adaptés au dénivelé et à la durée de votre parcours.',
-    iconName: 'Flame',
-    badge: 'Bons réflexes',
+    id: 'guidance',
+    title: 'Guidage Temps Réel & Cockpit Hors-Ligne',
+    subtitle: 'Votre smartphone transformé en compteur GPS d’exception',
+    description: 'Une prouesse d’ergonomie développée pour le cintre ou la bretelle. Le moteur de calcul ultra-léger projette votre position sur la trace avec une fluidité totale, sans lag ni dérive. Grâce au téléchargement prédictif des tuiles cartographiques, naviguez sans interruption même au cœur des zones blanches les plus isolées.',
+    iconName: 'Navigation',
+    badge: '100% Autonome & Zéro Réseau',
     technicalDetails: [
-      'Repères d’apports faciles à mémoriser pour chaque heure',
-      'Aide pour anticiper les sections plus exigeantes',
-      'Conseils d’hydratation ajustés aux conditions météo'
+      'Maintien d’écran allumé automatique (Screen WakeLock API) sans verrouillage intempestif',
+      'Cache hors-ligne intégral des tuiles cartographiques stockées en local (IndexedDB)',
+      'Orientation dynamique au cap (course-up) avec stabilisation de cap anti-dandinement GPS',
+      'Mode Fil d’Ariane éco-batterie (fond noir OLED) et indicateur de distance aux fontaines'
     ]
   },
   {
@@ -100,6 +115,19 @@ export const TECH_PILLARS: TechPillar[] = [
       'Données cartographiques partagées par la communauté OpenStreetMap',
       'Indication de l’écart éventuel par rapport à votre trace',
       'Un vrai coup de pouce bienveillant pour vos sorties estivales'
+    ]
+  },
+  {
+    id: 'nutrition',
+    title: 'Repères d’Énergie & d’Hydratation',
+    subtitle: 'Des conseils simples pour doser son effort',
+    description: 'Pour éviter le coup de pompe sur les sorties longues, TrackPilot vous donne des repères indicatifs simples de glucides et d’eau par heure, adaptés au dénivelé et à la durée de votre parcours.',
+    iconName: 'Flame',
+    badge: 'Bons réflexes',
+    technicalDetails: [
+      'Repères d’apports faciles à mémoriser pour chaque heure',
+      'Aide pour anticiper les sections plus exigeantes',
+      'Conseils d’hydratation ajustés aux conditions météo'
     ]
   }
 ];

@@ -1,18 +1,22 @@
 import React from 'react';
-import { Layers, Wind, Flame, Droplets, CheckCircle, ArrowRight } from 'lucide-react';
+import { Route, Navigation, Layers, Wind, Flame, Droplets, CheckCircle, ArrowRight } from 'lucide-react';
 import { TECH_PILLARS } from '../data/modules';
 
 export const TechPillars: React.FC = () => {
   const getPillarIcon = (name: string) => {
     switch (name) {
+      case 'Route':
+        return <Route className="w-6 h-6 text-emerald-400" />;
       case 'Layers':
         return <Layers className="w-6 h-6 text-brand-400" />;
       case 'Wind':
         return <Wind className="w-6 h-6 text-teal-400" />;
-      case 'Flame':
-        return <Flame className="w-6 h-6 text-amber-400" />;
+      case 'Navigation':
+        return <Navigation className="w-6 h-6 text-cyan-400" />;
       case 'Droplets':
         return <Droplets className="w-6 h-6 text-sky-400" />;
+      case 'Flame':
+        return <Flame className="w-6 h-6 text-amber-400" />;
       default:
         return <Layers className="w-6 h-6 text-brand-400" />;
     }
@@ -25,18 +29,18 @@ export const TechPillars: React.FC = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
-            <span>Approche & Fonctionnalités Clés</span>
+            <span>Les 6 Piliers Fondateurs</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             Comment nous concevons TrackPilot.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            Nos outils viennent en complément naturel des appareils et applications que vous utilisez déjà avec plaisir. Nous nous concentrons sur des repères très concrets : le vent réel le long de la route, l’énergie nécessaire et l’eau disponible.
+            De l’esquisse de votre premier tracé jusqu’au guidage sans réseau sur votre guidon, TrackPilot couvre chaque étape de votre sortie : dessin vectoriel magnétique, météo prédictive face au vent, navigation 100% hors-ligne et repères d’eau et d’énergie.
           </p>
         </div>
 
-        {/* 4 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* 6 Pillars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {TECH_PILLARS.map((pillar) => (
             <div
               key={pillar.id}
@@ -86,10 +90,10 @@ export const TechPillars: React.FC = () => {
               Déjà éprouvé par des centaines d’athlètes
             </div>
             <h4 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
-              Prêt à tester ces 4 piliers sur votre prochaine sortie vélo ?
+              Prêt à tester ces 6 piliers sur votre prochaine sortie vélo ?
             </h4>
             <p className="text-sm text-slate-300 mt-1">
-              Aucune inscription requise. Glissez simplement votre fichier GPX pour analyser votre parcours.
+              Aucune inscription requise. Tracez un itinéraire ou glissez votre fichier GPX pour lancer l’analyse.
             </p>
           </div>
           <a
