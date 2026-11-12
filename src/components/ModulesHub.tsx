@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bike, Footprints, Mountain, ArrowUpRight, CheckCircle2, Clock, Wrench, BellRing } from 'lucide-react';
+import { Bike, Footprints, Mountain, ArrowUpRight, CheckCircle2, Clock, Wrench, BellRing, Watch } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { ModuleInfo } from '../types';
 
@@ -194,6 +194,21 @@ export const ModulesHub: React.FC = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Clarification Box: Preparation & Guidance vs GPS Track/Stats Recording */}
+        <div className="mt-12 max-w-4xl mx-auto p-5 sm:p-6 rounded-2xl glass-panel border border-white/10 bg-dark-850/60 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
+            <Watch className="w-5 h-5" />
+          </div>
+          <div className="space-y-1">
+            <h4 className="text-sm font-bold text-white flex items-center gap-2">
+              <span>Un positionnement clair : préparer et guider, pas enregistrer vos statistiques</span>
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              TrackPilot n’est pas un outil d’enregistrement d'activités ni un carnet de statistiques (type Strava ou Garmin Connect). Ses outils de traçage et de guidage sont volontairement épurés pour vous aider à concevoir vos parcours, anticiper la météo et naviguer sans vous encombrer. <strong className="text-white font-medium">Vos montres et compteurs GPS restent indispensables</strong> pour enregistrer vos traces réelles, vos données de performance (fréquence cardiaque, puissance, allure) et votre historique d'entraînement.
+            </p>
+          </div>
         </div>
 
       </div>

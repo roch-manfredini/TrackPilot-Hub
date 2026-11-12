@@ -12,11 +12,11 @@ export const MODULES: ModuleInfo[] = [
     description: 'Glissez simplement votre fichier GPX ou FIT pour découvrir les points clés de votre itinéraire : le vent prévu au fil des kilomètres, des repères de rythme adaptés à votre niveau et l’emplacement des points d’eau.',
     url: 'https://cycling.trackpilot.fit',
     highlights: [
-      'Studio de tracé vectoriel assisté par routage magnétique (BRouter)',
-      'Guidage GPS dynamique plein écran avec cache 100% hors-ligne (zéro réseau)',
-      'Visualisation du vent relatif (face, côté, dos) le long du parcours',
-      'Repérage des fontaines et points d’eau potable utiles (OSM)',
-      'Conseils personnalisés d’hydratation, d’énergie et export compteurs'
+      'Studio de traçage épuré cyclisme : routage magnétique instantané (route, gravel, voies douces) et profil altimétrique direct',
+      'Guidage cintre ultra-épuré : lisibilité immédiate à vitesse élevée, vent relatif, pente et mode éco OLED sans réseau',
+      'Visualisation du vent relatif (face, côté, dos) calculé selon votre horaire de passage',
+      'Repérage des fontaines et points d’eau potable utiles (données libres OSM)',
+      'Conseils personnalisés d’hydratation, d’énergie et export rapide vers vos compteurs'
     ],
     metrics: [
       { label: 'Météo', value: 'Sur le parcours' },
@@ -35,11 +35,11 @@ export const MODULES: ModuleInfo[] = [
     description: 'Pensé pour toutes vos sorties à pied en pleine nature, en marchant ou en courant. Allure ajustée au dénivelé (GAP), estimations des temps de parcours et de marche (Tobler), gestion de l’eau et de votre autonomie.',
     url: 'https://trail.trackpilot.fit',
     highlights: [
-      'Double mode : Trail & Course (allure ajustée GAP) ou Randonnée & Marche (Tobler & sac)',
-      'Profil altimétrique précis avec dénivelé et pourcentages point par point',
-      'Aide à l’estimation des temps de parcours et des barrières horaires',
-      'Repérage des fontaines, sources naturelles, refuges et abris',
-      'Gestion équilibrée de l’hydratation et de l’énergie selon l’effort'
+      'Outil de traçage épuré sentiers : tracé adapté aux chemins de montagne, courbes de niveau et calcul du relief D+/D-',
+      'Guidage outdoor épuré : orientation immédiate aux intersections, D+ restant, refuges et zéro gigue GPS à la marche',
+      'Double mode d’effort : Trail & Course (allure ajustée GAP) ou Randonnée & Marche (calcul Tobler & sac)',
+      'Aide à l’estimation des temps de parcours et suivi des barrières horaires',
+      'Repérage des sources naturelles, fontaines, refuges et abris en pleine nature'
     ],
     metrics: [
       { label: 'Discipline', value: 'Trail & Rando' },

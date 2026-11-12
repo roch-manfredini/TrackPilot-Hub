@@ -19,8 +19,8 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
     },
     {
       icon: <RefreshCw className="w-5 h-5 text-sky-400" />,
-      title: "Compatible avec vos Outils Favoris",
-      description: "Les compteurs et applications existants (Garmin, Wahoo, Karoo, Strava, Komoot...) sont d'excellents compagnons. TrackPilot s'y associe naturellement grâce aux formats universels GPX et FIT."
+      title: "Complémentaire de vos Compteurs GPS",
+      description: "TrackPilot n'a pas vocation à remplacer votre compteur ou votre montre pour enregistrer des statistiques ou vos performances. Nos outils se concentrent sur la préparation en amont et le guidage épuré sur le terrain. Vos appareils GPS restent indispensables."
     },
     {
       icon: <Zap className="w-5 h-5 text-amber-400" />,
