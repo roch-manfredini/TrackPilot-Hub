@@ -87,7 +87,7 @@ export const TechPillars: React.FC = () => {
         <div className="mt-14 p-6 sm:p-8 rounded-2xl glass-panel border border-brand-500/30 bg-gradient-to-r from-brand-950/40 via-dark-900 to-dark-950 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <div className="text-xs font-mono uppercase text-brand-400 font-semibold tracking-wider">
-              Déjà éprouvé par des centaines d’athlètes
+              En cours de validation par un panel de testeurs experts de la discipline
             </div>
             <h4 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
               Prêt à tester ces 6 piliers sur votre prochaine sortie vélo ?
