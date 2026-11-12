@@ -66,6 +66,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               Fonctionnalités
             </a>
             <a 
+              href="#installation" 
+              className="hover:text-white transition-colors duration-150 py-1"
+            >
+              Installation
+            </a>
+            <a 
               href="#vision" 
               className="hover:text-white transition-colors duration-150 py-1"
             >
@@ -131,6 +137,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Fonctionnalités
+            </a>
+            <a
+              href="#installation"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
+            >
+              Installation
             </a>
             <a
               href="#vision"
