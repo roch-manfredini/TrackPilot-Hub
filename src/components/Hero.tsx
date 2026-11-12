@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, ChevronDown, Sparkles, Shield, Cpu, Gauge } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Sparkles, Shield, Cpu, Gauge, Zap } from 'lucide-react';
 import { TelemetryPreview } from './TelemetryPreview';
 
 export const Hero: React.FC = () => {
@@ -61,6 +61,10 @@ export const Hero: React.FC = () => {
 
           {/* Trust & Spec Micro-stats */}
           <div className="mt-10 pt-6 border-t border-white/[0.06] flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs text-slate-400 font-mono">
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-brand-neon" />
+              <span>Reprise 1s si coupure batterie (Zéro crash)</span>
+            </div>
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-brand-400" />
               <span>Traces nettoyées de toute donnée privée</span>

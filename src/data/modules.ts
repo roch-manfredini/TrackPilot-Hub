@@ -95,14 +95,14 @@ export const TECH_PILLARS: TechPillar[] = [
     id: 'guidance',
     title: 'Guidage Temps Réel & Cockpit Hors-Ligne',
     subtitle: 'Votre smartphone transformé en compteur GPS d’exception',
-    description: 'Une prouesse d’ergonomie développée pour le cintre ou la bretelle. Le moteur de calcul ultra-léger projette votre position sur la trace avec une fluidité totale, sans lag ni dérive. Grâce au téléchargement prédictif des tuiles cartographiques, naviguez sans interruption même au cœur des zones blanches les plus isolées.',
+    description: 'Une prouesse d’ergonomie développée pour le cintre ou la bretelle. Conçu selon une architecture sans état (Stateless), le moteur projette instantanément votre position sur la trace vectorielle : en cas de coupure inattendue ou de batterie vide, la navigation reprend en 1 seconde chrono sans session corrompue ni perte de données.',
     iconName: 'Navigation',
-    badge: '100% Autonome & Zéro Réseau',
+    badge: 'Stateless & Zéro Réseau',
     technicalDetails: [
-      'Maintien d’écran allumé automatique (Screen WakeLock API) sans verrouillage intempestif',
+      'Architecture Stateless : reprise instantanée en 1s sans session corrompue en cas de panne de batterie',
+      'Projection spatiale instantanée : recalcule en direct distance restante, D+ et fontaines en aval',
       'Cache hors-ligne intégral des tuiles cartographiques stockées en local (IndexedDB)',
-      'Orientation dynamique au cap (course-up) avec stabilisation de cap anti-dandinement GPS',
-      'Mode Fil d’Ariane éco-batterie (fond noir OLED) et indicateur de distance aux fontaines'
+      'Maintien d’écran allumé automatique (Screen WakeLock API) et mode Fil d’Ariane éco-batterie OLED'
     ]
   },
   {

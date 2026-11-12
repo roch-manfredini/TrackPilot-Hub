@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Navigation, Layers, Wind, Flame, Droplets, CheckCircle, ArrowRight } from 'lucide-react';
 import { TECH_PILLARS } from '../data/modules';
+import { StatelessShowcase } from './StatelessShowcase';
 
 export const TechPillars: React.FC = () => {
   const getPillarIcon = (name: string) => {
@@ -82,6 +83,9 @@ export const TechPillars: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Stateless Architecture Showcase (Zero-Crash & Instant Recovery) */}
+        <StatelessShowcase />
 
         {/* Bottom Banner to Cycling App */}
         <div className="mt-14 p-6 sm:p-8 rounded-2xl glass-panel border border-brand-500/30 bg-gradient-to-r from-brand-950/40 via-dark-900 to-dark-950 flex flex-col md:flex-row items-center justify-between gap-6">
