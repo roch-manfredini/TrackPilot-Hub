@@ -3,7 +3,6 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ModulesHub } from './components/ModulesHub';
 import { TechPillars } from './components/TechPillars';
-import { InteractiveSimulator } from './components/InteractiveSimulator';
 import { EcosystemVision } from './components/EcosystemVision';
 import { ContactSection } from './components/ContactSection';
 import { ContactModal } from './components/ContactModal';
@@ -19,7 +18,6 @@ export const App: React.FC = () => {
         <Hero />
         <ModulesHub />
         <TechPillars />
-        <InteractiveSimulator />
         <EcosystemVision onOpenContact={() => setIsContactModalOpen(true)} />
         <ContactSection />
       </main>
