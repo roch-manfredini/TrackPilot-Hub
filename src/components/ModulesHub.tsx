@@ -61,13 +61,13 @@ export const ModulesHub: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
-            <span>Le Hub des Disciplines</span>
+            <span>Disciplines & Pratiques</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Une suite d'applications spécialisées, une exigence commune.
+            À chaque pratique ses repères, construits avec vous.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            Chaque sport possède ses contraintes d'allure, de biomécanique et de ravitaillement. TrackPilot décline ses algorithmes pour chaque pratique avec une précision sans compromis.
+            La route, le sentier et la montagne ont chacun leur rythme et leurs besoins. Nous adaptons ces outils en échangeant directement avec les sportifs sur le terrain, pour apporter des aides simples et concrètes.
           </p>
         </div>
 
@@ -88,7 +88,7 @@ export const ModulesHub: React.FC = () => {
                 {/* Available highlight top border tag */}
                 {isAvailable && (
                   <div className="absolute -top-3 left-6 px-3 py-0.5 rounded-md bg-brand-neon text-dark-950 font-mono text-[10px] font-black uppercase tracking-wider shadow-sm">
-                    Recommandé • Actif
+                    Disponible en ligne
                   </div>
                 )}
 

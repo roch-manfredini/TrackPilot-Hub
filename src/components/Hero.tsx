@@ -20,22 +20,22 @@ export const Hero: React.FC = () => {
           {/* Tag Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-850/90 border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-glow-sm">
             <Sparkles className="w-3.5 h-3.5 text-brand-neon" />
-            <span>Écosystème GPS & Préparation Outdoor</span>
+            <span>Projet collaboratif & outils outdoor libres</span>
             <span className="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
-            <span className="font-mono text-slate-400">v1.4 Live</span>
+            <span className="font-mono text-slate-400">Accès libre & gratuit</span>
           </div>
 
           {/* Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
-            Pilotez vos sorties avec une{' '}
+            Mieux appréhender ses sorties,{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500">
-              précision chirurgicale.
+              partager et rouler serein.
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
-            L’alliance ultime du <strong className="text-white font-medium">GPS haute fidélité</strong>, de la <strong className="text-white font-medium">météo</strong> et de la <strong className="text-white font-medium">physiologie d'effort</strong>. Préparez vos traces, anticipez les vents contraires et ne subissez plus jamais la défaillance.
+            Des passionnés qui construisent des outils utiles pour la communauté : visualisez simplement le profil de vos traces, anticipez le vent réel sur votre parcours et trouvez des repères simples pour l'effort et les points d'eau. En toute transparence, sans publicité et avec le respect de vos données.
           </p>
 
           {/* Action CTAs */}
@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-base font-bold text-dark-950 bg-gradient-to-r from-brand-neon via-brand-400 to-brand-500 hover:brightness-110 active:scale-[0.98] rounded-xl shadow-glow-md transition-all duration-150"
             >
-              <span>Ouvrir TrackPilot Cycling</span>
+              <span>Découvrir TrackPilot Cycling</span>
               <ArrowUpRight className="w-5 h-5" />
             </a>
 
@@ -54,7 +54,7 @@ export const Hero: React.FC = () => {
               href="#modules"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-base font-semibold text-slate-200 bg-dark-850/80 hover:bg-dark-800 hover:text-white border border-white/10 hover:border-white/20 active:scale-[0.98] rounded-xl transition-all duration-150"
             >
-              <span>Explorer la suite</span>
+              <span>Explorer les modules</span>
               <ChevronDown className="w-4 h-4 text-slate-400" />
             </a>
           </div>
@@ -63,15 +63,15 @@ export const Hero: React.FC = () => {
           <div className="mt-10 pt-6 border-t border-white/[0.06] flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs text-slate-400 font-mono">
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-brand-400" />
-              <span>100% Confidentialité Locale</span>
+              <span>Vos traces restent sur votre appareil</span>
             </div>
             <div className="flex items-center gap-2">
               <Cpu className="w-4 h-4 text-brand-400" />
-              <span>Moteur In-Browser Zéro-Latence</span>
+              <span>100% Web, rien à installer</span>
             </div>
             <div className="flex items-center gap-2">
               <Gauge className="w-4 h-4 text-brand-400" />
-              <span>Précision Météo au km</span>
+              <span>En complément de vos compteurs favoris</span>
             </div>
           </div>
 

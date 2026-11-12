@@ -43,13 +43,13 @@ export const InteractiveSimulator: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
             <Sliders className="w-3.5 h-3.5" />
-            <span>Simulateur Interactif en Direct</span>
+            <span>Simulateur Interactif</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Testez l’impact du vent et de la pente en temps réel.
+            Visualiser l’impact du vent et de la pente.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            Ajustez les curseurs ci-dessous pour observer comment notre moteur algorithmique recalcule instantanément la vitesse prévisionnelle et les besoins énergétiques.
+            Faites varier les curseurs ci-dessous pour apprécier simplement comment la pente et l’orientation du vent modifient la vitesse estimée et les besoins en énergie.
           </p>
         </div>
 
@@ -150,7 +150,7 @@ export const InteractiveSimulator: React.FC = () => {
             {/* Right Column: Live Recalculated Output Box */}
             <div className="lg:col-span-5 rounded-xl bg-dark-950/90 border border-white/10 p-5 sm:p-6 space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                <span className="text-xs font-mono uppercase text-slate-400 tracking-wider">Résultats Algorithmiques</span>
+                <span className="text-xs font-mono uppercase text-slate-400 tracking-wider">Estimations Indicatives</span>
                 <span className="inline-block w-2 h-2 rounded-full bg-brand-neon animate-pulse"></span>
               </div>
 
@@ -206,7 +206,7 @@ export const InteractiveSimulator: React.FC = () => {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-xs font-bold text-dark-950 bg-brand-400 hover:bg-brand-300 transition-colors"
                 >
-                  <span>Appliquer à un tracé réel</span>
+                  <span>Tester sur votre propre trace GPX</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </a>
               </div>

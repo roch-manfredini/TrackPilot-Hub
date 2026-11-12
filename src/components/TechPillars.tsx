@@ -25,13 +25,13 @@ export const TechPillars: React.FC = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
-            <span>Rigueur Scientifique & Technologie Embarquée</span>
+            <span>Approche & Fonctionnalités Clés</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Les 4 Piliers Technologiques de TrackPilot.
+            Comment nous concevons TrackPilot.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            Fini les prévisions statiques et les estimations au doigt mouillé. TrackPilot fusionne télémétrie spatiale, modèles météo et physiologie humaine.
+            Nos outils viennent en complément naturel des appareils et applications que vous utilisez déjà avec plaisir. Nous nous concentrons sur des repères très concrets : le vent réel le long de la route, l’énergie nécessaire et l’eau disponible.
           </p>
         </div>
 

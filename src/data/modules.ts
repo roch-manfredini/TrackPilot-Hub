@@ -8,20 +8,20 @@ export const MODULES: ModuleInfo[] = [
     iconName: 'Bike',
     status: 'available',
     statusLabel: 'En ligne',
-    tagline: 'Le préparateur de sorties et de cyclosportives haute précision.',
-    description: 'Importez votre parcours GPX ou FIT et obtenez instantanément le profil complet de votre sortie : météo du vent point par point, calcul de pacing dynamique, cibles glucidiques et détection des points d’eau.',
+    tagline: 'Un carnet de route interactif pour préparer vos sorties vélo et gravel.',
+    description: 'Glissez simplement votre fichier GPX ou FIT pour découvrir les points clés de votre itinéraire : le vent prévu au fil des kilomètres, des repères de rythme adaptés à votre niveau et l’emplacement des points d’eau.',
     url: 'https://cycling.trackpilot.fit',
     highlights: [
-      'Analyse temps réel de la météo et du vent relatif le long du tracé',
-      'Pacing dynamique W/kg et estimation du temps selon votre FTP',
-      'Plan de ravitaillement glucidique (g/h) & hydratation personnalisés',
-      'Détection automatique des fontaines d’eau potable et supérettes',
-      'Exportation directe sur vos compteurs Garmin, Wahoo et Karoo'
+      'Visualisation du vent relatif (face, côté, dos) le long du parcours',
+      'Repères d’allure et d’effort selon votre forme et vos habitudes',
+      'Conseils simples pour l’hydratation et les apports d’énergie',
+      'Repérage des fontaines et points d’eau potable utiles',
+      'Export facile vers vos compteurs habituels (Garmin, Wahoo, Karoo...)'
     ],
     metrics: [
-      { label: 'Calcul Météo', value: 'Point par point' },
-      { label: 'Précision D+', value: '± 1.5 %' },
-      { label: 'Statut', value: 'Production' }
+      { label: 'Météo', value: 'Sur le parcours' },
+      { label: 'Format', value: 'GPX & FIT' },
+      { label: 'Accès', value: 'Libre & Gratuit' }
     ]
   },
   {
@@ -31,19 +31,19 @@ export const MODULES: ModuleInfo[] = [
     iconName: 'Footprints',
     status: 'soon',
     statusLabel: 'Bientôt',
-    tagline: 'L’art du pacing GAP et de la gestion d’effort sur dénivelé.',
-    description: 'Spécialement développé pour le trail-running, le marathon et les ultras. Modélisez votre allure ajustée à la pente (GAP), anticipez les barrières horaires et gérez vos transitions de ravitaillement sans défaillir.',
+    tagline: 'Pour le trail et la course à pied : mieux appréhender les dénivelés.',
+    description: 'Pensé pour la course sur sentier et la route. Adaptez votre allure selon les montées et descentes (allure ajustée à la pente), préparez vos estimations de passage et vos ravitaillements en toute sérénité.',
     url: 'https://running.trackpilot.fit',
     highlights: [
-      'Allure ajustée au dénivelé (Grade Adjusted Pace - GAP) dynamique',
-      'Simulateur de barrières horaires pour courses et ultra-trails',
-      'Régulation de l’effort en montée vs préservation musculaire en descente',
-      'Gestion prédictive des réserves de glycogène et sodium'
+      'Allure ajustée à la pente (GAP) pour mieux doser son effort',
+      'Aide à l’estimation des temps de passage sur vos courses',
+      'Gestion équilibrée de l’énergie entre montées et descentes',
+      'Repères réguliers pour bien s’hydrater tout au long du parcours'
     ],
     metrics: [
-      { label: 'Algorithme', value: 'GAP Adaptatif' },
-      { label: 'Focus', value: 'Trail & Ultra' },
-      { label: 'Accès', value: 'T2 2025' }
+      { label: 'Discipline', value: 'Trail & Route' },
+      { label: 'Projet', value: 'En co-création' },
+      { label: 'Accès', value: 'Bientôt disponible' }
     ]
   },
   {
@@ -53,19 +53,19 @@ export const MODULES: ModuleInfo[] = [
     iconName: 'Mountain',
     status: 'dev',
     statusLabel: 'En développement',
-    tagline: 'L’autonomie totale pour le long cours et les treks d’altitude.',
-    description: 'Conçu pour les traversées alpines, le GR20, la Haute Route et les bivouacs en autonomie. Cartographie topographique hors-ligne, calcul de la règle de Naismith corrigée et géolocalisation des sources naturelles pérennes.',
+    tagline: 'Pour la randonnée et le bivouac : préparer ses étapes et son autonomie.',
+    description: 'Pensé pour les amateurs de grands espaces, de randonnée itinérante et de montagne. Calculez vos temps de marche avec sac à dos, repérez les sources naturelles et profitez de fonds cartographiques clairs.',
     url: 'https://trekking.trackpilot.fit',
     highlights: [
-      'Calcul du temps de marche selon la règle de Naismith et la charge du sac',
-      'Cartographie IGN / Swisstopo / OpenTopoMap avec cache hors-réseau',
-      'Inventaire des points d’eau de montagne, cabanes non gardées et abris',
-      'Alerte orageuse géolocalisée et prévisions isothème 0°C'
+      'Estimation des temps de marche selon la pente et le poids du sac',
+      'Fonds de carte clairs adaptés aux sentiers et chemins',
+      'Repérage des points d’eau, abris et cabanes non gardées',
+      'Respect total de vos traces, sans pistage'
     ],
     metrics: [
-      { label: 'Cartographie', value: 'Multi-fonds topo' },
-      { label: 'Mode', value: '100% Hors-ligne' },
-      { label: 'Accès', value: 'T3 2025' }
+      { label: 'Discipline', value: 'Rando & Bivouac' },
+      { label: 'Statut', value: 'En cours de dev' },
+      { label: 'Accès', value: 'Ouvert aux retours' }
     ]
   }
 ];
@@ -73,54 +73,54 @@ export const MODULES: ModuleInfo[] = [
 export const TECH_PILLARS: TechPillar[] = [
   {
     id: 'import',
-    title: 'Import Direct GPX & FIT',
-    subtitle: 'Garmin, Wahoo, Strava, Komoot',
-    description: 'Glissez-déposez n’importe quelle trace GPX ou FIT. Notre moteur web traite instantanément les coordonnées, l’altitude et les métadonnées sans envoyer vos données personnelles sur un serveur distant.',
+    title: 'Import Simple GPX & FIT',
+    subtitle: 'Pensé pour s’intégrer avec vos appareils habituels',
+    description: 'Glissez votre trace directement dans le navigateur. Vos données restent chez vous, sur votre ordinateur ou votre téléphone : aucun compte obligatoire, aucun envoi de vos parcours personnels sur un serveur tiers.',
     iconName: 'Layers',
-    badge: 'Zéro-latence',
+    badge: 'Vie privée respectée',
     technicalDetails: [
-      'Traitement local dans le navigateur (Web Workers)',
-      'Lissage barométrique adaptatif des profils d’élévation',
-      'Support natif des fichiers multi-segments et laps'
+      'Traitement local directement dans votre navigateur web',
+      'Compatible avec les exports de vos applications préférées (Garmin, Strava, Komoot...)',
+      'Zéro traçage, vos fichiers personnels restent les vôtres'
     ]
   },
   {
     id: 'weather',
-    title: 'Météo Prédictive',
-    subtitle: 'Vent, pluie & rafales synchronisés',
-    description: 'Une météo globale ne sert à rien sur un col 3 heures après votre départ. TrackPilot projette votre vitesse estimée et calcule la direction exacte du vent relatif, les rafales et les précipitations au moment précis où vous franchirez chaque point.',
+    title: 'Vent & Météo le Long du Parcours',
+    subtitle: 'Anticiper les conditions réelles à votre passage',
+    description: 'Plutôt qu’une météo générale à un endroit fixe, TrackPilot croise votre horaire estimé de passage avec les prévisions pour vous indiquer si le vent sera de face, de côté ou de dos au fil des kilomètres.',
     iconName: 'Wind',
-    badge: 'Synchronisation horaire',
+    badge: 'Repères utiles',
     technicalDetails: [
-      'Calcul de l’angle du vent relatif (face, trois-quarts, dos)',
-      'Modèles météo haute résolution (Météo-France AROME / GFS)',
-      'Alerte thermique : sensation au vent & refroidissement éolien'
+      'Direction du vent relatif calculée selon le cap de votre tracé',
+      'Données météo ouvertes et prévisions actualisées',
+      'Température ressentie et indication des rafales pour bien s’équiper'
     ]
   },
   {
     id: 'nutrition',
-    title: 'Stratégie Glucidique & Énergie',
-    subtitle: 'Optimisation de la dépense calorique',
-    description: 'Évitez la panne sèche (« l’hypo »). En croisant votre profil physiologique (FTP, poids, intensité) avec le profil de dénivelé, TrackPilot prescrit vos cibles de glucides horaires (40 à 90 g/h) adaptées à chaque portion.',
+    title: 'Repères d’Énergie & d’Hydratation',
+    subtitle: 'Des conseils simples pour doser son effort',
+    description: 'Pour éviter le coup de pompe sur les sorties longues, TrackPilot vous donne des repères indicatifs simples de glucides et d’eau par heure, adaptés au dénivelé et à la durée de votre parcours.',
     iconName: 'Flame',
-    badge: 'Physiologie appliquée',
+    badge: 'Bons réflexes',
     technicalDetails: [
-      'Ratios optimaux Glucose / Fructose (1:0.8)',
-      'Planification des prises alimentaires sur les replats',
-      'Bilan hydrique ajusté à l’indice thermique et l’hygrométrie'
+      'Repères d’apports faciles à mémoriser pour chaque heure',
+      'Aide pour anticiper les sections plus exigeantes',
+      'Conseils d’hydratation ajustés aux conditions météo'
     ]
   },
   {
     id: 'water',
-    title: 'Ravitaillements & Points d’Eau',
-    subtitle: 'Détection intelligente le long de la trace',
-    description: 'Ne roulez plus jamais avec deux bidons vides. TrackPilot scanne les abords de votre parcours (à moins de 150 mètres) pour identifier les fontaines publiques, cimetières avec eau potable, supérettes et refuges.',
+    title: 'Points d’Eau & Fontaines Collaboratives',
+    subtitle: 'Savoir où faire le plein sereinement',
+    description: 'Pour partir l’esprit tranquille sans craindre les bidons à sec, TrackPilot s’appuie sur les données ouvertes et collaboratives d’OpenStreetMap pour signaler les fontaines publiques et points d’eau proches de votre itinéraire.',
     iconName: 'Droplets',
-    badge: 'Sécurité outdoor',
+    badge: 'Données libres OSM',
     technicalDetails: [
-      'Données croisées OpenStreetMap vérifiées par la communauté',
-      'Calcul du détour nécessaire en mètres et secondes',
-      'Espacement kilométrique recommandé entre chaque point'
+      'Données cartographiques partagées par la communauté OpenStreetMap',
+      'Indication de l’écart éventuel par rapport à votre trace',
+      'Un vrai coup de pouce bienveillant pour vos sorties estivales'
     ]
   }
 ];

@@ -55,7 +55,7 @@ export const TelemetryPreview: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-mono tracking-widest text-brand-400 font-semibold">Télémétrie Active</span>
+              <span className="text-xs uppercase font-mono tracking-widest text-brand-400 font-semibold">Exemple de Carnet de Route</span>
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse"></span>
             </div>
             <h4 className="text-sm font-bold text-white tracking-tight">Col du Ventoux — Traversée Sud-Nord (114.2 km)</h4>
@@ -65,11 +65,11 @@ export const TelemetryPreview: React.FC = () => {
         {/* GPS Badge & Format */}
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono px-2.5 py-1 rounded bg-dark-800 text-slate-400 border border-white/5">
-            Format: FIT / GPX v1.1
+            Format : FIT / GPX
           </span>
           <span className="inline-flex items-center gap-1 text-xs font-mono px-2 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30">
             <CheckCircle2 className="w-3 h-3 text-brand-400" />
-            Synchronisé
+            Exemple interactif
           </span>
         </div>
       </div>
