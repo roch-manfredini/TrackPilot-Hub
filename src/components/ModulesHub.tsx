@@ -67,12 +67,12 @@ export const ModulesHub: React.FC = () => {
             À chaque pratique ses repères, construits avec vous.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            La route, le sentier et la montagne ont chacun leur rythme et leurs besoins. Nous adaptons ces outils en échangeant directement avec les sportifs sur le terrain, pour apporter des aides simples et concrètes.
+            Sur deux roues ou sur deux jambes, chaque pratique a ses exigences propres. Nous adaptons ces outils en échangeant directement avec les sportifs sur le terrain, pour apporter des aides simples et concrètes.
           </p>
         </div>
 
-        {/* 3 Modules Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* 2 Modules Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {MODULES.map((module) => {
             const isAvailable = module.status === 'available';
 

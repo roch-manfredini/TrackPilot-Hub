@@ -6,9 +6,8 @@ Vitrine centrale et Hub d'accueil pour l'écosystème **TrackPilot** (`trackpilo
 
 ## 🧭 L'Écosystème TrackPilot
 
-- **TrackPilot Cycling** (`https://cycling.trackpilot.fit`) — *En production* : Préparation de sorties vélo, analyse de traces GPX/FIT, pacing dynamique, météo de vol vectorielle point par point, détection des fontaines d’eau et cibles glucidiques.
-- **TrackPilot Running** (`https://running.trackpilot.fit`) — *Bientôt disponible* : Allure ajustée au dénivelé (GAP), simulation de barrières horaires trail et gestion des réserves énergétiques.
-- **TrackPilot Trekking** (`https://trekking.trackpilot.fit`) — *En développement* : Randonnée au long cours, profils d'élévation, gestion de l'autonomie et cartographie hors-piste.
+- **TrackPilot Cycling** (`https://cycling.trackpilot.fit`) — *En production* : Préparation de sorties vélo et gravel, analyse de traces GPX/FIT, pacing dynamique, météo de vol vectorielle point par point, détection des fontaines d’eau et repères nutritionnels.
+- **TrackPilot Trail** (`https://trail.trackpilot.fit`) — *Bientôt disponible* : L'outil outdoor pour le trail, la randonnée et la marche. Allure ajustée au dénivelé (GAP), estimation des temps de marche et de passage (Tobler), profils d'élévation précis, gestion de l'autonomie et points d'eau.
 
 ---
 

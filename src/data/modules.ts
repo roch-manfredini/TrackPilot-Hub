@@ -25,47 +25,26 @@ export const MODULES: ModuleInfo[] = [
     ]
   },
   {
-    id: 'running',
-    title: 'TrackPilot Running',
-    discipline: 'Trail & Course à pied',
-    iconName: 'Footprints',
+    id: 'trail',
+    title: 'TrackPilot Trail',
+    discipline: 'Trail, Randonnée & Marche',
+    iconName: 'Mountain',
     status: 'soon',
     statusLabel: 'Bientôt',
-    tagline: 'Pour le trail et la course à pied : mieux appréhender les dénivelés.',
-    description: 'Pensé pour la course sur sentier et la route. Adaptez votre allure selon les montées et descentes (allure ajustée à la pente), préparez vos estimations de passage et vos ravitaillements en toute sérénité.',
-    url: 'https://running.trackpilot.fit',
+    tagline: 'Pour le trail, la randonnée et la marche : dompter le dénivelé et les sentiers.',
+    description: 'Pensé pour toutes vos sorties à pied en pleine nature, en marchant ou en courant. Allure ajustée au dénivelé (GAP), estimations des temps de parcours et de marche (Tobler), gestion de l’eau et de votre autonomie.',
+    url: 'https://trail.trackpilot.fit',
     highlights: [
-      'Allure ajustée à la pente (GAP) pour mieux doser son effort',
-      'Aide à l’estimation des temps de passage sur vos courses',
-      'Gestion équilibrée de l’énergie entre montées et descentes',
-      'Repères réguliers pour bien s’hydrater tout au long du parcours'
+      'Double mode : Trail & Course (allure ajustée GAP) ou Randonnée & Marche (Tobler & sac)',
+      'Profil altimétrique précis avec dénivelé et pourcentages point par point',
+      'Aide à l’estimation des temps de parcours et des barrières horaires',
+      'Repérage des fontaines, sources naturelles, refuges et abris',
+      'Gestion équilibrée de l’hydratation et de l’énergie selon l’effort'
     ],
     metrics: [
-      { label: 'Discipline', value: 'Trail & Route' },
+      { label: 'Discipline', value: 'Trail & Rando' },
       { label: 'Projet', value: 'En co-création' },
       { label: 'Accès', value: 'Bientôt disponible' }
-    ]
-  },
-  {
-    id: 'trekking',
-    title: 'TrackPilot Trekking',
-    discipline: 'Randonnée & Bivouac',
-    iconName: 'Mountain',
-    status: 'dev',
-    statusLabel: 'En développement',
-    tagline: 'Pour la randonnée et le bivouac : préparer ses étapes et son autonomie.',
-    description: 'Pensé pour les amateurs de grands espaces, de randonnée itinérante et de montagne. Calculez vos temps de marche avec sac à dos, repérez les sources naturelles et profitez de fonds cartographiques clairs.',
-    url: 'https://trekking.trackpilot.fit',
-    highlights: [
-      'Estimation des temps de marche selon la pente et le poids du sac',
-      'Fonds de carte clairs adaptés aux sentiers et chemins',
-      'Repérage des points d’eau, abris et cabanes non gardées',
-      'Respect total de vos traces, sans pistage'
-    ],
-    metrics: [
-      { label: 'Discipline', value: 'Rando & Bivouac' },
-      { label: 'Statut', value: 'En cours de dev' },
-      { label: 'Accès', value: 'Ouvert aux retours' }
     ]
   }
 ];
