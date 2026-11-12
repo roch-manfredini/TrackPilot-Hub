@@ -97,6 +97,10 @@ export const StatelessShowcase: React.FC = () => {
                 <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
                 <span><strong className="text-white font-medium">Perte du fil de guidage :</strong> la navigation tente parfois de vous renvoyer au point de départ.</span>
               </div>
+              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Synchronisation manuelle fastidieuse :</strong> obligation de cocher chaque trace manuellement pour espérer y accéder hors-ligne.</span>
+              </div>
             </div>
           </div>
 
@@ -144,6 +148,10 @@ export const StatelessShowcase: React.FC = () => {
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
                 <span><strong className="text-white font-medium">Filtrage intelligent de l'eau :</strong> le cockpit ignore le passé et cible immédiatement la prochaine fontaine en aval.</span>
+              </div>
+              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Plans de route 100% hors-ligne :</strong> vos parcours personnels sont stockés automatiquement en local (comme un Drive, mais entièrement automatique).</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />

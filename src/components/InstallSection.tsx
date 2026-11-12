@@ -33,8 +33,8 @@ export const InstallSection: React.FC = () => {
     },
     {
       icon: <WifiOff className="w-5 h-5 text-cyan-400" />,
-      title: "Plein Écran & Hors-Ligne",
-      description: "Une fois ajoutée sur votre écran d'accueil, elle s'ouvre sans barre d'adresse et continue de fonctionner même en zone blanche sans réseau."
+      title: "Plein Écran & Mode Hors-Ligne",
+      description: "Une fois ajoutée sur votre écran d'accueil, elle s'ouvre sans barre d'adresse et stocke automatiquement tous vos plans de route en local : vos parcours restent accessibles hors ligne même en zone blanche, comme un Drive mais 100% automatique."
     }
   ];
 

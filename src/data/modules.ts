@@ -14,6 +14,7 @@ export const MODULES: ModuleInfo[] = [
     highlights: [
       'Studio de traçage épuré cyclisme : routage magnétique instantané (route, gravel, voies douces) et profil altimétrique direct',
       'Guidage cintre ultra-épuré : lisibilité immédiate à vitesse élevée, vent relatif, pente et mode éco OLED sans réseau',
+      'Plans de route personnels stockés automatiquement en local : consultation et guidage 100% hors-ligne (comme un Drive automatique)',
       'Visualisation du vent relatif (face, côté, dos) calculé selon votre horaire de passage',
       'Repérage des fontaines et points d’eau potable utiles (données libres OSM)',
       'Conseils personnalisés d’hydratation, d’énergie et export rapide vers vos compteurs'
@@ -74,7 +75,7 @@ export const TECH_PILLARS: TechPillar[] = [
     technicalDetails: [
       'Suppression automatique des métadonnées privées et des données biométriques (FC, watts, cadence)',
       'Conservation exclusive du tracé géographique utile et du profil altimétrique',
-      'Stockage sécurisé associé à votre compte pour synchroniser vos sorties sur tous vos appareils',
+      'Stockage sécurisé associé à votre compte et synchronisation locale automatique pour un accès hors-ligne',
       'Compatible avec les exports de tous vos appareils habituels (Garmin, Wahoo, Strava, Komoot...)'
     ]
   },
@@ -100,6 +101,7 @@ export const TECH_PILLARS: TechPillar[] = [
     badge: 'Stateless & Zéro Réseau',
     technicalDetails: [
       'Architecture Stateless : reprise instantanée en 1s sans session corrompue en cas de panne de batterie',
+      'Stockage local automatique de tous vos plans de route : consultation et guidage 100% hors-ligne (façon Google Drive, mais entièrement automatique)',
       'Projection spatiale instantanée : recalcule en direct distance restante, D+ et fontaines en aval',
       'Cache hors-ligne intégral des tuiles cartographiques stockées en local (IndexedDB)',
       'Maintien d’écran allumé automatique (Screen WakeLock API) et mode Fil d’Ariane éco-batterie OLED'
