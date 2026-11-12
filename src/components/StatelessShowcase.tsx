@@ -66,7 +66,7 @@ export const StatelessShowcase: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-white">Compteurs & Applis Classiques</h4>
-                  <span className="text-xs font-mono text-slate-400">Strava, Garmin, Wahoo...</span>
+                  <span className="text-xs font-mono text-slate-400">Chronologie enregistrée</span>
                 </div>
               </div>
               <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20 font-semibold">
