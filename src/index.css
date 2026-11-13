@@ -64,3 +64,13 @@
   pointer-events: none;
   z-index: 0;
 }
+
+/* Aligned comparison cards with same-cascade fallback before subgrid */
+@media (min-width: 768px) {
+  .comparison-card-subgrid {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: auto 1fr auto;
+    grid-template-rows: subgrid;
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, ChevronDown, Sparkles, Shield, Cpu, Gauge, Zap } from 'lucide-react';
 import { TelemetryPreview } from './TelemetryPreview';
+import { ScreenVersions } from './ScreenVersions';
 
 export const Hero: React.FC = () => {
   return (
@@ -81,8 +82,11 @@ export const Hero: React.FC = () => {
 
         </div>
 
+        {/* Screen-size versions (Large screen full studio vs Smartphone streamlined) */}
+        <ScreenVersions />
+
         {/* Telemetry Mockup Cockpit */}
-        <div id="cockpit" className="mt-14 sm:mt-20 scroll-mt-24">
+        <div id="cockpit" className="mt-12 sm:mt-16 scroll-mt-24">
           <div className="relative mx-auto max-w-5xl">
             {/* Glow frame background */}
             <div className="absolute -inset-1.5 bg-gradient-to-r from-brand-500/20 via-teal-500/10 to-brand-500/20 rounded-3xl blur-xl opacity-60 pointer-events-none" />

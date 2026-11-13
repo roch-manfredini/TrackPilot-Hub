@@ -109,6 +109,9 @@ export const InstallSection: React.FC = () => {
               <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">
                 Installer TrackPilot sur votre appareil
               </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
+                L’interface s’adapte à la largeur de l’écran : complète sur ordinateur ou tablette (iPad), épurée sur smartphone.
+              </p>
             </div>
 
             {/* Platform Selector Tabs */}
