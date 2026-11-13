@@ -52,7 +52,6 @@ export const App: React.FC = () => {
         <ContactSection />
       </main>
       <Footer
-        onOpenContact={() => setIsContactModalOpen(true)}
         onOpenLegal={(tab) => setLegalTab(tab)}
         onOpenCookies={() => setShowCookieBanner(true)}
       />

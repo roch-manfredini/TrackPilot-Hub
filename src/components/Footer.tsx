@@ -1,68 +1,22 @@
 import React from 'react';
-import { Compass, ArrowUpRight, Heart, Mail } from 'lucide-react';
+import { ArrowUpRight, Heart } from 'lucide-react';
 import { LegalTab } from './LegalModal';
 
 interface FooterProps {
-  onOpenContact?: () => void;
   onOpenLegal?: (tab: LegalTab) => void;
   onOpenCookies?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
-  onOpenContact,
   onOpenLegal,
   onOpenCookies,
 }) => {
   return (
-    <footer className="border-t border-white/[0.08] bg-dark-950 py-10">
+    <footer className="border-t border-white/[0.08] bg-dark-950 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Main Footer Row */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/[0.06]">
-          
-          {/* Brand & Brief Tagline */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left">
-            <div className="flex items-center gap-2.5 shrink-0">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-dark-850 border border-brand-500/40 text-brand-400">
-                <Compass className="w-4 h-4" />
-              </div>
-              <span className="text-base font-extrabold text-white">
-                TrackPilot<span className="text-brand-400 font-mono text-xs">.fit</span>
-              </span>
-            </div>
-            <span className="hidden sm:inline text-slate-600">•</span>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-md">
-              Des outils web simples et partagés pour préparer vos sorties vélo, trail et rando.
-            </p>
-          </div>
-
-          {/* Quick Access Links */}
-          <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-6 text-xs text-slate-400 font-mono">
-            <a 
-              href="https://cycling.trackpilot.fit" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium"
-            >
-              <span>TrackPilot Cycling</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-            
-            <button
-              type="button"
-              onClick={onOpenContact}
-              className="hover:text-teal-300 text-slate-300 transition-colors flex items-center gap-1.5 cursor-pointer font-medium"
-              title="Contacter l'équipe"
-            >
-              <Mail className="w-3.5 h-3.5 text-teal-400" />
-              <span>contact@trackpilot.fit</span>
-            </button>
-          </div>
-
-        </div>
 
         {/* Legal & Attribution Bar */}
-        <div className="py-4 border-b border-white/[0.06] flex flex-wrap items-center justify-center sm:justify-between gap-3 text-xs font-mono text-slate-400">
+        <div className="pb-4 border-b border-white/[0.06] flex flex-wrap items-center justify-center sm:justify-between gap-3 text-xs font-mono text-slate-400">
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <button
               type="button"
