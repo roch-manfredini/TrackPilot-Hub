@@ -106,7 +106,7 @@ export const ScreenVersions: React.FC = () => {
       {/* Side-by-Side Real Screenshots Comparison (Ventoux X 2 Demo) */}
       <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-center">
         {/* Desktop Screenshot Frame + Live Resize Tip (8 cols) */}
-        <div className="lg:col-span-8 flex flex-col gap-3.5">
+        <div className="lg:col-span-8 flex flex-col">
           <div className="rounded-2xl glass-panel border border-brand-500/30 overflow-hidden shadow-card">
             <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-dark-900/95 border-b border-white/[0.08]">
               <div className="flex items-center gap-2 min-w-0">
@@ -145,13 +145,13 @@ export const ScreenVersions: React.FC = () => {
             </div>
           </div>
 
-          {/* Short live-resize tip */}
-          <div className="rounded-xl glass-panel border border-white/10 bg-dark-900/70 px-4 py-3 flex items-start sm:items-center gap-3">
-            <div className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-brand-500/15 text-brand-300 border border-brand-500/30 shrink-0">
-              <Lightbulb className="w-3 h-3 text-brand-neon" />
+          {/* Short live-resize tip (symmetrical to mobile caption) */}
+          <div className="mt-3 text-center max-w-xl mx-auto">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-brand-400 font-semibold">
+              <Lightbulb className="w-3.5 h-3.5" />
               <span>Astuce</span>
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="mt-1 text-xs text-slate-400 leading-relaxed">
               Sur PC ou tablette, ouvrez TrackPilot puis réduisez la largeur de votre fenêtre au format smartphone : vous verrez l’application basculer en direct vers son affichage épuré.
             </p>
           </div>
