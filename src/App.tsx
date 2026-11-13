@@ -20,6 +20,23 @@ export const App: React.FC = () => {
   const [showCookieBanner, setShowCookieBanner] = useState(false);
 
   useEffect(() => {
+    const syncLegalHash = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#mentions') {
+        setLegalTab('mentions');
+      } else if (hash === '#confidentialite' || hash === '#privacy') {
+        setLegalTab('privacy');
+      } else if (hash === '#cgu' || hash === '#disclaimer') {
+        setLegalTab('disclaimer');
+      }
+    };
+
+    syncLegalHash();
+    window.addEventListener('hashchange', syncLegalHash);
+    return () => window.removeEventListener('hashchange', syncLegalHash);
+  }, []);
+
+  useEffect(() => {
     const consent = getCookieConsent();
     if (consent === 'accepted') {
       enableAnalytics();
@@ -27,6 +44,14 @@ export const App: React.FC = () => {
       setShowCookieBanner(true);
     }
   }, []);
+
+  const handleCloseLegal = () => {
+    setLegalTab(null);
+    const hash = window.location.hash.toLowerCase();
+    if (['#mentions', '#confidentialite', '#privacy', '#cgu', '#disclaimer'].includes(hash)) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  };
 
   const handleAcceptCookies = () => {
     setCookieConsent('accepted');
@@ -62,7 +87,7 @@ export const App: React.FC = () => {
       <LegalModal
         activeTab={legalTab}
         onSelectTab={(tab) => setLegalTab(tab)}
-        onClose={() => setLegalTab(null)}
+        onClose={handleCloseLegal}
         onOpenCookieSettings={() => setShowCookieBanner(true)}
       />
       <CookieBanner
