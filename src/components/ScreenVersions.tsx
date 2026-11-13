@@ -159,20 +159,59 @@ export const ScreenVersions: React.FC = () => {
 
         {/* Smartphone Screenshot Frame (4 cols) */}
         <div className="lg:col-span-4 flex flex-col items-center">
-          <div className="w-full max-w-[260px] sm:max-w-[280px] rounded-[24px] p-2 bg-dark-900 border border-white/15 shadow-card">
-            <div className="rounded-[18px] overflow-hidden border border-white/10 bg-dark-950">
-              <div className="flex items-center justify-center py-1.5 bg-dark-950 border-b border-white/[0.05]" aria-hidden="true">
-                <span className="w-14 h-2 rounded-full bg-dark-850 border border-white/10" />
-              </div>
-              <div className="aspect-[390/844] w-full overflow-hidden bg-dark-950">
-                <img
-                  src="/images/cockpit_mobile_ventoux.png"
-                  alt="Capture d'écran réelle du Cockpit TrackPilot Cycling sur smartphone : même parcours Ventoux X 2 en vue épurée avec guidage direct, 4 indicateurs essentiels, profil et carte"
-                  width={390}
-                  height={844}
-                  decoding="async"
-                  className="block w-full h-full object-cover object-left-top"
-                />
+          {/* Realistic Smartphone Chassis (Titanium Bezel + Side Buttons + Dynamic Island + Home Bar) */}
+          <div className="relative w-full max-w-[265px] sm:max-w-[285px]">
+            {/* Left Side Physical Buttons (Silent switch + Volume Up/Down) */}
+            <span className="absolute -left-[3px] top-20 w-[3px] h-5 rounded-l-sm bg-slate-600/80 border-l border-white/20" aria-hidden="true" />
+            <span className="absolute -left-[3px] top-28 w-[3px] h-9 rounded-l-sm bg-slate-600/80 border-l border-white/20" aria-hidden="true" />
+            <span className="absolute -left-[3px] top-40 w-[3px] h-9 rounded-l-sm bg-slate-600/80 border-l border-white/20" aria-hidden="true" />
+            {/* Right Side Power Button */}
+            <span className="absolute -right-[3px] top-32 w-[3px] h-12 rounded-r-sm bg-slate-600/80 border-r border-white/20" aria-hidden="true" />
+
+            {/* Outer Metallic Titanium Frame */}
+            <div className="rounded-[36px] p-[7px] bg-gradient-to-b from-slate-700/70 via-dark-850 to-slate-800/80 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.75),inset_0_1px_1px_rgba(255,255,255,0.25)]">
+              {/* Inner OLED Screen Bezel */}
+              <div className="rounded-[29px] overflow-hidden bg-[#0e0f10] ring-1 ring-black/90">
+                {/* Mobile Status Bar + Dynamic Island */}
+                <div className="relative flex items-center justify-between px-5 pt-2 pb-1.5 bg-[#0e0f10] text-[10px] font-semibold text-white/85 select-none" aria-hidden="true">
+                  <span className="tabular-nums tracking-tight">09:41</span>
+                  {/* Dynamic Island Pill */}
+                  <div className="absolute left-1/2 -translate-x-1/2 top-1.5 w-16 h-4 rounded-full bg-black border border-white/[0.08] flex items-center justify-end pr-1.5">
+                    <span className="w-2 h-2 rounded-full bg-[#111827] ring-1 ring-indigo-500/30" />
+                  </div>
+                  {/* Cellular + 5G + Battery */}
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex items-end gap-[1.5px] h-2.5">
+                      <span className="w-[2px] h-1 rounded-[0.5px] bg-white/85" />
+                      <span className="w-[2px] h-1.5 rounded-[0.5px] bg-white/85" />
+                      <span className="w-[2px] h-2 rounded-[0.5px] bg-white/85" />
+                      <span className="w-[2px] h-2.5 rounded-[0.5px] bg-white/85" />
+                    </div>
+                    <span className="text-[8px] font-bold tracking-tighter text-white/80">5G</span>
+                    <div className="flex items-center">
+                      <span className="w-4 h-2.5 rounded-[3px] border border-white/50 p-[1.5px] flex items-center">
+                        <span className="w-full h-full rounded-[1px] bg-brand-neon" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pure App Viewport (Zero Windows frame) */}
+                <div className="aspect-[438/961] w-full overflow-hidden bg-[#0e0f10]">
+                  <img
+                    src="/images/cockpit_mobile_ventoux.png"
+                    alt="Capture d'écran réelle du Cockpit TrackPilot Cycling sur smartphone : même parcours Ventoux X 2 en vue épurée avec guidage direct, 4 indicateurs essentiels, profil et carte"
+                    width={438}
+                    height={961}
+                    decoding="async"
+                    className="block w-full h-full object-contain"
+                  />
+                </div>
+
+                {/* Bottom Home Gesture Bar */}
+                <div className="flex items-center justify-center pt-1.5 pb-2 bg-[#0e0f10]" aria-hidden="true">
+                  <span className="w-24 h-1 rounded-full bg-white/30" />
+                </div>
               </div>
             </div>
           </div>
