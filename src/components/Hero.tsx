@@ -36,7 +36,7 @@ export const Hero: React.FC = () => {
 
           {/* Subtitle */}
           <p className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
-            Des passionnés qui construisent des outils utiles pour la communauté : visualisez simplement le profil de vos traces, anticipez le vent réel sur votre parcours et trouvez des repères simples pour l'effort et les points d'eau. En toute transparence, sans publicité et avec le respect de vos données.
+            Des passionnés qui construisent des outils utiles pour la communauté : visualisez simplement le profil de vos traces, anticipez le vent réel sur votre parcours et trouvez des repères simples pour l'effort et les points d'eau. En toute transparence, gratuitement et avec le respect de vos données.
           </p>
 
           {/* Action CTAs */}
@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
           </div>
 
           <p className="mt-5 text-xs sm:text-sm text-slate-300">
-            <strong className="text-brand-300 font-semibold">100 % gratuit, sans publicité et sans abonnement</strong>{' '}
+            <strong className="text-brand-300 font-semibold">100 % gratuit et sans abonnement</strong>{' '}
             — aujourd’hui comme demain, appuyé sur l’écosystème open source et collaboratif.
           </p>
 

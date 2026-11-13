@@ -25,7 +25,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
     {
       icon: <Zap className="w-5 h-5 text-amber-400" />,
       title: "Collaboratif & À l'Écoute",
-      description: "Un projet indépendant, sans publicité ni abonnement forcé. Nous sommes une équipe de pratiquants qui fait évoluer ces outils en échangeant avec bienveillance avec les sportifs sur le terrain."
+      description: "Un projet indépendant, sans abonnement forcé ni mur payant. Nous sommes une équipe de pratiquants qui fait évoluer ces outils en échangeant avec bienveillance avec les sportifs sur le terrain."
     }
   ];
 
@@ -82,14 +82,14 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                   Gratuit par principe, parce que bâti sur le partage
                 </h3>
                 <span className="text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-500/15 text-brand-300 border border-brand-500/30 font-semibold">
-                  Sans abonnement · Sans pub
+                  100% Gratuit · Sans abonnement
                 </span>
               </div>
               <p className="text-sm text-slate-300 leading-relaxed">
                 TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils <strong className="text-white font-semibold">open source</strong> et des bases de données collaboratives créées par la communauté (<strong className="text-white font-medium">OpenStreetMap</strong>, <strong className="text-white font-medium">BRouter</strong>, données météo ouvertes).
               </p>
               <p className="text-sm text-slate-300 leading-relaxed">
-                Parce que nous bénéficions gratuitement de ce travail collectif, l’application est <strong className="text-brand-300 font-semibold">100 % gratuite, sans publicité ni mur payant</strong> — et vouée à le rester. Si un jour l’outil vous rend service, tout au plus un café symbolique (totalement facultatif) permettra d’aider à financer l’hébergement.
+                Parce que nous bénéficions gratuitement de ce travail collectif, l’application est <strong className="text-brand-300 font-semibold">100 % gratuite, sans abonnement ni mur payant</strong> — et vouée à le rester. Si un jour l’outil vous rend service, tout au plus un café symbolique (totalement facultatif) permettra d’aider à financer l’hébergement.
               </p>
             </div>
           </div>
