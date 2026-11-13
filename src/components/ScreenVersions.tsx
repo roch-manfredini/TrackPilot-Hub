@@ -14,7 +14,7 @@ export const ScreenVersions: React.FC = () => {
           Une seule et même application : complète sur grand écran, épurée sur smartphone.
         </h2>
         <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-          Il n’y a pas deux applications différentes : c’est exactement le même TrackPilot (même lien, même compte, mêmes parcours) qui adapte automatiquement son affichage à la largeur de votre écran.
+          Il n’y a pas deux applications différentes : c’est exactement le même TrackPilot (même lien, même compte, mêmes parcours) qui adapte automatiquement son affichage et ses fonctionnalités à la largeur de votre écran.
         </p>
       </div>
 

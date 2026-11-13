@@ -1,6 +1,5 @@
 import React from 'react';
 import { ArrowUpRight, ChevronDown, Sparkles, Shield, Cpu, Gauge, Zap } from 'lucide-react';
-import { TelemetryPreview } from './TelemetryPreview';
 import { ScreenVersions } from './ScreenVersions';
 
 export const Hero: React.FC = () => {
@@ -68,10 +67,6 @@ export const Hero: React.FC = () => {
             </a>
           </div>
 
-          <p className="mt-5 text-xs sm:text-sm text-slate-300">
-            <strong className="text-brand-300 font-semibold">100 % gratuit et sans abonnement</strong>{' '}
-            — aujourd’hui comme demain, appuyé sur l’écosystème open source et collaboratif.
-          </p>
 
           {/* Trust & Spec Micro-stats */}
           <div className="mt-10 pt-6 border-t border-white/[0.06] flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs text-slate-400 font-mono">
@@ -98,15 +93,6 @@ export const Hero: React.FC = () => {
         {/* Screen-size versions (Large screen full studio vs Smartphone streamlined) */}
         <ScreenVersions />
 
-        {/* Telemetry Mockup Cockpit */}
-        <div id="cockpit" className="mt-12 sm:mt-16 scroll-mt-24">
-          <div className="relative mx-auto max-w-5xl">
-            {/* Glow frame background */}
-            <div className="absolute -inset-1.5 bg-gradient-to-r from-brand-500/20 via-teal-500/10 to-brand-500/20 rounded-3xl blur-xl opacity-60 pointer-events-none" />
-            
-            <TelemetryPreview />
-          </div>
-        </div>
 
       </div>
     </section>

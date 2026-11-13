@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               Modules
             </a>
             <a 
-              href="#cockpit" 
+              href="#formats" 
               className="hover:text-white transition-colors duration-150 py-1"
             >
               Profil & Cockpit
@@ -142,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               Modules
             </a>
             <a
-              href="#cockpit"
+              href="#formats"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >

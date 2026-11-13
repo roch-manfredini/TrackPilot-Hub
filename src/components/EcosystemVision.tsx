@@ -114,7 +114,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold text-dark-950 bg-brand-neon hover:bg-brand-400 active:scale-[0.98] shadow-glow-md transition-all duration-150"
               >
-                <span>Tester TrackPilot Cycling (Gratuit)</span>
+                <span>Tester TrackPilot Cycling</span>
                 <span className="font-mono text-xs px-2 py-0.5 rounded bg-dark-950/20">cycling.trackpilot.fit</span>
               </a>
 
