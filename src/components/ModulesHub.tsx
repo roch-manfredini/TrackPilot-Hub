@@ -64,23 +64,24 @@ export const ModulesHub: React.FC = () => {
           <img
             src="/images/swiss_mountain_cyclist.jpg"
             alt="Cyclisme sur route en montagne alpine"
-            className="w-full h-full object-cover object-[center_right] sm:object-[80%_center] opacity-70 brightness-[0.65] contrast-[1.1]"
+            className="w-full h-full object-cover object-[center_right] sm:object-[85%_center] opacity-90 contrast-[1.05]"
           />
         </picture>
-        {/* Vertical blending gradients: pure dark-950 top & bottom to transition cleanly */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-950/30 to-dark-950" />
-        {/* Horizontal gradient: darker on left to ensure high readability for text, opening to scenery on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-950/90 via-dark-950/60 to-dark-950/20" />
-        {/* Subtle grid pattern overlay */}
-        <div className="absolute inset-0 bg-grid-pattern bg-[size:32px_32px] opacity-15" />
+        {/* Subtle overall dark tint allowing the photo to remain clear and vibrant */}
+        <div className="absolute inset-0 bg-dark-950/40" />
+        {/* Top & bottom edge fades to melt smoothly into pure dark-950 above & below */}
+        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-dark-950 via-dark-950/80 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-dark-950 via-dark-950/80 to-transparent" />
+        {/* Subtle horizontal gradient to softly balance text area on left while leaving right vista open */}
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-950/60 via-transparent to-transparent" />
         {/* Ambient emerald glow on the scenery side */}
-        <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] bg-brand-500/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
             <span>Disciplines & Pratiques</span>
           </div>

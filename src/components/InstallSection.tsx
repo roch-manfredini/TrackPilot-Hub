@@ -41,30 +41,31 @@ export const InstallSection: React.FC = () => {
   return (
     <section id="installation" className="relative py-24 sm:py-32 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
       
-      {/* Background Photography Layer (Alpine Mountain Ridge & Trail - Offset Left, Strava-style) */}
+      {/* Background Photography Layer (Winding Alpine Mountain Pass & Cyclists - Offset Left, Strava-style) */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         <picture className="absolute inset-0 w-full h-full">
-          <source srcSet="/images/trail_runner_mountain.webp" type="image/webp" />
+          <source srcSet="/images/winding_mountain_cyclists.webp" type="image/webp" />
           <img
-            src="/images/trail_runner_mountain.jpg"
-            alt="Sentier de crête alpine outdoor et mobilité"
-            className="w-full h-full object-cover object-[center_left] sm:object-[20%_center] opacity-70 brightness-[0.65] contrast-[1.1]"
+            src="/images/winding_mountain_cyclists.jpg"
+            alt="Lacets de col de montagne et cyclistes"
+            className="w-full h-full object-cover object-[center_left] sm:object-[20%_center] opacity-90 contrast-[1.05]"
           />
         </picture>
-        {/* Vertical blending gradients: pure dark-950 top & bottom to transition cleanly */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-950/30 to-dark-950" />
-        {/* Horizontal gradient: opening to scenery on the left, darker on right for step-by-step content */}
-        <div className="absolute inset-0 bg-gradient-to-l from-dark-950/90 via-dark-950/60 to-dark-950/20" />
-        {/* Subtle technical grid pattern overlay */}
-        <div className="absolute inset-0 bg-grid-pattern bg-[size:32px_32px] opacity-15" />
+        {/* Subtle overall dark tint allowing the photo to remain clear, sharp and vibrant */}
+        <div className="absolute inset-0 bg-dark-950/40" />
+        {/* Top & bottom edge fades to melt smoothly into pure dark-950 above & below */}
+        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-dark-950 via-dark-950/80 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-dark-950 via-dark-950/80 to-transparent" />
+        {/* Subtle horizontal gradient to softly balance text area on right while leaving left scenery open */}
+        <div className="absolute inset-0 bg-gradient-to-l from-dark-950/60 via-transparent to-transparent" />
         {/* Ambient teal glow on the scenery side */}
-        <div className="absolute bottom-1/4 -left-24 w-[500px] h-[500px] bg-teal-500/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -left-24 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
             <Download className="w-3.5 h-3.5" />
             <span>Installation & Mobilité</span>
