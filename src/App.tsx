@@ -3,6 +3,8 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ModulesHub } from './components/ModulesHub';
 import { TechPillars } from './components/TechPillars';
+import { FieldResilience } from './components/FieldResilience';
+import { StatelessSection } from './components/StatelessSection';
 import { InstallSection } from './components/InstallSection';
 import { EcosystemVision } from './components/EcosystemVision';
 import { ContactSection } from './components/ContactSection';
@@ -19,6 +21,8 @@ export const App: React.FC = () => {
         <Hero />
         <ModulesHub />
         <TechPillars />
+        <FieldResilience />
+        <StatelessSection />
         <InstallSection />
         <EcosystemVision onOpenContact={() => setIsContactModalOpen(true)} />
         <ContactSection />

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route, Navigation, Layers, Wind, Flame, Droplets, CheckCircle, ArrowRight } from 'lucide-react';
+import { Route, Navigation, Layers, Wind, Flame, Droplets, CheckCircle } from 'lucide-react';
 import { TECH_PILLARS } from '../data/modules';
-import { StatelessShowcase } from './StatelessShowcase';
 
 export const TechPillars: React.FC = () => {
   const getPillarIcon = (name: string) => {
@@ -82,33 +81,6 @@ export const TechPillars: React.FC = () => {
 
             </div>
           ))}
-        </div>
-
-        {/* Stateless Architecture Showcase (Zero-Crash & Instant Recovery) */}
-        <StatelessShowcase />
-
-        {/* Bottom Banner to Cycling App */}
-        <div className="mt-14 p-6 sm:p-8 rounded-2xl glass-panel border border-brand-500/30 bg-gradient-to-r from-brand-950/40 via-dark-900 to-dark-950 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <div className="text-xs font-mono uppercase text-brand-400 font-semibold tracking-wider">
-              En cours de validation par un panel de testeurs experts de la discipline
-            </div>
-            <h4 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
-              Prêt à tester ces 6 piliers sur votre prochaine sortie vélo ?
-            </h4>
-            <p className="text-sm text-slate-300 mt-1">
-              Testez librement dès maintenant : tracez un itinéraire ou chargez votre fichier GPX pour lancer l’analyse.
-            </p>
-          </div>
-          <a
-            href="https://cycling.trackpilot.fit"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-dark-950 bg-brand-neon hover:bg-brand-400 active:scale-[0.98] transition-all duration-150 shadow-glow-sm"
-          >
-            <span>Tester sur TrackPilot Cycling</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
         </div>
 
       </div>
