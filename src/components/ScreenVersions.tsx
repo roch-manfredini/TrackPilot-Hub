@@ -8,13 +8,13 @@ export const ScreenVersions: React.FC = () => {
       <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
         <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-brand-400 mb-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
           <Maximize2 className="w-3 h-3" />
-          <span>Deux formats selon la taille d’écran</span>
+          <span>Une seule application, adaptée à votre écran</span>
         </div>
         <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-          Complet sur grand écran, volontairement épuré sur smartphone.
+          Une seule et même application : complète sur grand écran, épurée sur smartphone.
         </h2>
         <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-          TrackPilot adapte son interface à la largeur de votre écran : tout l’atelier de préparation sur ordinateur ou tablette, et uniquement l’essentiel sur petit écran pour préserver la lisibilité.
+          Il n’y a pas deux applications différentes : c’est exactement le même TrackPilot (même lien, même compte, mêmes parcours) qui adapte automatiquement son affichage à la largeur de votre écran.
         </p>
       </div>
 
@@ -33,7 +33,7 @@ export const ScreenVersions: React.FC = () => {
                   Grand écran · PC, Mac &amp; Tablette / iPad
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                  Version complète (Studio &amp; options)
+                  Affichage Grand Écran (Studio &amp; options)
                 </h3>
               </div>
             </div>
@@ -41,7 +41,7 @@ export const ScreenVersions: React.FC = () => {
 
           {/* Row 2: Description */}
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Dès que vous disposez d’un grand écran (ordinateur ou tablette), vous accédez à l’intégralité du produit avec tous les détails, les panneaux d’analyse et les réglages avancés pour préparer vos sorties confortablement.
+            Sur ordinateur ou tablette (PC, Mac, iPad), l’application déploie l’intégralité de ses outils avec tous les détails, les panneaux d’analyse et les réglages avancés pour préparer vos sorties confortablement.
           </p>
 
           {/* Row 3: Feature points */}
@@ -74,7 +74,7 @@ export const ScreenVersions: React.FC = () => {
                   Petit écran · Smartphone
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                  Version épurée (Compagnon terrain)
+                  Affichage Smartphone (Compagnon terrain)
                 </h3>
               </div>
             </div>
@@ -82,7 +82,7 @@ export const ScreenVersions: React.FC = () => {
 
           {/* Row 2: Description */}
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Pour des raisons de commodité et pour éviter un écran surchargé et illisible, la version smartphone est volontairement beaucoup plus épurée et n’embarque pas toutes les fonctionnalités de préparation de parcours.
+            Sur petit écran, la même application s’épure volontairement : pour des raisons de commodité et de lisibilité, elle n’affiche pas toutes les fonctionnalités de préparation de parcours afin d’éviter un écran surchargé.
           </p>
 
           {/* Row 3: Feature points */}

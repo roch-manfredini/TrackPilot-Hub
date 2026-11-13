@@ -10,7 +10,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
     {
       icon: <Smartphone className="w-5 h-5 text-brand-400" />,
       title: "100% Web & Adapté à Votre Écran",
-      description: "Accessible directement depuis votre navigateur, sans rien installer : profitez de la version complète sur grand écran (PC, Mac, tablette) pour préparer la veille, et d'une version smartphone volontairement épurée le jour de la sortie."
+      description: "Accessible directement depuis votre navigateur, sans rien installer : une seule et même application qui affiche tout le studio complet sur grand écran (PC, Mac, tablette) pour préparer la veille, et s’épure volontairement sur smartphone le jour de la sortie."
     },
     {
       icon: <Lock className="w-5 h-5 text-teal-400" />,

@@ -110,7 +110,7 @@ export const InstallSection: React.FC = () => {
                 Installer TrackPilot sur votre appareil
               </h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
-                L’interface s’adapte à la largeur de l’écran : complète sur ordinateur ou tablette (iPad), épurée sur smartphone.
+                Une seule et même application : complète sur ordinateur ou tablette (iPad), elle s’épure automatiquement sur smartphone.
               </p>
             </div>
 
