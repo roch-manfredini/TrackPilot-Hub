@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-import { Bike, Footprints, Mountain, ArrowUpRight, CheckCircle2, Clock, Wrench, BellRing, Watch } from 'lucide-react';
+import React from 'react';
+import { Bike, Footprints, Mountain, ArrowUpRight, CheckCircle2, Clock, Wrench, Watch } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { ModuleInfo } from '../types';
 
 export const ModulesHub: React.FC = () => {
-  const [notifiedModule, setNotifiedModule] = useState<string | null>(null);
-  const [emailInput, setEmailInput] = useState<{ [key: string]: string }>({});
-
-  const handleNotifySubmit = (e: React.FormEvent, moduleId: string) => {
-    e.preventDefault();
-    if (emailInput[moduleId]) {
-      setNotifiedModule(moduleId);
-      setTimeout(() => setNotifiedModule(null), 4000);
-    }
-  };
 
   const getDisciplineIcon = (iconName: string) => {
     switch (iconName) {
@@ -183,32 +173,9 @@ export const ModulesHub: React.FC = () => {
                       <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
                   ) : (
-                    <div>
-                      {notifiedModule === module.id ? (
-                        <div className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
-                          <CheckCircle2 className="w-4 h-4" />
-                          <span>Notification enregistrée ! Merci.</span>
-                        </div>
-                      ) : (
-                        <form onSubmit={(e) => handleNotifySubmit(e, module.id)} className="flex items-center gap-2">
-                          <input
-                            type="email"
-                            required
-                            placeholder="Votre email pour l’accès bêta"
-                            value={emailInput[module.id] || ''}
-                            onChange={(e) => setEmailInput({ ...emailInput, [module.id]: e.target.value })}
-                            className="flex-1 bg-dark-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500/50"
-                          />
-                          <button
-                            type="submit"
-                            className="shrink-0 p-2.5 rounded-xl bg-dark-800 hover:bg-dark-750 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition-colors"
-                            title="Être averti de la sortie"
-                          >
-                            <BellRing className="w-3.5 h-3.5" />
-                            <span className="hidden sm:inline">Alerte</span>
-                          </button>
-                        </form>
-                      )}
+                    <div className="flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl font-semibold text-sm text-amber-300/90 bg-amber-500/10 border border-amber-500/20 select-none">
+                      <Clock className="w-4 h-4 shrink-0" />
+                      <span>Bientôt disponible</span>
                     </div>
                   )}
                 </div>
