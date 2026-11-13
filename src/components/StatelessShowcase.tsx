@@ -1,31 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Zap, 
-  Power, 
-  RotateCcw, 
   CheckCircle2, 
   XCircle, 
-  Activity, 
   ShieldCheck,
   AlertOctagon
 } from 'lucide-react';
 
 export const StatelessShowcase: React.FC = () => {
-  // Simulator state: 'idle' | 'simulating' | 'recovered'
-  const [simState, setSimState] = useState<'idle' | 'simulating' | 'recovered'>('idle');
-
-  const handleSimulate = () => {
-    if (simState === 'simulating') return;
-    setSimState('simulating');
-    setTimeout(() => {
-      setSimState('recovered');
-    }, 900);
-  };
-
-  const handleReset = () => {
-    setSimState('idle');
-  };
-
   return (
     <div id="stateless" className="mt-16 relative rounded-3xl glass-panel border border-brand-500/30 p-6 sm:p-10 overflow-hidden bg-gradient-to-b from-dark-850/90 via-dark-900 to-dark-950 shadow-2xl">
       
@@ -53,7 +35,7 @@ export const StatelessShowcase: React.FC = () => {
       </div>
 
       {/* Side-by-side Comparative Grid */}
-      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-10">
+      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         
         {/* Left: Traditional Apps / GPS Devices */}
         <div className="rounded-2xl p-6 sm:p-7 bg-dark-950/70 border border-red-500/20 flex flex-col justify-between">
@@ -166,133 +148,6 @@ export const StatelessShowcase: React.FC = () => {
           </div>
         </div>
 
-      </div>
-
-      {/* Interactive Live Simulator: "Simulez une coupure au km 60" */}
-      <div className="p-5 sm:p-7 rounded-2xl bg-dark-950/80 border border-white/10">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/[0.08]">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-mono uppercase text-brand-400 font-semibold tracking-wider">
-              <Activity className="w-3.5 h-3.5" />
-              <span>Démonstration Interactive • Scénario Réel sur le Vélo</span>
-            </div>
-            <h4 className="text-lg font-bold text-white mt-1">
-              Vous roulez sur un parcours de 100 km. Votre téléphone s'éteint au km 60.
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Testez ce qui se passe quand vous rallumez votre téléphone et relancez TrackPilot.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 shrink-0">
-            {simState === 'idle' ? (
-              <button
-                type="button"
-                onClick={handleSimulate}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-dark-950 bg-brand-neon hover:bg-brand-400 active:scale-[0.98] transition-all cursor-pointer shadow-glow-sm"
-              >
-                <Power className="w-4 h-4" />
-                <span>Simuler coupure & rallumage</span>
-              </button>
-            ) : simState === 'simulating' ? (
-              <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs text-brand-300 bg-brand-500/20 border border-brand-500/40">
-                <span className="w-2 h-2 rounded-full bg-brand-neon animate-ping"></span>
-                <span>Signal GPS accroché... Calcul en cours</span>
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={handleReset}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs font-bold text-slate-300 hover:text-white bg-dark-850 hover:bg-dark-800 border border-white/10 transition-all cursor-pointer"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Réinitialiser</span>
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Live Simulator Results Dashboard */}
-        <div className="mt-5">
-          {simState === 'idle' && (
-            <div className="p-4 rounded-xl bg-dark-900/60 border border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-400">
-              <div className="flex items-center gap-3">
-                <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-dark-850 border border-white/10 text-slate-400 font-mono text-xs font-bold">
-                  60k
-                </span>
-                <span>État initial : Vous êtes au km 60.0. Cliquez sur le bouton pour simuler l’extinction et le redémarrage.</span>
-              </div>
-              <span className="text-xs font-mono text-slate-400 shrink-0">Prêt pour le test</span>
-            </div>
-          )}
-
-          {simState === 'simulating' && (
-            <div className="p-6 rounded-xl bg-dark-900/90 border border-brand-500/30 text-center animate-pulse">
-              <div className="inline-block w-6 h-6 border-2 border-brand-neon border-t-transparent rounded-full animate-spin mb-2" />
-              <div className="text-sm font-bold text-white">Rallumage & Projection spatiale en cours...</div>
-              <div className="text-xs font-mono text-brand-400 mt-1">Recherche de la projection orthogonale sur la trace GPX</div>
-            </div>
-          )}
-
-          {simState === 'recovered' && (
-            <div className="space-y-4 animate-in fade-in duration-300">
-              
-              {/* Notification Banner */}
-              <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-3 text-xs sm:text-sm">
-                <div className="flex items-center gap-2.5 text-emerald-300">
-                  <CheckCircle2 className="w-4 h-4 text-brand-neon shrink-0" />
-                  <span>
-                    <strong>Reprise effectuée en 0.8 s</strong> : accrochage immédiat au km 60.0. Aucune session corrompue !
-                  </span>
-                </div>
-                <span className="hidden sm:inline font-mono text-xs text-brand-400 bg-brand-500/20 px-2 py-0.5 rounded border border-brand-500/30">
-                  Statut : 100% Intègre
-                </span>
-              </div>
-
-              {/* Instant Live KPIs */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                
-                <div className="p-3 rounded-xl bg-dark-900 border border-white/5">
-                  <span className="text-[11px] font-mono uppercase text-slate-400 font-semibold block">Distance Restante</span>
-                  <div className="mt-1 flex items-baseline gap-1">
-                    <span className="text-2xl font-extrabold text-white tabular-nums">40.0</span>
-                    <span className="text-xs font-medium text-slate-400">km</span>
-                  </div>
-                  <span className="text-[10px] text-emerald-400 font-mono mt-0.5 block">Calculé du km 60 à 100</span>
-                </div>
-
-                <div className="p-3 rounded-xl bg-dark-900 border border-white/5">
-                  <span className="text-[11px] font-mono uppercase text-slate-400 font-semibold block">Dénivelé D+ Restant</span>
-                  <div className="mt-1 flex items-baseline gap-1">
-                    <span className="text-2xl font-extrabold text-emerald-400 tabular-nums">680</span>
-                    <span className="text-xs font-medium text-slate-400">m</span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">Profil recalculé direct</span>
-                </div>
-
-                <div className="p-3 rounded-xl bg-dark-900 border border-white/5">
-                  <span className="text-[11px] font-mono uppercase text-slate-400 font-semibold block">Prochain Point d'Eau</span>
-                  <div className="mt-1 flex items-baseline gap-1">
-                    <span className="text-2xl font-extrabold text-sky-400 tabular-nums">4.2</span>
-                    <span className="text-xs font-medium text-slate-400">km</span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 font-mono mt-0.5 block truncate">Fontaine du Col (km 64.2)</span>
-                </div>
-
-                <div className="p-3 rounded-xl bg-dark-900 border border-white/5">
-                  <span className="text-[11px] font-mono uppercase text-slate-400 font-semibold block">Cap & Direction</span>
-                  <div className="mt-1 flex items-baseline gap-1">
-                    <span className="text-2xl font-extrabold text-amber-400 tabular-nums">Vers km 61</span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">Orientation immédiate</span>
-                </div>
-
-              </div>
-
-            </div>
-          )}
-        </div>
       </div>
 
     </div>

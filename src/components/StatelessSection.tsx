@@ -16,11 +16,11 @@ export const StatelessSection: React.FC = () => {
             Zéro crash, zéro anxiété au guidon.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            Comparez le fonctionnement des applications traditionnelles avec le moteur sans état de TrackPilot, et testez vous-même la reprise instantanée avec le simulateur ci-dessous.
+            Comparez le fonctionnement des applications traditionnelles avec le moteur sans état de TrackPilot.
           </p>
         </div>
 
-        {/* Stateless Architecture Showcase Widget & Simulator */}
+        {/* Stateless Architecture Showcase Widget */}
         <StatelessShowcase />
 
         {/* Bottom Banner to Cycling App */}

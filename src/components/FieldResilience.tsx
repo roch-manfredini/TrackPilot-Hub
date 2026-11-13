@@ -101,13 +101,13 @@ export const FieldResilience: React.FC = () => {
 
         </div>
 
-        {/* Small transition prompt towards the technical simulator below */}
+        {/* Small transition prompt towards the technical architecture below */}
         <div className="text-center">
           <a
             href="#stateless"
             className="inline-flex items-center gap-2 text-xs font-mono font-medium text-slate-300 hover:text-emerald-400 transition-colors drop-shadow"
           >
-            <span>Découvrir l'architecture technique stateless & le simulateur interactif</span>
+            <span>Découvrir l'architecture technique stateless</span>
             <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
           </a>
         </div>
