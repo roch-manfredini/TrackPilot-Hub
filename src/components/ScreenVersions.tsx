@@ -1,5 +1,5 @@
 import React from 'react';
-import { Monitor, Smartphone, CheckCircle2, Minus, Maximize2 } from 'lucide-react';
+import { Monitor, Smartphone, CheckCircle2, Minus, Maximize2, Lightbulb } from 'lucide-react';
 
 export const ScreenVersions: React.FC = () => {
   return (
@@ -105,42 +105,55 @@ export const ScreenVersions: React.FC = () => {
 
       {/* Side-by-Side Real Screenshots Comparison (Ventoux X 2 Demo) */}
       <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-center">
-        {/* Desktop Screenshot Frame (8 cols) */}
-        <div className="lg:col-span-8 rounded-2xl glass-panel border border-brand-500/30 overflow-hidden shadow-card">
-          <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-dark-900/95 border-b border-white/[0.08]">
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
-                <span className="w-2 h-2 rounded-full bg-white/15" />
-                <span className="w-2 h-2 rounded-full bg-white/15" />
-                <span className="w-2 h-2 rounded-full bg-white/15" />
+        {/* Desktop Screenshot Frame + Live Resize Tip (8 cols) */}
+        <div className="lg:col-span-8 flex flex-col gap-3.5">
+          <div className="rounded-2xl glass-panel border border-brand-500/30 overflow-hidden shadow-card">
+            <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-dark-900/95 border-b border-white/[0.08]">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
+                  <span className="w-2 h-2 rounded-full bg-white/15" />
+                  <span className="w-2 h-2 rounded-full bg-white/15" />
+                  <span className="w-2 h-2 rounded-full bg-white/15" />
+                </div>
+                <span className="text-[11px] font-mono text-slate-400 truncate ml-1.5">
+                  cycling.trackpilot.fit — Cockpit Grand Écran
+                </span>
               </div>
-              <span className="text-[11px] font-mono text-slate-400 truncate ml-1.5">
-                cycling.trackpilot.fit — Cockpit Grand Écran
+              <span className="shrink-0 text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30">
+                PC · Mac · Tablette
               </span>
             </div>
-            <span className="shrink-0 text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30">
-              PC · Mac · Tablette
-            </span>
+
+            <div className="bg-dark-950 aspect-[16/10] w-full overflow-hidden">
+              <img
+                src="/images/cockpit_pc_ventoux.png"
+                alt="Capture d'écran réelle du Cockpit TrackPilot Cycling sur grand écran : parcours Ventoux X 2 avec options complètes, 6 indicateurs clés et profil altimétrique"
+                width={1024}
+                height={640}
+                decoding="async"
+                className="block w-full h-full object-cover object-top"
+              />
+            </div>
+
+            <div className="px-4 py-2.5 bg-dark-900/80 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+              <span className="text-slate-400">
+                Démo réelle : Ventoux X 2 (<span className="tabular-nums text-slate-200">95.6 km</span> · <span className="tabular-nums text-slate-200">2 836 m</span> D+)
+              </span>
+              <span className="text-brand-400 font-semibold">
+                Options Format/Objectif + 6 pavés complets
+              </span>
+            </div>
           </div>
 
-          <div className="bg-dark-950 aspect-[16/10] w-full overflow-hidden">
-            <img
-              src="/images/cockpit_pc_ventoux.png"
-              alt="Capture d'écran réelle du Cockpit TrackPilot Cycling sur grand écran : parcours Ventoux X 2 avec options complètes, 6 indicateurs clés et profil altimétrique"
-              width={1024}
-              height={640}
-              decoding="async"
-              className="block w-full h-full object-cover object-top"
-            />
-          </div>
-
-          <div className="px-4 py-2.5 bg-dark-900/80 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
-            <span className="text-slate-400">
-              Démo réelle : Ventoux X 2 (<span className="tabular-nums text-slate-200">95.6 km</span> · <span className="tabular-nums text-slate-200">2 836 m</span> D+)
-            </span>
-            <span className="text-brand-400 font-semibold">
-              Options Format/Objectif + 6 pavés complets
-            </span>
+          {/* Short live-resize tip */}
+          <div className="rounded-xl glass-panel border border-white/10 bg-dark-900/70 px-4 py-3 flex items-start sm:items-center gap-3">
+            <div className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-brand-500/15 text-brand-300 border border-brand-500/30 shrink-0">
+              <Lightbulb className="w-3 h-3 text-brand-neon" />
+              <span>Astuce</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Sur PC ou tablette, ouvrez TrackPilot puis réduisez la largeur de votre fenêtre au format smartphone : vous verrez l’application basculer en direct vers son affichage épuré.
+            </p>
           </div>
         </div>
 
