@@ -55,7 +55,7 @@ export const ModulesHub: React.FC = () => {
   };
 
   return (
-    <section id="modules" className="relative py-20 sm:py-28 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
+    <section id="modules" className="relative py-24 sm:py-32 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
       
       {/* Background Photography Layer (Alpine Cycling Switchbacks - Offset Right, Strava-style) */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
@@ -63,19 +63,18 @@ export const ModulesHub: React.FC = () => {
           <source srcSet="/images/swiss_mountain_cyclist.webp" type="image/webp" />
           <img
             src="/images/swiss_mountain_cyclist.jpg"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover object-[center_right] sm:object-[75%_center] opacity-35"
+            alt="Cyclisme sur route en montagne alpine"
+            className="w-full h-full object-cover object-[center_right] sm:object-[80%_center] opacity-70 brightness-[0.65] contrast-[1.1]"
           />
         </picture>
-        {/* Vertical blending gradients to melt into pure dark-950 above & below */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-950/70 to-dark-950" />
-        {/* Horizontal gradient: deeper contrast on the left for text, opening to scenery on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-dark-950/30" />
-        {/* Subtle technical grid pattern overlay */}
+        {/* Vertical blending gradients: pure dark-950 top & bottom to transition cleanly */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-950/30 to-dark-950" />
+        {/* Horizontal gradient: darker on left to ensure high readability for text, opening to scenery on the right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-950/90 via-dark-950/60 to-dark-950/20" />
+        {/* Subtle grid pattern overlay */}
         <div className="absolute inset-0 bg-grid-pattern bg-[size:32px_32px] opacity-15" />
         {/* Ambient emerald glow on the scenery side */}
-        <div className="absolute top-1/4 -right-24 w-[480px] h-[480px] bg-brand-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] bg-brand-500/15 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
