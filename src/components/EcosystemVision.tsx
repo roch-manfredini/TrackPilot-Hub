@@ -1,5 +1,5 @@
 import React from 'react';
-import { Smartphone, Lock, Zap, RefreshCw, Compass, ArrowRight } from 'lucide-react';
+import { Smartphone, Lock, Zap, RefreshCw, Compass, ArrowRight, Coffee } from 'lucide-react';
 
 interface EcosystemVisionProps {
   onOpenContact?: () => void;
@@ -65,6 +65,34 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Dedicated Free & Open Ecosystem Commitment Box */}
+        <div
+          id="gratuite"
+          className="mt-8 sm:mt-10 p-6 sm:p-8 rounded-2xl glass-panel border border-brand-500/30 bg-gradient-to-br from-brand-950/30 via-dark-900/90 to-dark-950 scroll-mt-24 shadow-card"
+        >
+          <div className="flex flex-col sm:flex-row items-start gap-5">
+            <div className="w-11 h-11 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-400 shrink-0">
+              <Coffee className="w-5 h-5 text-brand-neon" />
+            </div>
+            <div className="flex-1 space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Gratuit par principe, parce que bâti sur le partage
+                </h3>
+                <span className="text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-500/15 text-brand-300 border border-brand-500/30 font-semibold">
+                  Sans abonnement · Sans pub
+                </span>
+              </div>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils <strong className="text-white font-semibold">open source</strong> et des bases de données collaboratives créées par la communauté (<strong className="text-white font-medium">OpenStreetMap</strong>, <strong className="text-white font-medium">BRouter</strong>, données météo ouvertes).
+              </p>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                Parce que nous bénéficions gratuitement de ce travail collectif, l’application est <strong className="text-brand-300 font-semibold">100 % gratuite, sans publicité ni mur payant</strong> — et vouée à le rester. Si un jour l’outil vous rend service, tout au plus un café symbolique (totalement facultatif) permettra d’aider à financer l’hébergement.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Big Final Call to Action */}

@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-7 text-sm font-medium text-slate-300">
             <a 
               href="#modules" 
               className="hover:text-white transition-colors duration-150 py-1"
@@ -80,7 +80,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           </nav>
 
           {/* Quick CTA & Actions */}
-          <div className="hidden sm:flex items-center">
+          <div className="hidden sm:flex items-center gap-2.5">
+            <a
+              href="#gratuite"
+              title="Pourquoi TrackPilot est gratuit et voué à le rester"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono font-semibold text-brand-300 bg-brand-500/10 hover:bg-brand-500/20 border border-brand-500/30 hover:border-brand-500/50 transition-all duration-150 whitespace-nowrap"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
+              <span className="hidden sm:inline md:hidden lg:inline">Gratuit · Écosystème Libre</span>
+              <span className="hidden md:inline lg:hidden">100% Gratuit</span>
+            </a>
+
             <button
               type="button"
               onClick={onOpenContact}
@@ -94,6 +104,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
 
           {/* Mobile menu trigger */}
           <div className="flex sm:hidden items-center gap-2">
+            <a
+              href="#gratuite"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 whitespace-nowrap"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
+              <span>100% Gratuit</span>
+            </a>
             <button
               type="button"
               onClick={onOpenContact}
@@ -151,6 +168,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Esprit du Projet
+            </a>
+            <a
+              href="#gratuite"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-base font-medium text-brand-300 hover:text-white hover:bg-dark-850"
+            >
+              <span className="w-2 h-2 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
+              <span>Gratuit · Écosystème Libre</span>
             </a>
             <button
               type="button"

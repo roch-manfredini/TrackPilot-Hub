@@ -21,9 +21,9 @@ export const Hero: React.FC = () => {
           {/* Tag Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-850/90 border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-glow-sm">
             <Sparkles className="w-3.5 h-3.5 text-brand-neon" />
-            <span>Projet collaboratif & outils outdoor libres</span>
+            <span>Projet collaboratif &amp; outils outdoor gratuits</span>
             <span className="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
-            <span className="font-mono text-slate-400">Accès libre & gratuit</span>
+            <span className="font-mono text-slate-400">Accès libre &amp; gratuit</span>
           </div>
 
           {/* Headline */}
@@ -59,6 +59,11 @@ export const Hero: React.FC = () => {
               <ChevronDown className="w-4 h-4 text-slate-400" />
             </a>
           </div>
+
+          <p className="mt-5 text-xs sm:text-sm text-slate-300">
+            <strong className="text-brand-300 font-semibold">100 % gratuit, sans publicité et sans abonnement</strong>{' '}
+            — aujourd’hui comme demain, appuyé sur l’écosystème open source et collaboratif.
+          </p>
 
           {/* Trust & Spec Micro-stats */}
           <div className="mt-10 pt-6 border-t border-white/[0.06] flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs text-slate-400 font-mono">
