@@ -39,8 +39,30 @@ export const InstallSection: React.FC = () => {
   ];
 
   return (
-    <section id="installation" className="relative py-20 sm:py-28 border-t border-white/[0.06] bg-dark-900/40 scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="installation" className="relative py-20 sm:py-28 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
+      
+      {/* Background Photography Layer (Alpine Mountain Ridge & Trail - Offset Left, Strava-style) */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+        <picture className="absolute inset-0 w-full h-full">
+          <source srcSet="/images/trail_runner_mountain.webp" type="image/webp" />
+          <img
+            src="/images/trail_runner_mountain.jpg"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-[center_left] sm:object-[25%_center] opacity-35"
+          />
+        </picture>
+        {/* Vertical blending gradients to melt into pure dark-950 above & below */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-950/70 to-dark-950" />
+        {/* Horizontal gradient: opening to scenery on the left, deeper contrast on the right for content */}
+        <div className="absolute inset-0 bg-gradient-to-l from-dark-950 via-dark-950/80 to-dark-950/30" />
+        {/* Subtle technical grid pattern overlay */}
+        <div className="absolute inset-0 bg-grid-pattern bg-[size:32px_32px] opacity-15" />
+        {/* Ambient teal glow on the scenery side */}
+        <div className="absolute bottom-1/4 -left-24 w-[480px] h-[480px] bg-teal-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
