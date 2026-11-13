@@ -102,6 +102,79 @@ export const ScreenVersions: React.FC = () => {
           </ul>
         </article>
       </div>
+
+      {/* Side-by-Side Real Screenshots Comparison (Ventoux X 2 Demo) */}
+      <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-center">
+        {/* Desktop Screenshot Frame (8 cols) */}
+        <div className="lg:col-span-8 rounded-2xl glass-panel border border-brand-500/30 overflow-hidden shadow-card">
+          <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-dark-900/95 border-b border-white/[0.08]">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
+                <span className="w-2 h-2 rounded-full bg-white/15" />
+                <span className="w-2 h-2 rounded-full bg-white/15" />
+                <span className="w-2 h-2 rounded-full bg-white/15" />
+              </div>
+              <span className="text-[11px] font-mono text-slate-400 truncate ml-1.5">
+                cycling.trackpilot.fit — Cockpit Grand Écran
+              </span>
+            </div>
+            <span className="shrink-0 text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30">
+              PC · Mac · Tablette
+            </span>
+          </div>
+
+          <div className="bg-dark-950 aspect-[16/10] w-full overflow-hidden">
+            <img
+              src="/images/cockpit_pc_ventoux.png"
+              alt="Capture d'écran réelle du Cockpit TrackPilot Cycling sur grand écran : parcours Ventoux X 2 avec options complètes, 6 indicateurs clés et profil altimétrique"
+              width={1024}
+              height={640}
+              decoding="async"
+              className="block w-full h-full object-cover object-top"
+            />
+          </div>
+
+          <div className="px-4 py-2.5 bg-dark-900/80 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+            <span className="text-slate-400">
+              Démo réelle : Ventoux X 2 (<span className="tabular-nums text-slate-200">95.6 km</span> · <span className="tabular-nums text-slate-200">2 836 m</span> D+)
+            </span>
+            <span className="text-brand-400 font-semibold">
+              Options Format/Objectif + 6 pavés complets
+            </span>
+          </div>
+        </div>
+
+        {/* Smartphone Screenshot Frame (4 cols) */}
+        <div className="lg:col-span-4 flex flex-col items-center">
+          <div className="w-full max-w-[260px] sm:max-w-[280px] rounded-[24px] p-2 bg-dark-900 border border-white/15 shadow-card">
+            <div className="rounded-[18px] overflow-hidden border border-white/10 bg-dark-950">
+              <div className="flex items-center justify-center py-1.5 bg-dark-950 border-b border-white/[0.05]" aria-hidden="true">
+                <span className="w-14 h-2 rounded-full bg-dark-850 border border-white/10" />
+              </div>
+              <div className="aspect-[390/844] w-full overflow-hidden bg-dark-950">
+                <img
+                  src="/images/cockpit_mobile_ventoux.png"
+                  alt="Capture d'écran réelle du Cockpit TrackPilot Cycling sur smartphone : même parcours Ventoux X 2 en vue épurée avec guidage direct, 4 indicateurs essentiels, profil et carte"
+                  width={390}
+                  height={844}
+                  decoding="async"
+                  className="block w-full h-full object-cover object-left-top"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 text-center max-w-[280px]">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-teal-400 font-semibold">
+              <Smartphone className="w-3.5 h-3.5" />
+              <span>Smartphone · Même parcours</span>
+            </div>
+            <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+              Guidage direct, 4 repères essentiels, profil et carte lisibles sans surcharge.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
