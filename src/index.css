@@ -74,3 +74,14 @@
     grid-template-rows: subgrid;
   }
 }
+
+/* Native <dialog> modal scroll containment and backdrop */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
