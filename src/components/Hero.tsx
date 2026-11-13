@@ -36,7 +36,15 @@ export const Hero: React.FC = () => {
 
           {/* Subtitle */}
           <p className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
-            Des passionnés qui construisent des outils utiles pour la communauté : visualisez simplement le profil de vos traces, anticipez le vent réel sur votre parcours et trouvez des repères simples pour l'effort et les points d'eau. En toute transparence, gratuitement et avec le respect de vos données.
+            Des passionnés qui construisent bénévolement des outils{' '}
+            <a
+              href="#gratuite"
+              title="Découvrir pourquoi TrackPilot est gratuit et voué à le rester"
+              className="text-brand-300 hover:text-brand-neon font-semibold underline decoration-brand-400/60 underline-offset-4 transition-colors"
+            >
+              gratuits
+            </a>{' '}
+            pour la communauté : visualisez simplement le profil de vos traces, anticipez le vent réel sur votre parcours et trouvez des repères simples pour l'effort et les points d'eau. En toute transparence et avec le respect de vos données.
           </p>
 
           {/* Action CTAs */}
