@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "footerLabel": "TrackPilot.fit • LCEN & RGPD",
+  "tabs": {
+    "mentions": {
+      "label": "Mentions légales",
+      "sections": [
+        {
+          "heading": "1. Éditeur du site",
+          "paragraphs": [
+            [
+              { "text": "Le site " },
+              { "text": "trackpilot.fit", "style": "mono" },
+              { "text": " et l’écosystème associé sont édités à titre personnel, bénévole et non professionnel par l’équipe " },
+              { "text": "TrackPilot.fit", "style": "strong" },
+              { "text": ". Conformément à l’article 6 III-2 de la loi pour la confiance dans l’économie numérique (LCEN), les coordonnées d’identification personnelle de l’éditeur ont été communiquées à l’hébergeur." }
+            ]
+          ]
+        },
+        {
+          "heading": "2. Contact",
+          "paragraphs": [
+            [
+              { "text": "Pour toute question, réclamation ou signalement : " },
+              { "text": "contact@trackpilot.fit", "href": "mailto:contact@trackpilot.fit" }
+            ]
+          ]
+        },
+        {
+          "heading": "3. Hébergement",
+          "paragraphs": [
+            [
+              { "text": "Ce site et ses applications associées sont hébergés sur l’infrastructure " },
+              { "text": "Firebase Hosting", "style": "strong" },
+              { "text": " fournie par Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irlande) / Google LLC (1600 Amphitheatre Parkway, Mountain View, CA 94043, États-Unis)." }
+            ]
+          ]
+        },
+        {
+          "heading": "4. Crédits & données ouvertes",
+          "paragraphs": [
+            [
+              { "text": "Les données cartographiques et points d’eau proviennent des contributeurs " },
+              { "text": "OpenStreetMap", "style": "strong" },
+              { "text": " (" },
+              { "text": "© OpenStreetMap contributors", "style": "mono" },
+              { "text": ", sous licence ODbL). Le calcul d’itinéraire s’appuie sur le moteur libre " },
+              { "text": "BRouter", "style": "strong" },
+              { "text": " et des données météorologiques ouvertes." }
+            ]
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "label": "Confidentialité & RGPD",
+      "sections": [
+        {
+          "heading": "1. Collecte des données personnelles (RGPD)",
+          "paragraphs": [
+            [
+              { "text": "Le site vitrine " },
+              { "text": "trackpilot.fit", "style": "mono" },
+              { "text": " ne collecte aucune donnée personnelle via formulaire (le champ d’aperçu « alerte bêta » de TrackPilot Trail reste strictement local tant que le module n’est pas lancé)." }
+            ],
+            [
+              { "text": "Dans nos applications (comme " },
+              { "text": "cycling.trackpilot.fit", "style": "mono" },
+              { "text": "), la création volontaire d’un compte nécessite votre " },
+              { "text": "adresse e-mail", "style": "strong" },
+              { "text": " afin de vous authentifier et de retrouver vos parcours sauvegardés. Les fichiers GPX/FIT importés sont automatiquement purgés de leurs données biométriques et capteurs personnels (fréquence cardiaque, puissance, cadence) pour ne conserver que la trace géographique." }
+            ]
+          ]
+        },
+        {
+          "heading": "2. Finalité, conservation et non-revente",
+          "paragraphs": [
+            [
+              { "text": "Vos données sont hébergées de manière sécurisée via Google Firebase. Elles servent exclusivement au fonctionnement technique de votre compte et ne sont " },
+              { "text": "jamais vendues, louées ni cédées", "style": "strong" },
+              { "text": " à des tiers à des fins commerciales. Elles sont conservées tant que votre compte reste actif." }
+            ]
+          ]
+        },
+        {
+          "heading": "3. Vos droits (accès, rectification, suppression)",
+          "paragraphs": [
+            [
+              { "text": "Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d’un droit d’accès, de rectification, de portabilité et d’effacement de votre compte et de vos données à tout moment en écrivant à " },
+              { "text": "contact@trackpilot.fit", "href": "mailto:contact@trackpilot.fit?subject=RGPD%20-%20TrackPilot" },
+              { "text": ". Vous pouvez également introduire une réclamation auprès de la CNIL (" },
+              { "text": "cnil.fr", "style": "mono" },
+              { "text": ")." }
+            ]
+          ]
+        },
+        {
+          "heading": "4. Cookies & mesure d’audience",
+          "paragraphs": [
+            [
+              { "text": "Sur le site vitrine " },
+              { "text": "trackpilot.fit", "style": "mono" },
+              { "text": ", la mesure d’audience Google Analytics (" },
+              { "text": "G-BFYKSM6F66", "style": "mono" },
+              { "text": ") n’est activée qu’avec votre consentement explicite préalable. Les applications web embarquent également un stockage local technique (localStorage / IndexedDB) nécessaire au fonctionnement hors connexion de vos réglages et parcours." }
+            ]
+          ],
+          "hasCookieSettingsAction": true
+        }
+      ]
+    },
+    "disclaimer": {
+      "label": "Avertissement & CGU",
+      "sections": [
+        {
+          "heading": "1. Nature purement indicative des outils",
+          "paragraphs": [
+            [
+              { "text": "TrackPilot est un projet bénévole et gratuit mis à disposition en l’état, sans garantie d’exactitude, d’exhaustivité ni de disponibilité continue. Les tracés, pentes, profils altimétriques, prévisions météorologiques/vent et estimations de temps constituent de simples aides indicatives à la préparation." }
+            ]
+          ]
+        },
+        {
+          "heading": "2. Sécurité, code de la route et conditions réelles",
+          "paragraphs": [
+            [
+              { "text": "Sur la route comme sur les sentiers, " },
+              { "text": "l’utilisateur demeure seul responsable de sa sécurité", "style": "strong" },
+              { "text": ", de son équipement, du respect du Code de la route, des propriétés privées, des arrêtés locaux et de l’adaptation à l’état réel du terrain (travaux, voies fermées, météo changeante, passages techniques)." }
+            ]
+          ]
+        },
+        {
+          "heading": "3. Points d’eau & données collaboratives",
+          "paragraphs": [
+            [
+              { "text": "Les fontaines et points d’eau signalés proviennent de la base collaborative OpenStreetMap. Leur présence effective, leur fonctionnement saisonnier (coupures hivernales ou sécheresse) et la potabilité de l’eau ne peuvent jamais être garantis : prévoyez toujours une marge d’autonomie suffisante." }
+            ]
+          ]
+        },
+        {
+          "heading": "4. Effort, hydratation & nutrition",
+          "paragraphs": [
+            [
+              { "text": "Les repères horaires d’hydratation et d’apports glucidiques sont des estimations générales de confort et ne remplacent en aucun cas un avis médical, diététique ou un suivi d’entraînement personnalisé." }
+            ]
+          ]
+        },
+        {
+          "heading": "5. Limitation de responsabilité",
+          "paragraphs": [
+            [
+              { "text": "Dans les limites autorisées par la loi, l’éditeur ne pourra être tenu responsable des dommages matériels, corporels ou directs/indirects résultant de l’utilisation, d’une erreur de donnée ou d’une indisponibilité de l’application sur le terrain." }
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}
