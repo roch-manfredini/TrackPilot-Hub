@@ -46,6 +46,12 @@ export const Footer: React.FC<FooterProps> = ({
             >
               Gestion des cookies
             </button>
+            <a
+              href="#faq"
+              className="hover:text-white transition-colors"
+            >
+              FAQ
+            </a>
           </div>
           <span className="text-[11px] text-slate-500">
             Données cartographiques © OpenStreetMap contributors · BRouter

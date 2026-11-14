@@ -4,28 +4,96 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+    <link rel="canonical" href="https://trackpilot.fit/" />
+    <link rel="alternate" type="text/plain" title="LLMs.txt" href="/llms.txt" />
+
     <!-- Primary Meta Tags -->
-    <title>TrackPilot — Plans de route & préparation outdoor pour sportifs d'endurance</title>
-    <meta name="title" content="TrackPilot — Plans de route & préparation outdoor pour sportifs d'endurance" />
+    <title>TrackPilot — Plans de route &amp; préparation outdoor pour sportifs d'endurance</title>
+    <meta name="title" content="TrackPilot — Plans de route &amp; préparation outdoor pour sportifs d'endurance" />
     <meta name="description" content="Des outils simples, gratuits et collaboratifs pour transformer un simple GPX en véritable plan de route : relief, vent sur le parcours, points d'eau et repères d'effort." />
-    <meta name="keywords" content="TrackPilot, plan de route, GPS, cyclisme, vélo, trail, randonnée, marche, trekking, outdoor, GPX, FIT, météo vent parcours, nutrition, dénivelé" />
+    <meta name="keywords" content="TrackPilot, plan de route, GPS, cyclisme, vélo, gravel, trail, randonnée, marche, trekking, outdoor, GPX, FIT, météo vent parcours, fontaines eau OSM, nutrition, dénivelé" />
     <meta name="author" content="TrackPilot Team" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#07080b" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="TrackPilot" />
     <meta property="og:url" content="https://trackpilot.fit/" />
-    <meta property="og:title" content="TrackPilot — Outils web & préparation outdoor pour sportifs d'endurance" />
+    <meta property="og:title" content="TrackPilot — Outils web &amp; préparation outdoor pour sportifs d'endurance" />
     <meta property="og:description" content="Des outils simples et partagés pensés par des passionnés pour préparer vos sorties vélo, trail et rando." />
-    <meta property="og:image" content="https://trackpilot.fit/og-image.png" />
+    <meta property="og:image" content="https://trackpilot.fit/images/cockpit_pc_ventoux.png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:alt" content="Interface TrackPilot : plan de route, relief, vent relatif et points d'eau" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://trackpilot.fit/" />
-    <meta property="twitter:title" content="TrackPilot — Outils web & préparation outdoor pour sportifs d'endurance" />
-    <meta property="twitter:description" content="Des outils simples et partagés pensés par des passionnés pour préparer vos sorties vélo, trail et rando." />
-    <meta property="twitter:image" content="https://trackpilot.fit/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://trackpilot.fit/" />
+    <meta name="twitter:title" content="TrackPilot — Outils web &amp; préparation outdoor pour sportifs d'endurance" />
+    <meta name="twitter:description" content="Des outils simples et partagés pensés par des passionnés pour préparer vos sorties vélo, trail et rando." />
+    <meta name="twitter:image" content="https://trackpilot.fit/images/cockpit_pc_ventoux.png" />
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://trackpilot.fit/#organization",
+            "name": "TrackPilot",
+            "url": "https://trackpilot.fit/",
+            "email": "contact@trackpilot.fit",
+            "logo": "https://trackpilot.fit/favicon.svg"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://trackpilot.fit/#website",
+            "url": "https://trackpilot.fit/",
+            "name": "TrackPilot Hub",
+            "inLanguage": "fr-FR",
+            "publisher": {
+              "@id": "https://trackpilot.fit/#organization"
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://cycling.trackpilot.fit/#app",
+            "name": "TrackPilot Cycling",
+            "url": "https://cycling.trackpilot.fit/",
+            "applicationCategory": "SportsApplication",
+            "operatingSystem": "Web, Android, iOS",
+            "inLanguage": "fr-FR",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            },
+            "description": "Plan de route interactif pour cyclisme et gravel à partir d'un fichier GPX ou FIT : vent relatif kilomètre par kilomètre, fontaines OpenStreetMap et guidage hors-ligne."
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://trail.trackpilot.fit/#app",
+            "name": "TrackPilot Trail",
+            "url": "https://trail.trackpilot.fit/",
+            "applicationCategory": "SportsApplication",
+            "operatingSystem": "Web, Android, iOS",
+            "inLanguage": "fr-FR",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            },
+            "description": "Préparation de sorties trail, randonnée et marche : allure ajustée au dénivelé (GAP), estimation Tobler, refuges et points d'eau."
+          }
+        ]
+      }
+    </script>
+    <!-- FAQ_JSON_LD -->
 
     <!-- Google Analytics is loaded conditionally after explicit user consent via CookieBanner -->
 

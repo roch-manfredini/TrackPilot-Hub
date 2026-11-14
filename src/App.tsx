@@ -7,6 +7,7 @@ import { TechPillars } from './components/TechPillars';
 import { FieldResilience } from './components/FieldResilience';
 import { InstallSection } from './components/InstallSection';
 import { EcosystemVision } from './components/EcosystemVision';
+import { FaqSection } from './components/FaqSection';
 import { ContactSection } from './components/ContactSection';
 import { ContactModal } from './components/ContactModal';
 import { LegalModal, LegalTab } from './components/LegalModal';
@@ -74,6 +75,7 @@ export const App: React.FC = () => {
         <TechPillars />
         <InstallSection />
         <EcosystemVision onOpenContact={() => setIsContactModalOpen(true)} />
+        <FaqSection />
         <ContactSection />
       </main>
       <Footer

@@ -1,6 +1,8 @@
-# TrackPilot Hub — trackpilot.fit
+# TrackPilot Hub — [trackpilot.fit](https://trackpilot.fit/)
 
-Vitrine centrale et Hub d'accueil pour l'écosystème **TrackPilot** (`trackpilot.fit`), la suite web d'orientation, d'analyse et de préparation sportive GPS de haute précision (endurance et outdoor).
+> 🌐 **Site officiel :** [https://trackpilot.fit/](https://trackpilot.fit/)
+
+Vitrine centrale et Hub d'accueil pour l'écosystème **TrackPilot** ([trackpilot.fit](https://trackpilot.fit/)), la suite web gratuite et sans abonnement pour transformer un simple fichier GPX ou FIT en véritable plan de route (cyclisme, gravel, trail, randonnée et marche).
 
 ---
 
@@ -31,7 +33,7 @@ npm install
 # Lancement du serveur de développement local
 npm run dev
 
-# Build de production
+# Build de production (inclut le pré-rendu HTML et le JSON-LD)
 npm run build
 
 # Prévisualisation du build de production
@@ -40,7 +42,7 @@ npm run preview
 
 ---
 
-## 🌐 Déploiement sur Firebase Hosting
+## 🌐 Déploiement sur Firebase Hosting & Indexation
 
 Le projet est pré-configuré avec `firebase.json` pour déployer le dossier `dist/` sur le domaine racine `trackpilot.fit` :
 
@@ -48,6 +50,10 @@ Le projet est pré-configuré avec `firebase.json` pour déployer le dossier `di
 # Connexion Firebase (si nécessaire)
 npx firebase login
 
-# Déploiement sur l'hébergement
+# Build et déploiement sur l'hébergement
+npm run build
 npx firebase deploy --only hosting
+
+# Notification immédiate des moteurs compatibles IndexNow (Bing, DuckDuckGo, Ecosia, Yandex…)
+npm run indexnow
 ```

@@ -77,6 +77,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             >
               Esprit du Projet
             </a>
+            <a 
+              href="#faq" 
+              className="hover:text-white transition-colors duration-150 py-1"
+            >
+              FAQ
+            </a>
           </nav>
 
           {/* Quick CTA & Actions */}
@@ -168,6 +174,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Esprit du Projet
+            </a>
+            <a
+              href="#faq"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
+            >
+              FAQ
             </a>
             <a
               href="#gratuite"
