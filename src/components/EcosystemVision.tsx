@@ -1,5 +1,6 @@
 import React from 'react';
 import { Compass, ArrowRight, Coffee } from 'lucide-react';
+import { SectionBackground } from './SectionBackground';
 
 interface EcosystemVisionProps {
   onOpenContact?: () => void;
@@ -7,11 +8,20 @@ interface EcosystemVisionProps {
 
 export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact }) => {
   return (
-    <section id="vision" className="relative py-20 sm:py-28 border-t border-white/[0.06] bg-dark-950 scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="vision" className="relative py-20 sm:py-28 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
+      <SectionBackground
+        webpSrc="/images/cyclists_and_hikers.webp"
+        jpgSrc="/images/cyclists_and_hikers.jpg"
+        alt="Cyclistes sur route de montagne et randonneurs sur le sentier voisin"
+        imgClassName="object-center"
+        scrimClassName="bg-dark-950/45"
+        glowClassName="top-1/4 -right-24 bg-teal-500/10"
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-12 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
             <Compass className="w-3.5 h-3.5" />
             <span>Esprit du Projet</span>

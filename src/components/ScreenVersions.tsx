@@ -1,12 +1,23 @@
 import React from 'react';
 import { Monitor, Smartphone, CheckCircle2, Minus, Lightbulb } from 'lucide-react';
+import { SectionBackground } from './SectionBackground';
 
 export const ScreenVersions: React.FC = () => {
   return (
-    <section id="formats" className="relative py-20 sm:py-28 border-t border-white/[0.06] bg-dark-950 scroll-mt-16">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+    <section id="formats" className="relative py-20 sm:py-28 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
+      <SectionBackground
+        webpSrc="/images/mountain_hiker.webp"
+        jpgSrc="/images/mountain_hiker.jpg"
+        alt="Randonneur avec sac à dos et bâtons sur un col de montagne"
+        imgClassName="object-[center_right] sm:object-[75%_center]"
+        scrimClassName="bg-dark-950/50"
+        horizontalGradientClassName="bg-gradient-to-r from-dark-950/60 via-transparent to-transparent"
+        glowClassName="top-1/4 -right-24 bg-emerald-500/10"
+      />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
       {/* Compact Header */}
-      <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+      <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
         <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
           Une seule et même application : complète sur grand écran, épurée sur smartphone.
         </h2>

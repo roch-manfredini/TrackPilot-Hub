@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Send, Copy, Check, MessageSquare, Sparkles } from 'lucide-react';
+import { SectionBackground } from './SectionBackground';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -14,24 +15,15 @@ export const ContactSection: React.FC = () => {
   return (
     <section id="contact" className="relative py-24 sm:py-32 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
       
-      {/* Background Photography Layer (Cyclists and Hikers sharing a mountain valley - Final Contact Step) */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none">
-        <picture className="absolute inset-0 w-full h-full">
-          <source srcSet="/images/cyclists_and_hikers.webp" type="image/webp" />
-          <img
-            src="/images/cyclists_and_hikers.jpg"
-            alt="Cyclistes sur route de montagne et randonneurs sur le sentier voisin"
-            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05]"
-          />
-        </picture>
-        {/* Subtle overall dark tint allowing the photo to remain clear, sharp and vibrant */}
-        <div className="absolute inset-0 bg-dark-950/40" />
-        {/* Top & bottom edge fades to melt smoothly into pure dark-950 above & below */}
-        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-dark-950 via-dark-950/80 to-transparent" />
-        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-dark-950 via-dark-950/80 to-transparent" />
-        {/* Ambient teal glow */}
-        <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-3xl" />
-      </div>
+      {/* Background Photography Layer (Mountain Trail Runner on Ridge - Final Contact Step) */}
+      <SectionBackground
+        webpSrc="/images/trail_runner_mountain.webp"
+        jpgSrc="/images/trail_runner_mountain.jpg"
+        alt="Coureur de trail sur une crête de montagne"
+        imgClassName="object-[70%_35%] sm:object-[65%_35%]"
+        scrimClassName="bg-dark-950/40"
+        glowClassName="top-1/4 -right-24 bg-teal-500/10"
+      />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         

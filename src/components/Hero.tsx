@@ -1,20 +1,29 @@
 import React from 'react';
 import { ChevronDown, MonitorSmartphone, Sparkles } from 'lucide-react';
+import { SectionBackground } from './SectionBackground';
 
 export const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[76vh] sm:min-h-[82vh] flex items-center pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden">
       
+      {/* Background Photography Layer (Alpine Cycling Switchbacks) */}
+      <SectionBackground
+        webpSrc="/images/swiss_mountain_cyclist.webp"
+        jpgSrc="/images/swiss_mountain_cyclist.jpg"
+        alt="Cyclisme sur route en montagne alpine"
+        imgClassName="object-[center_right] sm:object-[85%_center]"
+        scrimClassName="bg-dark-950/40"
+        glowClassName="top-1/4 -right-24 bg-brand-500/10"
+        eager
+      />
+
       {/* Top Ambient Glow */}
-      <div className="ambient-glow-top" />
+      <div className="ambient-glow-top z-[1]" />
 
-      {/* Grid Pattern Background subtle overlay */}
-      <div className="absolute inset-0 bg-grid-pattern bg-[size:32px_32px] opacity-25 pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
         {/* Main Hero Header */}
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="text-center max-w-4xl mx-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
           
           {/* Tag Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-850/90 border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-glow-sm">

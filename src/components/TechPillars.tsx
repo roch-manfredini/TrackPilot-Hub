@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Navigation, Layers, Wind, Flame, Droplets, CheckCircle } from 'lucide-react';
 import { TECH_PILLARS } from '../data/modules';
+import { SectionBackground } from './SectionBackground';
 
 export const TechPillars: React.FC = () => {
   const getPillarIcon = (name: string) => {
@@ -23,11 +24,21 @@ export const TechPillars: React.FC = () => {
   };
 
   return (
-    <section id="tech" className="relative py-20 sm:py-28 border-t border-white/[0.06] bg-dark-950 scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="tech" className="relative py-20 sm:py-28 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
+      <SectionBackground
+        webpSrc="/images/winding_mountain_cyclists.webp"
+        jpgSrc="/images/winding_mountain_cyclists.jpg"
+        alt="Lacets de col de montagne et cyclistes"
+        imgClassName="object-[center_left] sm:object-[20%_center]"
+        scrimClassName="bg-dark-950/45"
+        horizontalGradientClassName="bg-gradient-to-l from-dark-950/60 via-transparent to-transparent"
+        glowClassName="bottom-1/4 -left-24 bg-teal-500/10"
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
             <span>Les 6 Piliers Fondateurs</span>
           </div>
