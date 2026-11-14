@@ -1,20 +1,17 @@
 import React from 'react';
-import { Monitor, Smartphone, CheckCircle2, Minus, Maximize2, Lightbulb } from 'lucide-react';
+import { Monitor, Smartphone, CheckCircle2, Minus, Lightbulb } from 'lucide-react';
 
 export const ScreenVersions: React.FC = () => {
   return (
-    <div id="formats" className="mt-12 sm:mt-14 mx-auto max-w-5xl scroll-mt-24 text-left">
+    <section id="formats" className="relative py-20 sm:py-28 border-t border-white/[0.06] bg-dark-950 scroll-mt-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
       {/* Compact Header */}
-      <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-        <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-brand-400 mb-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
-          <Maximize2 className="w-3 h-3" />
-          <span>Une seule application, adaptée à votre écran</span>
-        </div>
-        <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+      <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+        <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
           Une seule et même application : complète sur grand écran, épurée sur smartphone.
         </h2>
-        <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-          Il n’y a pas deux applications différentes : c’est exactement le même TrackPilot (même lien, même compte, mêmes parcours) qui adapte automatiquement son affichage et ses fonctionnalités à la largeur de votre écran.
+        <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
+          Même lien, même compte, mêmes plans de route : l’affichage s’adapte automatiquement à la largeur de votre écran.
         </p>
       </div>
 
@@ -56,7 +53,7 @@ export const ScreenVersions: React.FC = () => {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 mt-0.5 text-brand-neon shrink-0" />
-              <span>Import, nettoyage et organisation confortable de vos traces GPX / FIT</span>
+              <span>Import d’un simple GPX / FIT pour composer et organiser vos plans de route</span>
             </li>
           </ul>
         </article>
@@ -93,7 +90,7 @@ export const ScreenVersions: React.FC = () => {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
-              <span>Chargement rapide d’une trace GPX ou accès à vos parcours préparés, consultation hors-ligne et guidage</span>
+              <span>Chargement d’un plan de route préparé (ou d’un simple GPX), consultation hors-ligne et guidage</span>
             </li>
             <li className="flex items-start gap-2 text-slate-400">
               <Minus className="w-4 h-4 mt-0.5 text-slate-500 shrink-0" />
@@ -227,6 +224,7 @@ export const ScreenVersions: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </section>
   );
 };

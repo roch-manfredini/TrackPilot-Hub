@@ -23,7 +23,7 @@ export const TechPillars: React.FC = () => {
   };
 
   return (
-    <section id="tech" className="relative py-20 sm:py-28 scroll-mt-16">
+    <section id="tech" className="relative py-20 sm:py-28 border-t border-white/[0.06] bg-dark-950 scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -32,10 +32,10 @@ export const TechPillars: React.FC = () => {
             <span>Les 6 Piliers Fondateurs</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Comment nous concevons TrackPilot.
+            Une globalité pensée comme un vrai plan de route.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            De l’esquisse de votre premier tracé jusqu’au guidage sans réseau sur votre guidon, TrackPilot couvre chaque étape de votre sortie : dessin vectoriel magnétique, météo prédictive face au vent, navigation 100% hors-ligne et repères d’eau et d’énergie.
+            Créer un GPX et suivre une ligne sur une carte ne suffit pas : TrackPilot rassemble chaque dimension de votre sortie dans un seul plan de route — tracé, vent relatif, points d’eau, effort et guidage hors-ligne.
           </p>
         </div>
 

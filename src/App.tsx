@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ModulesHub } from './components/ModulesHub';
+import { ScreenVersions } from './components/ScreenVersions';
 import { TechPillars } from './components/TechPillars';
 import { FieldResilience } from './components/FieldResilience';
-import { StatelessSection } from './components/StatelessSection';
 import { InstallSection } from './components/InstallSection';
 import { EcosystemVision } from './components/EcosystemVision';
 import { ContactSection } from './components/ContactSection';
@@ -69,9 +69,9 @@ export const App: React.FC = () => {
       <main className="flex-1">
         <Hero />
         <ModulesHub />
-        <TechPillars />
+        <ScreenVersions />
         <FieldResilience />
-        <StatelessSection />
+        <TechPillars />
         <InstallSection />
         <EcosystemVision onOpenContact={() => setIsContactModalOpen(true)} />
         <ContactSection />

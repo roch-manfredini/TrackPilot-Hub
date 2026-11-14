@@ -8,13 +8,13 @@ export const MODULES: ModuleInfo[] = [
     iconName: 'Bike',
     status: 'available',
     statusLabel: 'En ligne',
-    tagline: 'Un carnet de route interactif pour préparer vos sorties vélo et gravel.',
-    description: 'Glissez simplement votre fichier GPX ou FIT pour découvrir les points clés de votre itinéraire : le vent prévu au fil des kilomètres, des repères de rythme adaptés à votre niveau et l’emplacement des points d’eau.',
+    tagline: 'Un plan de route complet et interactif pour préparer vos sorties vélo et gravel.',
+    description: 'Partez d’un simple fichier GPX ou FIT — ou tracez votre parcours — pour charger un véritable plan de route : vent prévu au fil des kilomètres, repères de rythme adaptés et points d’eau réunis en une vue globale.',
     url: 'https://cycling.trackpilot.fit',
     highlights: [
       'Studio de traçage épuré cyclisme : routage magnétique instantané (route, gravel, voies douces) et profil altimétrique direct',
       'Guidage cintre ultra-épuré : lisibilité immédiate à vitesse élevée, vent relatif, pente et mode éco OLED sans réseau',
-      'Plans de route personnels stockés automatiquement en local : consultation et guidage 100% hors-ligne (comme un Drive automatique)',
+      'Plans de route stockés automatiquement en local pour une consultation et un guidage 100% hors-ligne',
       'Visualisation du vent relatif (face, côté, dos) calculé selon votre horaire de passage',
       'Repérage des fontaines et points d’eau potable utiles (données libres OSM)',
       'Conseils personnalisés d’hydratation, d’énergie et export rapide vers vos compteurs'
@@ -33,7 +33,7 @@ export const MODULES: ModuleInfo[] = [
     status: 'soon',
     statusLabel: 'Bientôt',
     tagline: 'Pour le trail, la randonnée et la marche : dompter le dénivelé et les sentiers.',
-    description: 'Pensé pour toutes vos sorties à pied en pleine nature, en marchant ou en courant. Allure ajustée au dénivelé (GAP), estimations des temps de parcours et de marche (Tobler), gestion de l’eau et de votre autonomie.',
+    description: 'Pensé pour transformer un simple GPX en plan de route pour toutes vos sorties à pied : allure ajustée au dénivelé (GAP), temps de marche (Tobler), gestion de l’eau et autonomie.',
     url: 'https://trail.trackpilot.fit',
     highlights: [
       'Outil de traçage épuré sentiers : tracé adapté aux chemins de montagne, courbes de niveau et calcul du relief D+/D-',
@@ -53,13 +53,13 @@ export const MODULES: ModuleInfo[] = [
 export const TECH_PILLARS: TechPillar[] = [
   {
     id: 'mapping',
-    title: 'Création de Trace & Studio Vectoriel',
-    subtitle: 'Dessiner, ajuster et perfectionner au mètre près',
-    description: 'Un véritable atelier de dessin cartographique dans votre navigateur. Épaulé par le moteur de routage BRouter et son aimantation magnétique intelligente (Snap), tracez vos parcours d’un simple clic. Les profils dédiés (Route fluide, Gravel, Voies cyclables sécurisées ou Ligne droite libre) s’adaptent à vos envies, avec déplacement fluide des waypoints et profil altimétrique calculé en temps réel.',
+    title: 'Tracé Support & Studio Vectoriel',
+    subtitle: 'Dessiner la base de votre plan de route au mètre près',
+    description: 'Un atelier de dessin cartographique épuré dans votre navigateur. Épaulé par BRouter et son aimantation magnétique intelligente (Snap), tracez votre itinéraire en quelques clics : il devient aussitôt la base de votre plan de route avec profil altimétrique calculé en temps réel.',
     iconName: 'Route',
     badge: 'Routage BRouter & Snap',
     technicalDetails: [
-      'Aimantation magnétique adaptative : Asphalte, Gravel, Pistes sécurisées ou Tracé libre',
+      'Aimantation magnétique adaptative : Route, Gravel, Sentiers de randonnée ou Tracé libre',
       'Profil altimétrique interactif et dénivelé cumulé (D+) calculés en direct à chaque point',
       'Fonctions d’atelier en 1 clic : rebouclage automatique, aller-retour, inversion et Undo/Redo infini',
       'Passerelle instantanée vers le Cockpit de vol ou export GPX haute précision'
@@ -67,11 +67,11 @@ export const TECH_PILLARS: TechPillar[] = [
   },
   {
     id: 'import',
-    title: 'Import & Nettoyage des Traces GPX/FIT',
-    subtitle: 'Vos parcours épurés de toute donnée privée ou sensible',
-    description: 'Créez votre compte pour gérer et retrouver vos parcours en toute simplicité. Lorsque vous chargez un fichier GPX ou FIT, TrackPilot nettoie automatiquement l’ensemble de vos données privées : les métadonnées personnelles, données cardiaques, puissances et capteurs sont purgés pour ne conserver strictement que la trace géographique et son altitude.',
+    title: 'Du simple GPX au Plan de Route',
+    subtitle: 'Un fichier GPX en entrée, un plan de route assaini en sortie',
+    description: 'Dans TrackPilot, vous ne chargez pas une simple trace : un fichier GPX ou FIT suffit pour charger un plan de route complet sur votre compte. À l’import, vos données privées et biométriques (fréquence cardiaque, puissance, capteurs) sont purgées pour ne garder que l’essentiel géographique.',
     iconName: 'Layers',
-    badge: 'Données Assainies',
+    badge: 'Plan de Route Assaini',
     technicalDetails: [
       'Suppression automatique des métadonnées privées et des données biométriques (FC, watts, cadence)',
       'Conservation exclusive du tracé géographique utile et du profil altimétrique',
@@ -95,14 +95,14 @@ export const TECH_PILLARS: TechPillar[] = [
   {
     id: 'guidance',
     title: 'Guidage Temps Réel & Cockpit Hors-Ligne',
-    subtitle: 'Votre smartphone transformé en compteur GPS d’exception',
-    description: 'Une prouesse d’ergonomie développée pour le cintre ou la bretelle. Conçu selon une architecture sans état (Stateless), le moteur projette instantanément votre position sur la trace vectorielle : en cas de coupure inattendue ou de batterie vide, la navigation reprend en 1 seconde chrono sans session corrompue ni perte de données.',
+    subtitle: 'Un guidage épuré sur votre smartphone',
+    description: 'Pensé pour être lisible d’un coup d’œil au cintre ou sur une bretelle. Grâce à une projection directe sur le tracé (architecture sans état), le guidage reprend en 1 seconde après une coupure de batterie, sans session corrompue.',
     iconName: 'Navigation',
     badge: 'Stateless & Zéro Réseau',
     technicalDetails: [
-      'Architecture Stateless : reprise instantanée en 1s sans session corrompue en cas de panne de batterie',
-      'Stockage local automatique de tous vos plans de route : consultation et guidage 100% hors-ligne (façon Google Drive, mais entièrement automatique)',
-      'Projection spatiale instantanée : recalcule en direct distance restante, D+ et fontaines en aval',
+      'Reprise instantanée en 1s après coupure batterie, sans session corrompue',
+      'Stockage local automatique de vos plans de route pour un accès 100% hors-ligne',
+      'Recalcul en direct de la distance restante, du D+ et des fontaines en aval',
       'Cache hors-ligne intégral des tuiles cartographiques stockées en local (IndexedDB)',
       'Maintien d’écran allumé automatique (Screen WakeLock API) et mode Fil d’Ariane éco-batterie OLED'
     ]
@@ -111,7 +111,7 @@ export const TECH_PILLARS: TechPillar[] = [
     id: 'water',
     title: 'Points d’Eau & Fontaines Collaboratives',
     subtitle: 'Savoir où faire le plein sereinement',
-    description: 'Pour partir l’esprit tranquille sans craindre les bidons à sec, TrackPilot s’appuie sur les données ouvertes et collaboratives d’OpenStreetMap pour signaler les fontaines publiques et points d’eau proches de votre itinéraire.',
+    description: 'Pour partir l’esprit tranquille sans craindre les bidons ou gourdes à sec, TrackPilot s’appuie sur les données ouvertes et collaboratives d’OpenStreetMap pour signaler les fontaines, sources et points d’eau proches de votre itinéraire.',
     iconName: 'Droplets',
     badge: 'Données libres OSM',
     technicalDetails: [

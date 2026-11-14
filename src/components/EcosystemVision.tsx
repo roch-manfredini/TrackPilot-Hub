@@ -1,40 +1,17 @@
 import React from 'react';
-import { Smartphone, Lock, Zap, RefreshCw, Compass, ArrowRight, Coffee } from 'lucide-react';
+import { Compass, ArrowRight, Coffee } from 'lucide-react';
 
 interface EcosystemVisionProps {
   onOpenContact?: () => void;
 }
 
 export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact }) => {
-  const VISION_ITEMS = [
-    {
-      icon: <Smartphone className="w-5 h-5 text-brand-400" />,
-      title: "100% Web & Adapté à Votre Écran",
-      description: "Accessible directement depuis votre navigateur, sans rien installer : une seule et même application qui affiche tout le studio complet sur grand écran (PC, Mac, tablette) pour préparer la veille, et s’épure volontairement sur smartphone le jour de la sortie."
-    },
-    {
-      icon: <Lock className="w-5 h-5 text-teal-400" />,
-      title: "Vie Privée & Données Assainies",
-      description: "Pour sauvegarder et retrouver vos parcours, un compte est nécessaire. À chaque chargement de GPX, TrackPilot nettoie automatiquement vos traces de toutes leurs données privées et biométriques (fréquence cardiaque, puissance, capteurs personnels). Seul l'itinéraire géographique utile est conservé."
-    },
-    {
-      icon: <RefreshCw className="w-5 h-5 text-sky-400" />,
-      title: "Complémentaire de vos Compteurs GPS",
-      description: "TrackPilot n'a pas vocation à remplacer votre compteur ou votre montre pour enregistrer des statistiques ou vos performances. Nos outils se concentrent sur la préparation en amont et le guidage épuré sur le terrain. Vos appareils GPS restent indispensables."
-    },
-    {
-      icon: <Zap className="w-5 h-5 text-amber-400" />,
-      title: "Collaboratif & À l'Écoute",
-      description: "Un projet indépendant, sans abonnement forcé ni mur payant. Nous sommes une équipe de pratiquants qui fait évoluer ces outils en échangeant avec bienveillance avec les sportifs sur le terrain."
-    }
-  ];
-
   return (
-    <section id="vision" className="relative py-20 sm:py-28 scroll-mt-16">
+    <section id="vision" className="relative py-20 sm:py-28 border-t border-white/[0.06] bg-dark-950 scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">
             <Compass className="w-3.5 h-3.5" />
             <span>Esprit du Projet</span>
@@ -43,34 +20,14 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
             Développé par des passionnés, partagé avec tous.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            TrackPilot est né de l'envie d'avoir des repères simples et pratiques au guidon : anticiper le vent réel le long de la trace, repérer les points d'eau et adapter son énergie. Nous partageons ces outils librement pour que chacun puisse en profiter.
+            TrackPilot est né d’une idée simple : ne plus partir avec une trace muette, mais avec un plan de route complet — vent réel, points d’eau et gestion de l’énergie réunis au même endroit. Un projet indépendant, construit à l’écoute des pratiquants sur le terrain.
           </p>
-        </div>
-
-        {/* 4 Pillars of Vision */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {VISION_ITEMS.map((item, idx) => (
-            <div 
-              key={idx}
-              className="p-6 sm:p-8 rounded-2xl glass-panel border border-white/[0.08] hover:border-white/20 transition-colors"
-            >
-              <div className="w-10 h-10 rounded-xl bg-dark-850 border border-white/10 flex items-center justify-center mb-4">
-                {item.icon}
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
-                {item.title}
-              </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                {item.description}
-              </p>
-            </div>
-          ))}
         </div>
 
         {/* Dedicated Free & Open Ecosystem Commitment Box */}
         <div
           id="gratuite"
-          className="mt-8 sm:mt-10 p-6 sm:p-8 rounded-2xl glass-panel border border-brand-500/30 bg-gradient-to-br from-brand-950/30 via-dark-900/90 to-dark-950 scroll-mt-24 shadow-card"
+          className="max-w-4xl mx-auto p-6 sm:p-8 rounded-2xl glass-panel border border-brand-500/30 bg-gradient-to-br from-brand-950/30 via-dark-900/90 to-dark-950 scroll-mt-24 shadow-card"
         >
           <div className="flex flex-col sm:flex-row items-start gap-5">
             <div className="w-11 h-11 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-400 shrink-0">
@@ -103,19 +60,17 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                 Accès libre & gratuit
               </span>
               <h3 className="text-2xl sm:text-4xl font-extrabold text-white mt-2 mb-4">
-                Envie d'essayer sur votre prochaine sortie ?
+                Prêt à préparer votre prochain plan de route ?
               </h3>
               <p className="text-sm sm:text-base text-slate-300 mb-8 max-w-xl mx-auto">
-                Glissez votre dernière trace GPX dans TrackPilot Cycling pour découvrir vos repères météo et dénivelé.
+                Vélo, gravel, trail ou randonnée à pied : choisissez l’application adaptée à votre pratique et glissez un simple fichier GPX pour démarrer.
               </p>
               <a
-                href="https://cycling.trackpilot.fit"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#modules"
                 className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold text-dark-950 bg-brand-neon hover:bg-brand-400 active:scale-[0.98] shadow-glow-md transition-all duration-150"
               >
-                <span>Tester TrackPilot Cycling</span>
-                <span className="font-mono text-xs px-2 py-0.5 rounded bg-dark-950/20">cycling.trackpilot.fit</span>
+                <span>Choisir mon module</span>
+                <ArrowRight className="w-4 h-4" />
               </a>
 
               <div className="mt-5">

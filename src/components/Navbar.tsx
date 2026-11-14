@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X, Compass, Mail } from 'lucide-react';
+import { Menu, X, Compass, Mail } from 'lucide-react';
 
 interface NavbarProps {
   onOpenContact?: () => void;
@@ -190,13 +190,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             </button>
             <div className="pt-2">
               <a
-                href="https://cycling.trackpilot.fit"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#modules"
+                onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-dark-950 bg-brand-400 rounded-xl"
               >
-                <span>Accéder à TrackPilot Cycling</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <span>Explorer les modules</span>
               </a>
             </div>
           </div>

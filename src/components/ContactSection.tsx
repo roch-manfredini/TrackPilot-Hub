@@ -14,14 +14,14 @@ export const ContactSection: React.FC = () => {
   return (
     <section id="contact" className="relative py-24 sm:py-32 border-t border-white/[0.06] overflow-hidden scroll-mt-16">
       
-      {/* Background Photography Layer (Open Road Cyclist - Final Contact Step, Strava-style) */}
+      {/* Background Photography Layer (Cyclists and Hikers sharing a mountain valley - Final Contact Step) */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         <picture className="absolute inset-0 w-full h-full">
-          <source srcSet="/images/open_road_cyclist.webp" type="image/webp" />
+          <source srcSet="/images/cyclists_and_hikers.webp" type="image/webp" />
           <img
-            src="/images/open_road_cyclist.jpg"
-            alt="Cycliste sur route ouverte en pleine nature"
-            className="w-full h-full object-cover object-[center_right] sm:object-[75%_center] opacity-90 contrast-[1.05]"
+            src="/images/cyclists_and_hikers.jpg"
+            alt="Cyclistes sur route de montagne et randonneurs sur le sentier voisin"
+            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05]"
           />
         </picture>
         {/* Subtle overall dark tint allowing the photo to remain clear, sharp and vibrant */}
@@ -29,9 +29,7 @@ export const ContactSection: React.FC = () => {
         {/* Top & bottom edge fades to melt smoothly into pure dark-950 above & below */}
         <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-dark-950 via-dark-950/80 to-transparent" />
         <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-dark-950 via-dark-950/80 to-transparent" />
-        {/* Subtle horizontal gradient to softly balance text area on left while leaving right scenery open */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-950/60 via-transparent to-transparent" />
-        {/* Ambient teal glow on the scenery side */}
+        {/* Ambient teal glow */}
         <div className="absolute top-1/4 -right-24 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-3xl" />
       </div>
 
@@ -47,7 +45,7 @@ export const ContactSection: React.FC = () => {
             Une question, une idée ou un retour de sortie ?
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-300">
-            TrackPilot est un projet partagé : nous roulons et faisons évoluer ces outils grâce aux retours de chacun sur le terrain. Écrivez-nous en toute simplicité !
+            TrackPilot est un projet partagé : nous pratiquons et faisons évoluer ces outils grâce aux retours de chacun sur le terrain. Écrivez-nous en toute simplicité !
           </p>
         </div>
 
@@ -62,21 +60,16 @@ export const ContactSection: React.FC = () => {
             </h3>
           </div>
 
-          {/* Description text identical to app reference */}
-          <div className="space-y-2 text-slate-300 text-sm sm:text-base leading-relaxed">
-            <p>
-              Une remarque, une idée d'amélioration ou un retour d'expérience sur vos sorties ?
-            </p>
-            <p>
-              N'hésitez pas à contacter directement l'équipe TrackPilot :{' '}
-              <a
-                href={`mailto:${email}?subject=Retour%20TrackPilot`}
-                className="font-bold text-white hover:text-teal-300 underline decoration-teal-400/50 underline-offset-4 transition-colors"
-              >
-                {email}
-              </a>
-            </p>
-          </div>
+          {/* Description text */}
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Écrivez directement à l'équipe sur{' '}
+            <a
+              href={`mailto:${email}?subject=Retour%20TrackPilot`}
+              className="font-bold text-white hover:text-teal-300 underline decoration-teal-400/50 underline-offset-4 transition-colors"
+            >
+              {email}
+            </a>
+          </p>
 
           {/* Quick Action Buttons */}
           <div className="mt-6 pt-6 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-4">
@@ -126,7 +119,7 @@ export const ContactSection: React.FC = () => {
               💡 Suggestions de fonctionnalités
             </span>
             <span className="text-xs px-2.5 py-1 rounded-lg bg-dark-850/80 border border-white/5 text-slate-400 font-mono">
-              🚴 Retours sur trace GPX & Météo
+              🚴 Retours sur plan de route & Météo
             </span>
             <span className="text-xs px-2.5 py-1 rounded-lg bg-dark-850/80 border border-white/5 text-slate-400 font-mono">
               🐛 Signalement de bug

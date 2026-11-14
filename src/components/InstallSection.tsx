@@ -8,8 +8,7 @@ import {
   CheckCircle2, 
   Zap, 
   WifiOff, 
-  HardDrive, 
-  ArrowUpRight
+  HardDrive
 } from 'lucide-react';
 
 export const InstallSection: React.FC = () => {
@@ -34,7 +33,7 @@ export const InstallSection: React.FC = () => {
     {
       icon: <WifiOff className="w-5 h-5 text-cyan-400" />,
       title: "Plein Écran & Mode Hors-Ligne",
-      description: "Une fois ajoutée sur votre écran d'accueil, elle s'ouvre sans barre d'adresse et stocke automatiquement tous vos plans de route en local : vos parcours restent accessibles hors ligne même en zone blanche, comme un Drive mais 100% automatique."
+      description: "Ajoutée à votre écran d'accueil, elle s'ouvre sans barre d'adresse et garde vos plans de route accessibles hors ligne, même en zone blanche."
     }
   ];
 
@@ -110,7 +109,7 @@ export const InstallSection: React.FC = () => {
                 Installer TrackPilot sur votre appareil
               </h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
-                Une seule et même application : complète sur ordinateur ou tablette (iPad), elle s’épure automatiquement sur smartphone.
+                Même application sur ordinateur pour préparer et sur smartphone pour le terrain.
               </p>
             </div>
 
@@ -168,7 +167,7 @@ export const InstallSection: React.FC = () => {
                     </div>
                     <h4 className="text-base font-bold text-white mb-2">Ouvrir dans Safari</h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Rendez-vous sur <span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span> depuis le navigateur <strong className="text-white">Safari</strong> de votre iPhone ou iPad.
+                      Rendez-vous sur votre application TrackPilot (ex. <span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span>) depuis le navigateur <strong className="text-white">Safari</strong> de votre iPhone ou iPad.
                     </p>
                   </div>
                 </div>
@@ -211,7 +210,7 @@ export const InstallSection: React.FC = () => {
                     </div>
                     <h4 className="text-base font-bold text-white mb-2">Ouvrir dans Chrome</h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Ouvrez le lien <span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span> dans le navigateur <strong className="text-white">Google Chrome</strong> de votre smartphone.
+                      Ouvrez votre application TrackPilot (ex. <span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span>) dans le navigateur <strong className="text-white">Google Chrome</strong> de votre smartphone.
                     </p>
                   </div>
                 </div>
@@ -287,22 +286,6 @@ export const InstallSection: React.FC = () => {
                 </div>
               </div>
             )}
-          </div>
-
-          {/* Quick link button */}
-          <div className="mt-8 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="text-xs text-slate-400 font-mono">
-              Envie de tester l'installation dès maintenant ?
-            </span>
-            <a
-              href="https://cycling.trackpilot.fit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-dark-950 bg-brand-neon hover:bg-brand-400 transition-all duration-150 active:scale-[0.98]"
-            >
-              <span>Ouvrir TrackPilot Cycling</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
           </div>
 
         </div>

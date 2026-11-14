@@ -61,12 +61,10 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           <a 
-            href="https://cycling.trackpilot.fit" 
-            target="_blank" 
-            rel="noopener noreferrer"
+            href="#modules" 
             className="text-slate-400 hover:text-emerald-400 transition-colors flex items-center justify-center gap-1 whitespace-nowrap"
           >
-            <span>cycling.trackpilot.fit</span>
+            <span>trackpilot.fit</span>
             <ArrowUpRight className="w-3 h-3" />
           </a>
         </div>
