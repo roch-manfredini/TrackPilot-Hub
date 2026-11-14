@@ -154,12 +154,12 @@ export const ScreenVersions: React.FC = () => {
           </div>
 
           {/* Short live-resize tip (symmetrical to mobile caption) */}
-          <div className="mt-3 text-center max-w-xl mx-auto">
+          <div className="mt-3.5 text-center max-w-xl mx-auto px-4 py-2.5 rounded-xl bg-dark-950/75 backdrop-blur-md border border-white/[0.08] shadow-sm">
             <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-brand-400 font-semibold">
               <Lightbulb className="w-3.5 h-3.5" />
               <span>Astuce</span>
             </div>
-            <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+            <p className="mt-1 text-xs text-slate-200 leading-relaxed">
               Sur PC ou tablette, ouvrez TrackPilot puis réduisez la largeur de votre fenêtre au format smartphone : vous verrez l’application basculer en direct vers son affichage épuré.
             </p>
           </div>
@@ -224,12 +224,12 @@ export const ScreenVersions: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-3 text-center max-w-[280px]">
+          <div className="mt-3.5 text-center max-w-[285px] w-full px-4 py-2.5 rounded-xl bg-dark-950/75 backdrop-blur-md border border-white/[0.08] shadow-sm">
             <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-teal-400 font-semibold">
               <Smartphone className="w-3.5 h-3.5" />
               <span>Smartphone · Même parcours</span>
             </div>
-            <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+            <p className="mt-1 text-xs text-slate-200 leading-relaxed">
               Guidage direct, 4 repères essentiels, profil et carte lisibles sans surcharge.
             </p>
           </div>
