@@ -8,7 +8,8 @@ import {
   CheckCircle2, 
   Zap, 
   WifiOff, 
-  HardDrive
+  HardDrive,
+  ArrowUpRight
 } from 'lucide-react';
 
 export const InstallSection: React.FC = () => {
@@ -98,7 +99,7 @@ export const InstallSection: React.FC = () => {
         </div>
 
         {/* Installation Steps Guide with Device Switcher */}
-        <div className="relative rounded-3xl glass-panel border border-white/10 p-6 sm:p-10 bg-gradient-to-b from-dark-850/80 to-dark-950/80">
+        <div id="guide-installation" className="relative rounded-3xl glass-panel border border-white/10 p-6 sm:p-10 bg-gradient-to-b from-dark-850/80 to-dark-950/80 scroll-mt-24">
           
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/[0.08]">
             <div>
@@ -286,6 +287,22 @@ export const InstallSection: React.FC = () => {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Open App CTA below the 3 installation steps */}
+          <div className="mt-8 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span className="text-xs text-slate-300 font-mono">
+              Prêt à suivre ces 3 étapes pour installer l’application ?
+            </span>
+            <a
+              href="https://cycling.trackpilot.fit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-dark-950 bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 active:scale-[0.98] shadow-glow-sm transition-all duration-150"
+            >
+              <span>Ouvrir TrackPilot Cycling</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
           </div>
 
         </div>

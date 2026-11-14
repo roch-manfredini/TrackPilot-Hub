@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bike, Footprints, Mountain, ArrowUpRight, CheckCircle2, Clock, Wrench, Watch } from 'lucide-react';
+import { Bike, Footprints, Mountain, ChevronDown, CheckCircle2, Clock, Wrench, Watch } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { ModuleInfo } from '../types';
 
@@ -164,13 +164,11 @@ export const ModulesHub: React.FC = () => {
                 <div className="pt-4 border-t border-white/[0.08]">
                   {isAvailable ? (
                     <a
-                      href={module.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href="#guide-installation"
                       className="group flex items-center justify-center gap-2.5 w-full py-3 px-5 rounded-xl font-bold text-sm text-dark-950 bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 active:scale-[0.98] shadow-glow-sm transition-all duration-150"
                     >
-                      <span>Lancer TrackPilot Cycling</span>
-                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      <span>Installer {module.title}</span>
+                      <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                     </a>
                   ) : (
                     <div className="flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl font-semibold text-sm text-amber-300/90 bg-amber-500/10 border border-amber-500/20 select-none">
