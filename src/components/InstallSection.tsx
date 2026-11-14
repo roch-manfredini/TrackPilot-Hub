@@ -9,7 +9,8 @@ import {
   Zap, 
   WifiOff, 
   HardDrive,
-  ArrowUpRight
+  ArrowUpRight,
+  Clock
 } from 'lucide-react';
 
 export const InstallSection: React.FC = () => {
@@ -289,20 +290,33 @@ export const InstallSection: React.FC = () => {
             )}
           </div>
 
-          {/* Open App CTA below the 3 installation steps */}
-          <div className="mt-8 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="text-xs text-slate-300 font-mono">
+          {/* Open App CTAs below the 3 installation steps */}
+          <div className="mt-8 pt-6 border-t border-white/[0.08] flex flex-col lg:flex-row items-center justify-between gap-4">
+            <span className="text-xs text-slate-300 font-mono text-center lg:text-left">
               Prêt à suivre ces 3 étapes pour installer l’application ?
             </span>
-            <a
-              href="https://cycling.trackpilot.fit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-dark-950 bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 active:scale-[0.98] shadow-glow-sm transition-all duration-150"
-            >
-              <span>Ouvrir TrackPilot Cycling</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+              <a
+                href="https://cycling.trackpilot.fit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-dark-950 bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 active:scale-[0.98] shadow-glow-sm transition-all duration-150"
+              >
+                <span>Ouvrir TrackPilot Cycling</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+
+              <div
+                aria-disabled="true"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl text-sm font-semibold text-slate-300 bg-dark-950/70 border border-white/10 select-none cursor-not-allowed"
+              >
+                <span>Ouvrir TrackPilot Trail</span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                  <Clock className="w-3 h-3" />
+                  Bientôt
+                </span>
+              </div>
+            </div>
           </div>
 
         </div>

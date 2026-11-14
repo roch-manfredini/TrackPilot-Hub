@@ -97,13 +97,6 @@ export const ModulesHub: React.FC = () => {
                     : 'border-white/10 hover:border-white/20'
                 }`}
               >
-                {/* Available highlight top border tag */}
-                {isAvailable && (
-                  <div className="absolute -top-3 left-6 px-3 py-0.5 rounded-md bg-brand-neon text-dark-950 font-mono text-[10px] font-black uppercase tracking-wider shadow-sm">
-                    Disponible en ligne
-                  </div>
-                )}
-
                 <div>
                   {/* Top Bar with Icon & Status Badge */}
                   <div className="flex items-center justify-between gap-4 mb-6">
