@@ -133,12 +133,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               href="#gratuite"
               onClick={(e) => handleSectionClick(e, '#gratuite')}
-              title="Pourquoi TrackPilot est gratuit et voué à le rester"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono font-semibold text-brand-300 bg-brand-500/10 hover:bg-brand-500/20 border border-brand-500/30 hover:border-brand-500/50 transition-all duration-150 whitespace-nowrap"
+              title="Découvrir l'écosystème TrackPilot"
+              className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-mono font-semibold text-brand-300 bg-brand-500/10 hover:bg-brand-500/20 border border-brand-500/30 hover:border-brand-500/50 transition-all duration-150 whitespace-nowrap"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
-              <span className="hidden sm:inline md:hidden lg:inline">Gratuit · Écosystème Libre</span>
-              <span className="hidden md:inline lg:hidden">100% Gratuit</span>
+              <span>Écosystème Libre</span>
             </a>
           </div>
 
@@ -147,10 +145,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               href="#gratuite"
               onClick={(e) => handleSectionClick(e, '#gratuite')}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 whitespace-nowrap"
+              className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 whitespace-nowrap"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
-              <span>100% Gratuit</span>
+              <span>Écosystème Libre</span>
             </a>
             <button
               type="button"
@@ -221,10 +218,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               href="#gratuite"
               onClick={(e) => handleSectionClick(e, '#gratuite')}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-base font-medium text-brand-300 hover:text-white hover:bg-dark-850"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-brand-300 hover:text-white hover:bg-dark-850"
             >
-              <span className="w-2 h-2 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
-              <span>Gratuit · Écosystème Libre</span>
+              <span>Écosystème Libre</span>
             </a>
             <div className="pt-2">
               <a
