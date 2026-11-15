@@ -45,7 +45,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
             </div>
             <div className="flex-1 space-y-2">
               <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                Gratuit par principe, parce que bâti sur le partage
+                Bâti sur le partage
               </h3>
               <p className="text-sm text-white leading-relaxed font-normal">
                 TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils open source et des bases de données collaboratives créées par la communauté (OpenStreetMap, BRouter, données météo ouvertes).
