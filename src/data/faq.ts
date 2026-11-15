@@ -31,9 +31,9 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: 'gratuite-modele',
-    question: 'TrackPilot est-il vraiment gratuit et sans abonnement ?',
+    question: 'TrackPilot est-il vraiment gratuit, sans abonnement ni publicité ?',
     answer:
-      'Oui, TrackPilot est 100 % gratuit, sans abonnement ni mur payant, et voué à le rester. Le projet repose sur des briques open source et des données ouvertes partagées par la communauté (OpenStreetMap, BRouter, prévisions météo ouvertes).',
+      'Oui. Les applications TrackPilot sont 100 % gratuites, sans abonnement, sans mur payant et sans publicité, et vouées à le rester. Autonomes, elles fonctionnent sans avoir besoin de passer par le site web. Le projet repose sur des briques open source et des données ouvertes (OpenStreetMap, BRouter, prévisions météo ouvertes). Si la communauté grandit fortement et génère des coûts d’hébergement importants, un financement léger (don facultatif type « café » ou bandeau publicitaire discret) pourra être ajouté uniquement sur ce site web (le Hub), jamais dans les applications.',
   },
   {
     id: 'cycling-vs-trail',
