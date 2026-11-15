@@ -7,6 +7,18 @@ interface NavbarProps {
   onNavigatePlans?: () => void;
 }
 
+const SECTION_LINKS_BEFORE_PLANS = [
+  { href: '#modules', label: 'Modules' },
+  { href: '#formats', label: 'Profil & Cockpit' },
+  { href: '#tech', label: 'Fonctionnalités' },
+  { href: '#installation', label: 'Installation' },
+] as const;
+
+const SECTION_LINKS_AFTER_PLANS = [
+  { href: '#vision', label: 'Esprit du Projet' },
+  { href: '#faq', label: 'FAQ' },
+] as const;
+
 export const Navbar: React.FC<NavbarProps> = ({
   activeView = 'home',
   onNavigateHome,
@@ -39,14 +51,37 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  const headerSurfaceClass = mobileMenuOpen
+    ? isScrolled
+      ? 'bg-dark-950 md:bg-dark-950/85 md:backdrop-blur-md border-b border-white/10 py-3.5 shadow-card'
+      : 'bg-dark-950 md:bg-transparent border-b border-white/10 md:border-b-0 py-5 shadow-card md:shadow-none'
+    : isScrolled
+      ? 'bg-dark-950/85 backdrop-blur-md border-b border-white/[0.08] py-3.5 shadow-card'
+      : 'bg-transparent py-5';
+
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-        isScrolled 
-          ? 'bg-dark-950/85 backdrop-blur-md border-b border-white/[0.08] py-3.5 shadow-card' 
-          : 'bg-transparent py-5'
-      }`}
-    >
+    <>
+      {mobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-dark-950/80 backdrop-blur-sm"
+          aria-hidden="true"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${headerSurfaceClass}`}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
@@ -72,38 +107,21 @@ export const Navbar: React.FC<NavbarProps> = ({
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-4 lg:gap-7 text-sm font-medium text-slate-300">
-            <a 
-              href="#modules" 
-              onClick={(e) => handleSectionClick(e, '#modules')}
-              className="hover:text-white transition-colors duration-150 py-1"
-            >
-              Modules
-            </a>
-            <a 
-              href="#formats" 
-              onClick={(e) => handleSectionClick(e, '#formats')}
-              className="hover:text-white transition-colors duration-150 py-1"
-            >
-              Profil & Cockpit
-            </a>
-            <a 
-              href="#tech" 
-              onClick={(e) => handleSectionClick(e, '#tech')}
-              className="hover:text-white transition-colors duration-150 py-1"
-            >
-              Fonctionnalités
-            </a>
-            <a 
-              href="#installation" 
-              onClick={(e) => handleSectionClick(e, '#installation')}
-              className="hover:text-white transition-colors duration-150 py-1"
-            >
-              Installation
-            </a>
+          <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-4 lg:gap-7 text-sm font-medium text-slate-300">
+            {SECTION_LINKS_BEFORE_PLANS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleSectionClick(e, link.href)}
+                className="hover:text-white transition-colors duration-150 py-1"
+              >
+                {link.label}
+              </a>
+            ))}
             <a
               href="/plans"
               onClick={handlePlansClick}
+              aria-current={activeView === 'plans' ? 'page' : undefined}
               className={`transition-colors duration-150 py-1 ${
                 activeView === 'plans'
                   ? 'text-brand-300 font-semibold'
@@ -112,20 +130,16 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Plans publics
             </a>
-            <a 
-              href="#vision" 
-              onClick={(e) => handleSectionClick(e, '#vision')}
-              className="hover:text-white transition-colors duration-150 py-1"
-            >
-              Esprit du Projet
-            </a>
-            <a 
-              href="#faq" 
-              onClick={(e) => handleSectionClick(e, '#faq')}
-              className="hover:text-white transition-colors duration-150 py-1"
-            >
-              FAQ
-            </a>
+            {SECTION_LINKS_AFTER_PLANS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleSectionClick(e, link.href)}
+                className="hover:text-white transition-colors duration-150 py-1"
+              >
+                {link.label}
+              </a>
+            ))}
           </nav>
 
           {/* Quick Contact & Mobile Menu Trigger */}
@@ -142,10 +156,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-dark-850 border border-white/10 text-slate-300 hover:text-white hover:bg-dark-800 transition-colors"
-              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-menu"
+              className="md:hidden p-2 rounded-lg bg-dark-850 border border-white/10 text-slate-300 hover:text-white hover:bg-dark-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              aria-label={mobileMenuOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
             </button>
           </div>
 
@@ -153,70 +169,56 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t border-white/10 pb-4 space-y-3">
-            <a
-              href="#modules"
-              onClick={(e) => handleSectionClick(e, '#modules')}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
-            >
-              Modules
-            </a>
-            <a
-              href="#formats"
-              onClick={(e) => handleSectionClick(e, '#formats')}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
-            >
-              Profil & Cockpit
-            </a>
-            <a
-              href="#tech"
-              onClick={(e) => handleSectionClick(e, '#tech')}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
-            >
-              Fonctionnalités
-            </a>
-            <a
-              href="#installation"
-              onClick={(e) => handleSectionClick(e, '#installation')}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
-            >
-              Installation
-            </a>
+          <nav
+            id="mobile-nav-menu"
+            aria-label="Navigation mobile"
+            className="md:hidden mt-3 rounded-2xl bg-dark-900 border border-white/10 p-3 shadow-card max-h-[calc(100dvh-5.5rem)] overflow-y-auto space-y-1"
+          >
+            {SECTION_LINKS_BEFORE_PLANS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleSectionClick(e, link.href)}
+                className="block px-3.5 py-2.5 rounded-xl text-base font-medium text-slate-100 hover:text-white hover:bg-dark-800 active:bg-dark-750 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
             <a
               href="/plans"
               onClick={handlePlansClick}
-              className={`block px-3 py-2 rounded-lg text-base font-medium hover:bg-dark-850 ${
-                activeView === 'plans' ? 'text-brand-300' : 'text-slate-300 hover:text-white'
+              aria-current={activeView === 'plans' ? 'page' : undefined}
+              className={`block px-3.5 py-2.5 rounded-xl text-base font-medium transition-colors ${
+                activeView === 'plans'
+                  ? 'text-brand-300 font-semibold bg-brand-500/10 border border-brand-500/20'
+                  : 'text-slate-100 hover:text-white hover:bg-dark-800 active:bg-dark-750'
               }`}
             >
               Plans publics
             </a>
-            <a
-              href="#vision"
-              onClick={(e) => handleSectionClick(e, '#vision')}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
-            >
-              Esprit du Projet
-            </a>
-            <a
-              href="#faq"
-              onClick={(e) => handleSectionClick(e, '#faq')}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
-            >
-              FAQ
-            </a>
-            <div className="pt-2">
+            {SECTION_LINKS_AFTER_PLANS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleSectionClick(e, link.href)}
+                className="block px-3.5 py-2.5 rounded-xl text-base font-medium text-slate-100 hover:text-white hover:bg-dark-800 active:bg-dark-750 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="pt-2 mt-2 border-t border-white/10">
               <a
                 href="#modules"
                 onClick={(e) => handleSectionClick(e, '#modules')}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-dark-950 bg-brand-400 rounded-xl"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 active:scale-[0.98] rounded-xl transition-all"
               >
                 <span>Explorer les modules</span>
               </a>
             </div>
-          </div>
+          </nav>
         )}
       </div>
     </header>
+    </>
   );
 };
