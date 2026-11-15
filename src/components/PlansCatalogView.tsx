@@ -238,10 +238,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
       scrollWheelZoom: false,
     }).setView([45.8, 4.8], 6);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap &copy; CARTO',
-      subdomains: 'abcd',
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      attribution: 'Données: &copy; OpenStreetMap, SRTM | Style: &copy; OpenTopoMap',
+      subdomains: 'abc',
       maxZoom: 19,
+      maxNativeZoom: 17,
     }).addTo(map);
 
     const routeGroup = L.layerGroup().addTo(map);
@@ -275,19 +276,19 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
     const latLngs: L.LatLngExpression[] = coords.map((c) => [c.lat, c.lng]);
 
-    // Soft outer glow + sharp emerald line
+    // Dark obsidian casing + vibrant emerald line for crisp contrast on topo relief
     L.polyline(latLngs, {
-      color: '#34d399',
-      weight: 8,
-      opacity: 0.22,
+      color: '#07080b',
+      weight: 7,
+      opacity: 0.78,
       lineCap: 'round',
       lineJoin: 'round',
     }).addTo(layerGroup);
 
     const mainLine = L.polyline(latLngs, {
-      color: '#34d399',
+      color: '#10b981',
       weight: 3.5,
-      opacity: 0.95,
+      opacity: 1,
       lineCap: 'round',
       lineJoin: 'round',
     }).addTo(layerGroup);
