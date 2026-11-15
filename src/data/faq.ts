@@ -30,12 +30,6 @@ export const FAQ_ITEMS: FaqItem[] = [
       'Oui. Vos plans de route sont stockés automatiquement en local et les tuiles cartographiques peuvent être mises en cache dans votre navigateur (IndexedDB). Grâce à une architecture sans état (stateless), le guidage reprend en 1 seconde après une coupure de batterie, sans session corrompue.',
   },
   {
-    id: 'gratuite-modele',
-    question: 'TrackPilot est-il vraiment gratuit, sans abonnement ni publicité ?',
-    answer:
-      'Oui. Les 2 applications TrackPilot sont gratuites et sans publicité. Le projet repose sur des briques open source et des données ouvertes (OpenStreetMap, BRouter, prévisions météo ouvertes). Si la communauté grandit fortement et génère des coûts d’hébergement importants, un financement (don facultatif type « café » ou bandeau publicitaire) pourra être ajouté uniquement sur ce site web (le Hub), jamais dans les applications.',
-  },
-  {
     id: 'cycling-vs-trail',
     question: 'Quelle est la différence entre TrackPilot Cycling et TrackPilot Trail ?',
     answer:

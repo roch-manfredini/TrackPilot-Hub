@@ -54,7 +54,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                 Parce que nous bénéficions gratuitement de ce travail collectif, les 2 applications TrackPilot sont gratuites et sans publicité.
               </p>
               <p className="text-sm text-white leading-relaxed font-normal">
-                En toute transparence : si la communauté grandit fortement et que les frais d’hébergement ou d’infrastructure deviennent importants, un financement pourra être ajouté (un café symbolique facultatif ou un bandeau publicitaire), uniquement sur ce site web (le Hub), jamais dans les applications.
+                En toute transparence : si la communauté grandit fortement et que les frais d’hébergement ou d’infrastructure deviennent importants, un financement pourra être ajouté (un café symbolique facultatif ou un bandeau publicitaire), sur ce site web (le Hub).
               </p>
             </div>
           </div>
