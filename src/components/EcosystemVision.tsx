@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, ArrowRight, Coffee } from 'lucide-react';
+import { Compass, ArrowRight, Share2 } from 'lucide-react';
 import { SectionBackground } from './SectionBackground';
 
 interface EcosystemVisionProps {
@@ -41,20 +41,20 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
         >
           <div className="flex flex-col sm:flex-row items-start gap-5">
             <div className="w-11 h-11 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-400 shrink-0">
-              <Coffee className="w-5 h-5 text-brand-neon" />
+              <Share2 className="w-5 h-5 text-brand-neon" />
             </div>
             <div className="flex-1 space-y-2">
               <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                 Gratuit par principe, parce que bâti sur le partage
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils <strong className="text-white font-semibold">open source</strong> et des bases de données collaboratives créées par la communauté (<strong className="text-white font-medium">OpenStreetMap</strong>, <strong className="text-white font-medium">BRouter</strong>, données météo ouvertes).
+              <p className="text-sm text-white leading-relaxed font-normal">
+                TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils open source et des bases de données collaboratives créées par la communauté (OpenStreetMap, BRouter, données météo ouvertes).
               </p>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                Parce que nous bénéficions gratuitement de ce travail collectif, les 2 applications TrackPilot sont <strong className="text-brand-300 font-semibold">gratuites et sans publicité</strong>.
+              <p className="text-sm text-white leading-relaxed font-normal">
+                Parce que nous bénéficions gratuitement de ce travail collectif, les 2 applications TrackPilot sont gratuites et sans publicité.
               </p>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                En toute transparence : si la communauté grandit fortement et que les frais d’hébergement ou d’infrastructure deviennent importants, un financement pourra être ajouté (un café symbolique facultatif ou un bandeau publicitaire), <strong className="text-white font-semibold">uniquement sur ce site web (le Hub)</strong>, <strong className="text-brand-300 font-semibold">jamais</strong> dans les applications.
+              <p className="text-sm text-white leading-relaxed font-normal">
+                En toute transparence : si la communauté grandit fortement et que les frais d’hébergement ou d’infrastructure deviennent importants, un financement pourra être ajouté (un café symbolique facultatif ou un bandeau publicitaire), uniquement sur ce site web (le Hub), jamais dans les applications.
               </p>
             </div>
           </div>
