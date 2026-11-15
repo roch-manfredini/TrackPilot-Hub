@@ -40,7 +40,7 @@ import {
 import { ElevationProfileChart } from './ElevationProfileChart';
 
 interface PlansCatalogViewProps {
-  onBackHome: () => void;
+  onBackHome: (sectionHash?: string) => void;
   currentUser: User | null;
   onAdminSignedOut: () => void;
 }
@@ -459,7 +459,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
         <div>
           <button
             type="button"
-            onClick={onBackHome}
+            onClick={() => onBackHome()}
             className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-brand-300 transition-colors mb-3 cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
@@ -514,12 +514,16 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                 votre plan de route, décochez la case{' '}
                 <strong className="text-white font-semibold">Partager</strong> pour qu’il reste
                 privé. Cette liste est synchronisée régulièrement par l’équipe (et non en direct) :
-                si votre parcours public n’apparaît pas encore, patientez ou demandez-le par mail à{' '}
+                si votre parcours public n’apparaît pas encore, patientez ou{' '}
                 <a
-                  href="mailto:contact@trackpilot.fit?subject=Synchronisation%20d%E2%80%99un%20plan%20de%20route%20public"
-                  className="text-brand-300 hover:text-brand-neon underline underline-offset-2 transition-colors"
+                  href="/#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onBackHome('#contact');
+                  }}
+                  className="text-brand-300 hover:text-brand-neon font-semibold underline decoration-brand-400/60 underline-offset-4 transition-colors"
                 >
-                  contact@trackpilot.fit
+                  contactez l’équipe
                 </a>
                 .
               </p>

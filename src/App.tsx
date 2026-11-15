@@ -106,10 +106,12 @@ export const App: React.FC = () => {
     setView('home');
     if (sectionHash && sectionHash.startsWith('#')) {
       window.requestAnimationFrame(() => {
-        const el = document.querySelector(sectionHash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
+        window.requestAnimationFrame(() => {
+          const el = document.querySelector(sectionHash);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
       });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -169,7 +171,7 @@ export const App: React.FC = () => {
             }
           >
             <PlansCatalogView
-              onBackHome={() => handleNavigateHome()}
+              onBackHome={handleNavigateHome}
               currentUser={currentUser}
               onAdminSignedOut={() => setCurrentUser(null)}
             />
