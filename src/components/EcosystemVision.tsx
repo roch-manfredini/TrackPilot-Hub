@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, ArrowRight, Share2 } from 'lucide-react';
+import { Compass, ArrowRight, GlobeCode } from 'lucide-react';
 import { SectionBackground } from './SectionBackground';
 
 interface EcosystemVisionProps {
@@ -41,7 +41,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
         >
           <div className="flex flex-col sm:flex-row items-start gap-5">
             <div className="w-11 h-11 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-400 shrink-0">
-              <Share2 className="w-5 h-5 text-brand-neon" />
+              <GlobeCode className="w-5 h-5 text-brand-neon" />
             </div>
             <div className="flex-1 space-y-2">
               <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
