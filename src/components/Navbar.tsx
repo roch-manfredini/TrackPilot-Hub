@@ -80,17 +80,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Modules
             </a>
-            <a
-              href="/plans"
-              onClick={handlePlansClick}
-              className={`transition-colors duration-150 py-1 ${
-                activeView === 'plans'
-                  ? 'text-brand-300 font-semibold'
-                  : 'hover:text-white'
-              }`}
-            >
-              Plans publics
-            </a>
             <a 
               href="#formats" 
               onClick={(e) => handleSectionClick(e, '#formats')}
@@ -111,6 +100,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="hover:text-white transition-colors duration-150 py-1"
             >
               Installation
+            </a>
+            <a
+              href="/plans"
+              onClick={handlePlansClick}
+              className={`transition-colors duration-150 py-1 ${
+                activeView === 'plans'
+                  ? 'text-brand-300 font-semibold'
+                  : 'hover:text-white'
+              }`}
+            >
+              Plans publics
             </a>
             <a 
               href="#vision" 
@@ -175,15 +175,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               Modules
             </a>
             <a
-              href="/plans"
-              onClick={handlePlansClick}
-              className={`block px-3 py-2 rounded-lg text-base font-medium hover:bg-dark-850 ${
-                activeView === 'plans' ? 'text-brand-300' : 'text-slate-300 hover:text-white'
-              }`}
-            >
-              Plans publics
-            </a>
-            <a
               href="#formats"
               onClick={(e) => handleSectionClick(e, '#formats')}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
@@ -203,6 +194,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Installation
+            </a>
+            <a
+              href="/plans"
+              onClick={handlePlansClick}
+              className={`block px-3 py-2 rounded-lg text-base font-medium hover:bg-dark-850 ${
+                activeView === 'plans' ? 'text-brand-300' : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              Plans publics
             </a>
             <a
               href="#vision"
