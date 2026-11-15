@@ -43,7 +43,7 @@ export const Hero: React.FC = () => {
 
           {/* Subtitle */}
           <p className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
-            Transformez un simple fichier GPX en véritable{' '}
+            Transformez un simple fichier GPX ou FIT en véritable{' '}
             <strong className="text-white font-semibold">plan de route</strong> : relief, vent réel sur le parcours, points d’eau et repères d’effort réunis au même endroit. Un outil{' '}
             <a
               href="#gratuite"
