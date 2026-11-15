@@ -486,15 +486,32 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
         <div className="w-9 h-9 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center shrink-0 text-brand-400">
           <Info className="w-4 h-4" />
         </div>
-        <div className="text-xs sm:text-sm text-slate-200 leading-relaxed flex-1">
-          <strong className="text-white font-semibold">
-            Espace de consultation rapide uniquement.
-          </strong>{' '}
-          Cet aperçu affiche uniquement le tracé géographique et le profil altimétrique (sans
-          téléchargement GPX ni réglages personnels). Pour planifier votre stratégie et exploiter
-          un parcours complet, ouvrez-le directement dans l’application dédiée{' '}
-          <span className="text-brand-300 font-medium">TrackPilot Cycling</span> ou{' '}
-          <span className="text-teal-300 font-medium">TrackPilot Trail</span>.
+        <div className="text-xs sm:text-sm text-slate-200 leading-relaxed flex-1 space-y-1.5">
+          <p>
+            <strong className="text-white font-semibold">
+              Espace de consultation rapide uniquement.
+            </strong>{' '}
+            Cet aperçu affiche uniquement le tracé géographique et le profil altimétrique (sans
+            téléchargement GPX ni réglages personnels). Pour planifier votre stratégie et exploiter
+            un parcours complet, ouvrez-le directement dans l’application dédiée{' '}
+            <span className="text-brand-300 font-medium">TrackPilot Cycling</span> ou{' '}
+            <span className="text-teal-300 font-medium">TrackPilot Trail</span>.
+          </p>
+          <p className="text-xs text-slate-300">
+            <strong className="text-white font-medium">Visibilité &amp; synchronisation :</strong>{' '}
+            dans le menu <strong className="text-white font-medium">Ajustements</strong> du plan de
+            route, décochez la case <strong className="text-white font-medium">Partager</strong>{' '}
+            pour qu’il reste privé. Cette liste est synchronisée régulièrement par l’équipe (et non
+            en direct) : si votre parcours public n’apparaît pas encore, patientez ou demandez-le
+            par mail à{' '}
+            <a
+              href="mailto:contact@trackpilot.fit?subject=Synchronisation%20d%E2%80%99un%20plan%20de%20route%20public"
+              className="text-brand-300 hover:text-brand-neon underline underline-offset-2 transition-colors"
+            >
+              contact@trackpilot.fit
+            </a>
+            .
+          </p>
         </div>
       </div>
 
