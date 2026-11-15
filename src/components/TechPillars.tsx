@@ -46,7 +46,7 @@ export const TechPillars: React.FC = () => {
             Une globalité pensée comme un vrai plan de route.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            Créer un GPX et suivre une ligne sur une carte ne suffit pas : TrackPilot rassemble chaque dimension de votre sortie dans un seul plan de route — tracé, vent relatif, points d’eau, effort et guidage hors-ligne.
+            Créer un GPX et suivre une ligne sur une carte ne suffit pas : TrackPilot rassemble chaque dimension de votre sortie dans un seul plan de route - tracé, vent relatif, points d’eau, effort et guidage hors-ligne.
           </p>
         </div>
 

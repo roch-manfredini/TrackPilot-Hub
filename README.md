@@ -1,4 +1,4 @@
-# TrackPilot Hub — [trackpilot.fit](https://trackpilot.fit/)
+# TrackPilot Hub - [trackpilot.fit](https://trackpilot.fit/)
 
 > 🌐 **Site officiel :** [https://trackpilot.fit/](https://trackpilot.fit/)
 
@@ -8,8 +8,8 @@ Vitrine centrale et Hub d'accueil pour l'écosystème **TrackPilot** ([trackpilo
 
 ## 🧭 L'Écosystème TrackPilot
 
-- **TrackPilot Cycling** (`https://cycling.trackpilot.fit`) — *En production* : Préparation de sorties vélo et gravel, analyse de traces GPX/FIT, pacing dynamique, météo de vol vectorielle point par point, détection des fontaines d’eau et repères nutritionnels.
-- **TrackPilot Trail** (`https://trail.trackpilot.fit`) — *Bientôt disponible* : L'outil outdoor pour le trail, la randonnée et la marche. Allure ajustée au dénivelé (GAP), estimation des temps de marche et de passage (Tobler), profils d'élévation précis, gestion de l'autonomie et points d'eau.
+- **TrackPilot Cycling** (`https://cycling.trackpilot.fit`) - *En production* : Préparation de sorties vélo et gravel, analyse de traces GPX/FIT, pacing dynamique, météo de vol vectorielle point par point, détection des fontaines d’eau et repères nutritionnels.
+- **TrackPilot Trail** (`https://trail.trackpilot.fit`) - *Bientôt disponible* : L'outil outdoor pour le trail, la randonnée et la marche. Allure ajustée au dénivelé (GAP), estimation des temps de marche et de passage (Tobler), profils d'élévation précis, gestion de l'autonomie et points d'eau.
 
 ---
 

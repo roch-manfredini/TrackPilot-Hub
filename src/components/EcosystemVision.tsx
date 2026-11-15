@@ -30,7 +30,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
             Développé par des passionnés, partagé avec tous.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            TrackPilot est né d’une idée simple : ne plus partir avec une trace muette, mais avec un plan de route complet — vent réel, points d’eau et gestion de l’énergie réunis au même endroit. Un projet indépendant, construit à l’écoute des pratiquants sur le terrain.
+            TrackPilot est né d’une idée simple : ne plus partir avec une trace muette, mais avec un plan de route complet - vent réel, points d’eau et gestion de l’énergie réunis au même endroit. Un projet indépendant, construit à l’écoute des pratiquants sur le terrain.
           </p>
         </div>
 

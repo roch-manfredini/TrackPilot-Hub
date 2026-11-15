@@ -124,7 +124,7 @@ export const ScreenVersions: React.FC = () => {
                   <span className="w-2 h-2 rounded-full bg-white/15" />
                 </div>
                 <span className="text-[11px] font-mono text-slate-400 truncate ml-1.5">
-                  cycling.trackpilot.fit — Cockpit Grand Écran
+                  cycling.trackpilot.fit - Cockpit Grand Écran
                 </span>
               </div>
               <span className="shrink-0 text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30">

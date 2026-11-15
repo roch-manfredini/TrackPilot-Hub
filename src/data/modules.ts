@@ -9,7 +9,7 @@ export const MODULES: ModuleInfo[] = [
     status: 'available',
     statusLabel: 'En ligne',
     tagline: 'Un plan de route complet et interactif pour préparer vos sorties vélo et gravel.',
-    description: 'Partez d’un simple fichier GPX ou FIT — ou tracez votre parcours — pour charger un véritable plan de route : vent prévu au fil des kilomètres, repères de rythme adaptés et points d’eau réunis en une vue globale.',
+    description: 'Partez d’un simple fichier GPX ou FIT - ou tracez votre parcours - pour charger un véritable plan de route : vent prévu au fil des kilomètres, repères de rythme adaptés et points d’eau réunis en une vue globale.',
     url: 'https://cycling.trackpilot.fit',
     highlights: [
       'Studio de traçage épuré cyclisme : routage magnétique instantané (route, gravel, voies douces) et profil altimétrique direct',

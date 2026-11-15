@@ -175,7 +175,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
               <span>Un positionnement clair : un plan de route global, pas un carnet de statistiques</span>
             </h4>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              TrackPilot n’est pas un outil d’enregistrement d’activités ni un carnet de statistiques (type Strava ou Garmin Connect). Son but n’est pas seulement de tracer un GPX ou de vous guider, mais de réunir toute votre sortie dans un véritable plan de route — relief, météo, eau et effort. <strong className="text-white font-medium">Vos montres et compteurs GPS restent indispensables</strong> pour enregistrer vos traces réelles, vos données de performance (fréquence cardiaque, puissance, allure) et votre historique d'entraînement.
+              TrackPilot n’est pas un outil d’enregistrement d’activités ni un carnet de statistiques (type Strava ou Garmin Connect). Son but n’est pas seulement de tracer un GPX ou de vous guider, mais de réunir toute votre sortie dans un véritable plan de route - relief, météo, eau et effort. <strong className="text-white font-medium">Vos montres et compteurs GPS restent indispensables</strong> pour enregistrer vos traces réelles, vos données de performance (fréquence cardiaque, puissance, allure) et votre historique d'entraînement.
             </p>
           </div>
         </div>
