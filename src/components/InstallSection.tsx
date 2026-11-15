@@ -23,7 +23,7 @@ export const InstallSection: React.FC = () => {
       description: "Pas besoin de compte Google Play ou App Store. Un simple clic sur un lien suffit pour utiliser l'outil immédiatement."
     },
     {
-      icon: <HardDrive className="w-5 h-5 text-teal-400" />,
+      icon: <HardDrive className="w-5 h-5 text-brand-400" />,
       title: "Ultra Légère (< 2 Mo)",
       description: "Contrairement aux applications classiques qui pèsent 150 Mo ou plus, TrackPilot n'encombre jamais la mémoire de votre téléphone."
     },
@@ -33,7 +33,7 @@ export const InstallSection: React.FC = () => {
       description: "Fini les corvées de mises à jour manuelles. Vous profitez automatiquement et en temps réel de la dernière version à chaque ouverture."
     },
     {
-      icon: <WifiOff className="w-5 h-5 text-cyan-400" />,
+      icon: <WifiOff className="w-5 h-5 text-brand-400" />,
       title: "Plein Écran & Mode Hors-Ligne",
       description: "Ajoutée à votre écran d'accueil, elle s'ouvre sans barre d'adresse et garde vos plans de route accessibles hors ligne, même en zone blanche."
     }
@@ -159,7 +159,7 @@ export const InstallSection: React.FC = () => {
                     </div>
                     <h4 className="text-base font-bold text-white mb-2">Bouton Partager</h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Touchez le bouton <strong className="text-white">Partager</strong> (<Share className="inline w-3.5 h-3.5 text-cyan-400" /> carré avec flèche vers le haut) situé en bas de votre écran.
+                      Touchez le bouton <strong className="text-white">Partager</strong> (<Share className="inline w-3.5 h-3.5 text-brand-400" /> carré avec flèche vers le haut) situé en bas de votre écran.
                     </p>
                   </div>
                 </div>
@@ -286,10 +286,10 @@ export const InstallSection: React.FC = () => {
 
               <div
                 aria-disabled="true"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl text-sm font-semibold text-slate-300 bg-dark-950/70 border border-white/10 select-none cursor-not-allowed"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl text-sm font-semibold text-trail-300 bg-dark-950/70 border border-trail-500/25 select-none cursor-not-allowed"
               >
                 <span>Ouvrir TrackPilot Trail</span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-trail-500/15 text-trail-300 border border-trail-500/30">
                   <Clock className="w-3 h-3" />
                   Bientôt
                 </span>

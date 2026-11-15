@@ -43,7 +43,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
       >
         {/* Header with Close */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-dark-900/80">
-          <div className="flex items-center gap-2.5 text-teal-400">
+          <div className="flex items-center gap-2.5 text-brand-400">
             <Mail className="w-5 h-5" />
             <span className="font-bold text-sm tracking-wider uppercase font-mono">Contacter l'équipe</span>
           </div>
@@ -60,8 +60,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
         {/* Modal Body */}
         <div className="p-6 space-y-4">
           {/* Card exactly reproducing the screenshot */}
-          <div className="rounded-xl border border-teal-500/30 bg-teal-950/20 p-5 space-y-3">
-            <div className="flex items-center gap-2 text-teal-400 font-bold text-xs uppercase tracking-wider font-mono">
+          <div className="rounded-xl border border-brand-500/30 bg-brand-500/[0.06] p-5 space-y-3">
+            <div className="flex items-center gap-2 text-brand-400 font-bold text-xs uppercase tracking-wider font-mono">
               <Mail className="w-4 h-4" />
               <span>CONTACTER L'ÉQUIPE</span>
             </div>
@@ -72,7 +72,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
               N'hésitez pas à contacter directement l'équipe TrackPilot :{' '}
               <a 
                 href={`mailto:${email}?subject=Retour%20TrackPilot`}
-                className="font-bold text-white hover:text-teal-300 underline decoration-teal-400/50 underline-offset-4 transition-colors font-mono"
+                className="font-bold text-white hover:text-brand-300 underline decoration-brand-400/50 underline-offset-4 transition-colors font-mono"
               >
                 {email}
               </a>
@@ -83,7 +83,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
               href={`mailto:${email}?subject=Retour%20d%27exp%C3%A9rience%20TrackPilot`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-dark-950 bg-teal-400 hover:bg-teal-300 active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 active:scale-[0.98] transition-all"
             >
               <Send className="w-4 h-4" />
               <span>Envoyer un e-mail</span>

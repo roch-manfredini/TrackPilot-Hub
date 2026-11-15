@@ -33,14 +33,14 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
         );
       case 'soon':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-trail-500/15 text-trail-300 border border-trail-500/35">
             <Clock className="w-3.5 h-3.5" />
             {module.statusLabel}
           </span>
         );
       case 'dev':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-500/15 text-sky-300 border border-sky-500/30">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-500/15 text-brand-300 border border-brand-500/30">
             <Wrench className="w-3.5 h-3.5" />
             {module.statusLabel}
           </span>
@@ -69,6 +69,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {MODULES.map((module) => {
             const isAvailable = module.status === 'available';
+            const isTrail = module.id === 'trail';
 
             return (
               <div 
@@ -76,6 +77,8 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                 className={`relative flex flex-col justify-between rounded-2xl glass-panel p-6 sm:p-8 transition-all duration-200 ${
                   isAvailable 
                     ? 'border-brand-500/40 shadow-glow-sm hover:border-brand-500/70 hover:bg-dark-850/90' 
+                    : isTrail
+                    ? 'border-trail-500/35 hover:border-trail-400/55 hover:bg-dark-850/90'
                     : 'border-white/10 hover:border-white/20'
                 }`}
               >
@@ -85,9 +88,9 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                     <div className={`p-3 rounded-xl border ${
                       isAvailable 
                         ? 'bg-brand-500/15 border-brand-500/30 text-brand-400' 
-                        : module.status === 'soon'
-                        ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                        : 'bg-sky-500/10 border-sky-500/20 text-sky-400'
+                        : isTrail
+                        ? 'bg-trail-500/15 border-trail-500/35 text-trail-400'
+                        : 'bg-brand-500/10 border-brand-500/20 text-brand-400'
                     }`}>
                       {getDisciplineIcon(module.iconName)}
                     </div>
@@ -98,10 +101,14 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                   <div className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-1">
                     {module.discipline}
                   </div>
-                  <h3 className="text-2xl font-bold text-white tracking-tight mb-2">
+                  <h3 className={`text-2xl font-bold tracking-tight mb-2 ${
+                    isTrail ? 'text-trail-300' : 'text-brand-300'
+                  }`}>
                     {module.title}
                   </h3>
-                  <p className="text-sm font-medium text-emerald-400 mb-4">
+                  <p className={`text-sm font-medium mb-4 ${
+                    isTrail ? 'text-trail-400' : 'text-emerald-400'
+                  }`}>
                     {module.tagline}
                   </p>
 
@@ -117,7 +124,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                     {module.highlights.map((feat, idx) => (
                       <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
                         <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${
-                          isAvailable ? 'text-brand-400' : 'text-slate-500'
+                          isAvailable ? 'text-brand-400' : isTrail ? 'text-trail-400' : 'text-slate-500'
                         }`} />
                         <span>{feat}</span>
                       </div>
@@ -146,7 +153,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                       <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                     </a>
                   ) : (
-                    <div className="flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl font-semibold text-sm text-amber-300/90 bg-amber-500/10 border border-amber-500/20 select-none">
+                    <div className="flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl font-semibold text-sm text-trail-300 bg-trail-500/10 border border-trail-500/25 select-none">
                       <Clock className="w-4 h-4 shrink-0" />
                       <span>Bientôt disponible</span>
                     </div>
@@ -160,7 +167,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
 
         {/* Clarification Box: Preparation & Guidance vs GPS Track/Stats Recording */}
         <div className="mt-12 max-w-4xl mx-auto p-5 sm:p-6 rounded-2xl glass-panel border border-white/10 bg-dark-850/60 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
+          <div className="p-3 rounded-xl bg-brand-500/10 border border-brand-500/25 text-brand-400 shrink-0">
             <Watch className="w-5 h-5" />
           </div>
           <div className="space-y-1">

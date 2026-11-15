@@ -22,14 +22,14 @@ export const ContactSection: React.FC = () => {
         alt="Coureur de trail sur une crête de montagne"
         imgClassName="object-[70%_35%] sm:object-[65%_35%]"
         scrimClassName="bg-dark-950/40"
-        glowClassName="top-1/4 -right-24 bg-teal-500/10"
+        glowClassName="top-1/4 -right-24 bg-brand-500/10"
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-teal-400 mb-3 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Échange & Projet Ouvert</span>
           </div>
@@ -42,10 +42,10 @@ export const ContactSection: React.FC = () => {
         </div>
 
         {/* Featured Contact Card matching TrackPilot visual standard */}
-        <div className="relative rounded-2xl glass-panel p-6 sm:p-9 border border-teal-500/30 hover:border-teal-500/50 transition-all duration-200 shadow-card">
+        <div className="relative rounded-2xl glass-panel p-6 sm:p-9 border border-brand-500/30 hover:border-brand-500/50 transition-all duration-200 shadow-card">
           
           {/* Card Title with Icon */}
-          <div className="flex items-center gap-2.5 text-teal-400 mb-4">
+          <div className="flex items-center gap-2.5 text-brand-400 mb-4">
             <Mail className="w-5 h-5 flex-shrink-0" />
             <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider font-mono">
               CONTACTER L'ÉQUIPE
@@ -57,7 +57,7 @@ export const ContactSection: React.FC = () => {
             Écrivez directement à l'équipe sur{' '}
             <a
               href={`mailto:${email}?subject=Retour%20TrackPilot`}
-              className="font-bold text-white hover:text-teal-300 underline decoration-teal-400/50 underline-offset-4 transition-colors"
+              className="font-bold text-white hover:text-brand-300 underline decoration-brand-400/50 underline-offset-4 transition-colors"
             >
               {email}
             </a>
@@ -70,7 +70,7 @@ export const ContactSection: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3">
               <a
                 href={`mailto:${email}?subject=Retour%20d%27exp%C3%A9rience%20TrackPilot`}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-dark-950 bg-teal-400 hover:bg-teal-300 active:scale-[0.98] transition-all shadow-glow-sm"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 active:scale-[0.98] transition-all shadow-glow-sm"
               >
                 <Send className="w-4 h-4" />
                 <span>Envoyer un e-mail</span>
@@ -98,7 +98,7 @@ export const ContactSection: React.FC = () => {
 
             {/* Direct human response guarantee */}
             <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-              <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+              <Sparkles className="w-3.5 h-3.5 text-brand-400" />
               <span>Échanges directs entre sportifs et développeurs</span>
             </div>
 

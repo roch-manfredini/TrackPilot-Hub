@@ -7,17 +7,17 @@ export const TechPillars: React.FC = () => {
   const getPillarIcon = (name: string) => {
     switch (name) {
       case 'Route':
-        return <Route className="w-6 h-6 text-emerald-400" />;
+        return <Route className="w-6 h-6 text-brand-400" />;
       case 'Layers':
         return <Layers className="w-6 h-6 text-brand-400" />;
       case 'Wind':
-        return <Wind className="w-6 h-6 text-teal-400" />;
+        return <Wind className="w-6 h-6 text-brand-400" />;
       case 'Navigation':
-        return <Navigation className="w-6 h-6 text-cyan-400" />;
+        return <Navigation className="w-6 h-6 text-brand-400" />;
       case 'Droplets':
-        return <Droplets className="w-6 h-6 text-sky-400" />;
+        return <Droplets className="w-6 h-6 text-brand-400" />;
       case 'Flame':
-        return <Flame className="w-6 h-6 text-amber-400" />;
+        return <Flame className="w-6 h-6 text-brand-400" />;
       default:
         return <Layers className="w-6 h-6 text-brand-400" />;
     }
@@ -32,7 +32,7 @@ export const TechPillars: React.FC = () => {
         imgClassName="object-[center_left] sm:object-[20%_center]"
         scrimClassName="bg-dark-950/45"
         horizontalGradientClassName="bg-gradient-to-l from-dark-950/60 via-transparent to-transparent"
-        glowClassName="bottom-1/4 -left-24 bg-teal-500/10"
+        glowClassName="bottom-1/4 -left-24 bg-brand-500/10"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

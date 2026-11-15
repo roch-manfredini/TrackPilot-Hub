@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   ArrowUpRight,
   Bike,
+  ChevronDown,
   Compass,
   Footprints,
   Info,
@@ -482,11 +483,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
       </div>
 
       {/* Prominent Consultation-Only Banner */}
-      <div className="mb-6 p-4 sm:p-5 rounded-2xl glass-panel border border-brand-500/25 bg-brand-500/[0.06] flex flex-col sm:flex-row items-start sm:items-center gap-3.5">
+      <div className="mb-6 p-4 sm:p-5 rounded-2xl glass-panel border border-brand-500/25 bg-brand-500/[0.06] flex flex-col sm:flex-row items-start gap-3.5">
         <div className="w-9 h-9 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center shrink-0 text-brand-400">
           <Info className="w-4 h-4" />
         </div>
-        <div className="text-xs sm:text-sm text-slate-200 leading-relaxed flex-1 space-y-1.5">
+        <div className="text-xs sm:text-sm text-slate-200 leading-relaxed flex-1">
           <p>
             <strong className="text-white font-semibold">
               Espace de consultation rapide uniquement.
@@ -494,24 +495,36 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
             Cet aperçu affiche uniquement le tracé géographique et le profil altimétrique (sans
             téléchargement GPX ni réglages personnels). Pour planifier votre stratégie et exploiter
             un parcours complet, ouvrez-le directement dans l’application dédiée{' '}
-            <span className="text-brand-300 font-medium">TrackPilot Cycling</span> ou{' '}
-            <span className="text-teal-300 font-medium">TrackPilot Trail</span>.
+            <strong className="text-brand-300 font-semibold">TrackPilot Cycling</strong> ou{' '}
+            <strong className="text-trail-300 font-semibold">TrackPilot Trail</strong>.
           </p>
-          <p className="text-xs text-slate-300">
-            <strong className="text-white font-medium">Visibilité &amp; synchronisation :</strong>{' '}
-            dans le menu <strong className="text-white font-medium">Ajustements</strong> du plan de
-            route, décochez la case <strong className="text-white font-medium">Partager</strong>{' '}
-            pour qu’il reste privé. Cette liste est synchronisée régulièrement par l’équipe (et non
-            en direct) : si votre parcours public n’apparaît pas encore, patientez ou demandez-le
-            par mail à{' '}
-            <a
-              href="mailto:contact@trackpilot.fit?subject=Synchronisation%20d%E2%80%99un%20plan%20de%20route%20public"
-              className="text-brand-300 hover:text-brand-neon underline underline-offset-2 transition-colors"
-            >
-              contact@trackpilot.fit
-            </a>
-            .
-          </p>
+
+          <details className="faq-details mt-2.5">
+            <summary className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 text-xs font-medium text-slate-200 hover:text-white transition-all duration-150 active:scale-[0.98] cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+              <ChevronDown
+                className="w-3.5 h-3.5 text-brand-400 faq-chevron shrink-0"
+                aria-hidden="true"
+              />
+              <span>Infos visibilité et synchronisation</span>
+            </summary>
+
+            <div className="mt-2.5 pt-2.5 border-t border-white/10">
+              <p>
+                Dans le menu <strong className="text-white font-semibold">Ajustements</strong> de
+                votre plan de route, décochez la case{' '}
+                <strong className="text-white font-semibold">Partager</strong> pour qu’il reste
+                privé. Cette liste est synchronisée régulièrement par l’équipe (et non en direct) :
+                si votre parcours public n’apparaît pas encore, patientez ou demandez-le par mail à{' '}
+                <a
+                  href="mailto:contact@trackpilot.fit?subject=Synchronisation%20d%E2%80%99un%20plan%20de%20route%20public"
+                  className="text-brand-300 hover:text-brand-neon underline underline-offset-2 transition-colors"
+                >
+                  contact@trackpilot.fit
+                </a>
+                .
+              </p>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -599,7 +612,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
               onClick={() => handleUniverseChange('trail')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
                 universe === 'trail'
-                  ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+                  ? 'bg-trail-500/20 text-trail-300 border border-trail-500/35'
                   : 'text-slate-400 hover:text-white border border-transparent'
               }`}
             >
@@ -684,20 +697,25 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
             >
               Toutes disciplines
             </button>
-            {availableDisciplines.map((disc) => (
-              <button
-                key={disc}
-                type="button"
-                onClick={() => setDisciplineFilter(disc)}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors cursor-pointer ${
-                  disciplineFilter === disc
-                    ? 'bg-brand-500/20 text-brand-300 border border-brand-500/35'
-                    : 'text-slate-400 hover:text-slate-200 border border-white/5 hover:border-white/15'
-                }`}
-              >
-                {DISCIPLINE_LABELS[disc]}
-              </button>
-            ))}
+            {availableDisciplines.map((disc) => {
+              const isTrailDisc = TRAIL_DISCIPLINES.includes(disc);
+              return (
+                <button
+                  key={disc}
+                  type="button"
+                  onClick={() => setDisciplineFilter(disc)}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors cursor-pointer ${
+                    disciplineFilter === disc
+                      ? isTrailDisc
+                        ? 'bg-trail-500/20 text-trail-300 border border-trail-500/35'
+                        : 'bg-brand-500/20 text-brand-300 border border-brand-500/35'
+                      : 'text-slate-400 hover:text-slate-200 border border-white/5 hover:border-white/15'
+                  }`}
+                >
+                  {DISCIPLINE_LABELS[disc]}
+                </button>
+              );
+            })}
           </div>
 
           {hasActiveFilters && (
@@ -753,9 +771,16 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
               : 'Aucun parcours ne correspond à vos filtres'}
           </h2>
           <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
-            {items.length === 0
-              ? 'Les parcours publics partagés depuis TrackPilot Cycling et TrackPilot Trail apparaîtront ici après synchronisation.'
-              : 'Essayez d’élargir vos critères de distance, de dénivelé ou de discipline.'}
+            {items.length === 0 ? (
+              <>
+                Les parcours publics partagés depuis{' '}
+                <strong className="text-brand-300 font-semibold">TrackPilot Cycling</strong> et{' '}
+                <strong className="text-trail-300 font-semibold">TrackPilot Trail</strong>{' '}
+                apparaîtront ici après synchronisation.
+              </>
+            ) : (
+              'Essayez d’élargir vos critères de distance, de dénivelé ou de discipline.'
+            )}
           </p>
           {hasActiveFilters && (
             <button
@@ -786,7 +811,9 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                   onClick={() => setSelectedId(item.id)}
                   className={`w-full text-left px-3 py-2 rounded-xl border transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-brand-500/[0.1] border-brand-400/55 shadow-md shadow-brand-500/5'
+                      ? isCycling
+                        ? 'bg-brand-500/[0.1] border-brand-400/55 shadow-md shadow-brand-500/5'
+                        : 'bg-trail-500/[0.1] border-trail-400/55 shadow-md shadow-trail-500/5'
                       : 'glass-panel border-white/8 hover:border-white/20 hover:bg-dark-850/80'
                   }`}
                 >
@@ -799,7 +826,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                       className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] uppercase tracking-wider border shrink-0 ${
                         isCycling
                           ? 'text-brand-300 bg-brand-500/10 border-brand-500/25'
-                          : 'text-teal-300 bg-teal-500/10 border-teal-500/25'
+                          : 'text-trail-300 bg-trail-500/10 border-trail-500/30'
                       }`}
                     >
                       {isCycling ? (
@@ -849,7 +876,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[11px] font-mono uppercase tracking-wider text-brand-300">
+                      <span
+                        className={`text-[11px] font-mono font-semibold uppercase tracking-wider ${
+                          activeSummary.app === 'cycling' ? 'text-brand-300' : 'text-trail-300'
+                        }`}
+                      >
                         {activeSummary.app === 'cycling'
                           ? 'TrackPilot Cycling'
                           : 'TrackPilot Trail'}{' '}
@@ -865,7 +896,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                     href={getAppLaunchUrl(activeSummary.app, activeSummary.id)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 transition-all shrink-0 shadow-lg shadow-brand-500/15"
+                    className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-dark-950 transition-all shrink-0 shadow-lg ${
+                      activeSummary.app === 'cycling'
+                        ? 'bg-brand-400 hover:bg-brand-300 shadow-brand-500/15'
+                        : 'bg-trail-400 hover:bg-trail-300 shadow-trail-500/15'
+                    }`}
                   >
                     <span>
                       Ouvrir dans TrackPilot{' '}
@@ -890,7 +925,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                     <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
                       Dénivelé +
                     </div>
-                    <div className="text-base sm:text-lg font-bold text-brand-400 font-mono tabular-nums mt-0.5">
+                    <div
+                      className={`text-base sm:text-lg font-bold font-mono tabular-nums mt-0.5 ${
+                        activeSummary.app === 'trail' ? 'text-trail-400' : 'text-brand-400'
+                      }`}
+                    >
                       +{Math.round(activeSummary.totalElevationGain)}{' '}
                       <span className="text-xs font-normal text-slate-400">m</span>
                     </div>

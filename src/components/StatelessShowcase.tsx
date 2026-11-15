@@ -12,7 +12,7 @@ export const StatelessShowcase: React.FC = () => {
       
       {/* Background radial glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
       {/* Side-by-side Comparative Grid */}
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">

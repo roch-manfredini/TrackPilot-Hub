@@ -15,7 +15,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
         alt="Cyclistes sur route de montagne et randonneurs sur le sentier voisin"
         imgClassName="object-center"
         scrimClassName="bg-dark-950/45"
-        glowClassName="top-1/4 -right-24 bg-teal-500/10"
+        glowClassName="top-1/4 -right-24 bg-brand-500/10"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,10 +90,10 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                 <button
                   type="button" 
                   onClick={onOpenContact}
-                  className="text-xs text-slate-400 hover:text-teal-300 transition-colors inline-flex items-center gap-1.5 font-mono cursor-pointer"
+                  className="text-xs text-slate-400 hover:text-brand-300 transition-colors inline-flex items-center gap-1.5 font-mono cursor-pointer"
                 >
                   <span>Une idée, une remarque ou envie d'échanger ? Contactez l'équipe</span>
-                  <ArrowRight className="w-3 h-3 text-teal-400" />
+                  <ArrowRight className="w-3 h-3 text-brand-400" />
                 </button>
               </div>
             </div>
