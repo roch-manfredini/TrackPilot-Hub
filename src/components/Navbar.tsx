@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Compass } from 'lucide-react';
+import { Menu, X, Compass, Mail } from 'lucide-react';
 
 interface NavbarProps {
   activeView?: 'home' | 'plans';
@@ -128,12 +128,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
           </nav>
 
-          {/* Mobile menu trigger */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Quick Contact & Mobile Menu Trigger */}
+          <div className="flex items-center gap-2">
+            <a
+              href="#contact"
+              onClick={(e) => handleSectionClick(e, '#contact')}
+              aria-label="Contacter l'équipe"
+              title="Contacter l'équipe"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-brand-500/15 hover:bg-brand-500/25 text-brand-400 hover:text-brand-300 border border-brand-500/35 hover:border-brand-400/60 shadow-glow-sm transition-all duration-150 ease-out active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            >
+              <Mail className="w-4 h-4" aria-hidden="true" />
+            </a>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-dark-850 border border-white/10 text-slate-300 hover:text-white hover:bg-dark-800 transition-colors"
+              className="md:hidden p-2 rounded-lg bg-dark-850 border border-white/10 text-slate-300 hover:text-white hover:bg-dark-800 transition-colors"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
