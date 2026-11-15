@@ -51,10 +51,10 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                 TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils <strong className="text-white font-semibold">open source</strong> et des bases de données collaboratives créées par la communauté (<strong className="text-white font-medium">OpenStreetMap</strong>, <strong className="text-white font-medium">BRouter</strong>, données météo ouvertes).
               </p>
               <p className="text-sm text-slate-300 leading-relaxed">
-                Parce que nous bénéficions gratuitement de ce travail collectif, les 2 applications TrackPilot sont <strong className="text-brand-300 font-semibold">gratuites et sans publicité</strong>. Elles sont totalement <strong className="text-white font-medium">autonomes</strong> et n’ont pas besoin de ce site web pour fonctionner.
+                Parce que nous bénéficions gratuitement de ce travail collectif, les 2 applications TrackPilot sont <strong className="text-brand-300 font-semibold">gratuites et sans publicité</strong>.
               </p>
               <p className="text-sm text-slate-300 leading-relaxed">
-                En toute transparence : si la communauté grandit fortement et que les frais d’hébergement ou d’infrastructure deviennent importants, un financement pourra être ajouté (un café symbolique facultatif ou un bandeau publicitaire), <strong className="text-white font-semibold">uniquement sur ce site web (le Hub)</strong>, <strong className="text-brand-300 font-semibold">jamais</strong> dans les 2 applications.
+                En toute transparence : si la communauté grandit fortement et que les frais d’hébergement ou d’infrastructure deviennent importants, un financement pourra être ajouté (un café symbolique facultatif ou un bandeau publicitaire), <strong className="text-white font-semibold">uniquement sur ce site web (le Hub)</strong>, <strong className="text-brand-300 font-semibold">jamais</strong> dans les applications.
               </p>
             </div>
           </div>
