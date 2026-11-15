@@ -206,15 +206,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {link.label}
               </a>
             ))}
-            <div className="pt-2 mt-2 border-t border-white/10">
-              <a
-                href="#modules"
-                onClick={(e) => handleSectionClick(e, '#modules')}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 active:scale-[0.98] rounded-xl transition-all"
-              >
-                <span>Explorer les modules</span>
-              </a>
-            </div>
           </nav>
         )}
       </div>
