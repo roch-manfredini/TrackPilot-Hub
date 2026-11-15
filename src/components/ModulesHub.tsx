@@ -1,9 +1,13 @@
 import React from 'react';
-import { Bike, Footprints, Mountain, ChevronDown, CheckCircle2, Clock, Wrench, Watch } from 'lucide-react';
+import { Bike, Footprints, Mountain, ChevronDown, CheckCircle2, Clock, Wrench, Watch, Compass, ArrowRight } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { ModuleInfo } from '../types';
 
-export const ModulesHub: React.FC = () => {
+interface ModulesHubProps {
+  onOpenPlans?: () => void;
+}
+
+export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
 
   const getDisciplineIcon = (iconName: string) => {
     switch (iconName) {
@@ -167,6 +171,32 @@ export const ModulesHub: React.FC = () => {
               TrackPilot n’est pas un outil d’enregistrement d’activités ni un carnet de statistiques (type Strava ou Garmin Connect). Son but n’est pas seulement de tracer un GPX ou de vous guider, mais de réunir toute votre sortie dans un véritable plan de route — relief, météo, eau et effort. <strong className="text-white font-medium">Vos montres et compteurs GPS restent indispensables</strong> pour enregistrer vos traces réelles, vos données de performance (fréquence cardiaque, puissance, allure) et votre historique d'entraînement.
             </p>
           </div>
+        </div>
+
+        {/* Discreet Public Plans Preview Callout */}
+        <div className="mt-4 max-w-4xl mx-auto p-4 sm:px-6 rounded-2xl glass-panel border border-brand-500/20 bg-brand-500/[0.04] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-start sm:items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-brand-500/10 border border-brand-500/25 text-brand-400 shrink-0">
+              <Compass className="w-4 h-4" />
+            </div>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <strong className="text-white font-medium">Aperçu des plans publics :</strong>{' '}
+              filtrez rapidement les tracés et profils partagés avant de les ouvrir dans leur application dédiée.
+            </p>
+          </div>
+          <a
+            href="/plans"
+            onClick={(e) => {
+              if (onOpenPlans) {
+                e.preventDefault();
+                onOpenPlans();
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-brand-300 bg-brand-500/10 hover:bg-brand-500/20 border border-brand-500/30 transition-colors shrink-0 whitespace-nowrap"
+          >
+            <span>Consulter les plans</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
         </div>
 
       </div>

@@ -121,3 +121,30 @@ dialog::backdrop {
     transition-behavior: allow-discrete;
   }
 }
+
+/* Dark Obsidian skin for lazy-loaded Leaflet preview map */
+.leaflet-container {
+  background: #07080b;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.leaflet-control-zoom a {
+  background-color: #111622 !important;
+  color: #cbd5e1 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #1a2234 !important;
+  color: #34d399 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(7, 8, 11, 0.72) !important;
+  color: #64748b !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #94a3b8 !important;
+}

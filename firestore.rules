@@ -1,0 +1,203 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// This security rules file assumes the following data structures
+// for the TrackPilot Hub project (trackpilot-hub):
+//
+// Collection: catalog_meta
+// Document ID: 'index' (single public catalog summary document)
+// Fields:
+//   - updatedAt: timestamp | ISO 8601 string (required, 10..40 chars if string)
+//   - count: int (required, >= 0)
+//   - items: list (required, size <= 2000)
+//
+// Collection: public_previews
+// Document ID: {previewId} (matches data.id, 1..128 chars)
+// Fields:
+//   - id: string (required, == previewId, 1..128 chars)
+//   - app: string (required, in ['cycling', 'trail'])
+//   - discipline: string (required, in ['road', 'gravel', 'mtb', 'trail', 'hike', 'walk'])
+//   - name: string (required, 1..200 chars)
+//   - totalDistanceKm: int | float (required, 0..10000)
+//   - totalElevationGain: int | float (required, 0..50000)
+//   - minAltitude: int | float (required, -500..9000)
+//   - maxAltitude: int | float (required, -500..9000)
+//   - createdAt: timestamp | ISO 8601 string (required, 10..40 chars if string)
+//   - updatedAt: timestamp | ISO 8601 string (required, 10..40 chars if string)
+//   - pathPolyline: string (required, 1..50000 chars)
+//   - elevationSamples: list (required, size <= 800)
+//   - startLat: int | float (optional, -90..90)
+//   - startLng: int | float (optional, -180..180)
+//   Note: Private fields (e.g., gpxContent, authorEmail, tactics) are
+//         strictly forbidden by hasOnly() schema enforcement.
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    // Check if the caller is authenticated with a non-null UID
+    function isAuthenticated() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    // Check if the caller is an authorized admin with a verified email
+    // matching the TrackPilot-Cycling / TrackPilot-Hub allowlist
+    function isAdmin() {
+      return isAuthenticated() &&
+             'email_verified' in request.auth.token &&
+             request.auth.token.email_verified == true &&
+             'email' in request.auth.token &&
+             request.auth.token.email is string &&
+             request.auth.token.email in [
+               'roch.manfredini@gmail.com',
+               'roch.manfredini@googlemail.com',
+               'rmanf30@gmail.com',
+               'rmanf30@googlemail.com',
+               'rochmanfredini@gmail.com',
+               'rochmanfredini@googlemail.com',
+               'rmanf.30@gmail.com',
+               'rmanf.30@googlemail.com'
+             ];
+    }
+
+    // Validate that a value is a numeric int or float
+    function isNumber(val) {
+      return val is int || val is float;
+    }
+
+    // Validate that a value is a Firestore timestamp or bounded ISO 8601 string
+    function isValidDateValue(val) {
+      return (val is timestamp) ||
+             (val is string &&
+              val.size() >= 10 &&
+              val.size() <= 40 &&
+              val.matches("^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})?)?$"));
+    }
+
+    // Validate that the document contains all required fields
+    function hasRequiredFields(data, fields) {
+      return data.keys().hasAll(fields);
+    }
+
+    // Validate that the document contains only allowed fields
+    function hasOnlyAllowedFields(data, fields) {
+      return data.keys().hasOnly(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    // Validate /catalog_meta/index document structure and bounds
+    function isValidCatalogIndex(data) {
+      return hasRequiredFields(data, ['updatedAt', 'count', 'items']) &&
+             hasOnlyAllowedFields(data, ['updatedAt', 'count', 'items']) &&
+             isValidDateValue(data.updatedAt) &&
+             data.count is int && data.count >= 0 &&
+             data.items is list && data.items.size() <= 2000;
+    }
+
+    // Validate /public_previews/{previewId} document structure, bounds, and PII exclusion
+    function isValidPublicPreview(data, previewId) {
+      let requiredFields = [
+        'id',
+        'app',
+        'discipline',
+        'name',
+        'totalDistanceKm',
+        'totalElevationGain',
+        'minAltitude',
+        'maxAltitude',
+        'createdAt',
+        'updatedAt',
+        'pathPolyline',
+        'elevationSamples'
+      ];
+      let allowedFields = [
+        'id',
+        'app',
+        'discipline',
+        'name',
+        'totalDistanceKm',
+        'totalElevationGain',
+        'minAltitude',
+        'maxAltitude',
+        'createdAt',
+        'updatedAt',
+        'pathPolyline',
+        'elevationSamples',
+        'startLat',
+        'startLng'
+      ];
+
+      return hasRequiredFields(data, requiredFields) &&
+             hasOnlyAllowedFields(data, allowedFields) &&
+             data.id is string &&
+             data.id == previewId &&
+             data.id.size() >= 1 &&
+             data.id.size() <= 128 &&
+             data.app is string &&
+             data.app in ['cycling', 'trail'] &&
+             data.discipline is string &&
+             data.discipline in ['road', 'gravel', 'mtb', 'trail', 'hike', 'walk'] &&
+             data.name is string &&
+             data.name.size() >= 1 &&
+             data.name.size() <= 200 &&
+             isNumber(data.totalDistanceKm) &&
+             data.totalDistanceKm >= 0 &&
+             data.totalDistanceKm <= 10000 &&
+             isNumber(data.totalElevationGain) &&
+             data.totalElevationGain >= 0 &&
+             data.totalElevationGain <= 50000 &&
+             isNumber(data.minAltitude) &&
+             data.minAltitude >= -500 &&
+             data.minAltitude <= 9000 &&
+             isNumber(data.maxAltitude) &&
+             data.maxAltitude >= -500 &&
+             data.maxAltitude <= 9000 &&
+             isValidDateValue(data.createdAt) &&
+             isValidDateValue(data.updatedAt) &&
+             data.pathPolyline is string &&
+             data.pathPolyline.size() >= 1 &&
+             data.pathPolyline.size() <= 50000 &&
+             data.elevationSamples is list &&
+             data.elevationSamples.size() <= 800 &&
+             (!('startLat' in data) || (isNumber(data.startLat) && data.startLat >= -90 && data.startLat <= 90)) &&
+             (!('startLng' in data) || (isNumber(data.startLng) && data.startLng >= -180 && data.startLng <= 180));
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    // Public read-only catalog summary (strictly /catalog_meta/index for writes)
+    match /catalog_meta/{docId} {
+      allow read: if true;
+      allow create, update: if isAdmin() &&
+                               docId == 'index' &&
+                               isValidCatalogIndex(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Public read-only route previews (strictly sanitized, no private GPX/PII fields)
+    match /public_previews/{previewId} {
+      allow read: if true;
+      allow create, update: if isAdmin() &&
+                               isValidPublicPreview(request.resource.data, previewId);
+      allow delete: if isAdmin();
+    }
+
+    // Default deny for all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,13 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Compass, Mail } from 'lucide-react';
+import { Menu, X, Compass } from 'lucide-react';
 
 interface NavbarProps {
-  onOpenContact?: () => void;
+  activeView?: 'home' | 'plans';
+  onNavigateHome?: (hash?: string) => void;
+  onNavigatePlans?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  activeView = 'home',
+  onNavigateHome,
+  onNavigatePlans,
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+    setMobileMenuOpen(false);
+    if (activeView === 'plans' && onNavigateHome) {
+      e.preventDefault();
+      onNavigateHome(hash);
+    }
+  };
+
+  const handlePlansClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setMobileMenuOpen(false);
+    if (onNavigatePlans) {
+      e.preventDefault();
+      onNavigatePlans();
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +51,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
         <div className="flex items-center justify-between">
           
           {/* Logo Brand */}
-          <a href="#" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-lg">
+          <a
+            href="#top"
+            onClick={(e) => handleSectionClick(e, '')}
+            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-lg"
+          >
             <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-dark-850 border border-brand-500/30 group-hover:border-brand-500/70 transition-colors shadow-glow-sm">
               <Compass className="w-5 h-5 text-brand-400 group-hover:rotate-45 transition-transform duration-300" />
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
@@ -49,36 +75,53 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           <nav className="hidden md:flex items-center gap-4 lg:gap-7 text-sm font-medium text-slate-300">
             <a 
               href="#modules" 
+              onClick={(e) => handleSectionClick(e, '#modules')}
               className="hover:text-white transition-colors duration-150 py-1"
             >
               Modules
             </a>
+            <a
+              href="/plans"
+              onClick={handlePlansClick}
+              className={`transition-colors duration-150 py-1 ${
+                activeView === 'plans'
+                  ? 'text-brand-300 font-semibold'
+                  : 'hover:text-white'
+              }`}
+            >
+              Plans publics
+            </a>
             <a 
               href="#formats" 
+              onClick={(e) => handleSectionClick(e, '#formats')}
               className="hover:text-white transition-colors duration-150 py-1"
             >
               Profil & Cockpit
             </a>
             <a 
               href="#tech" 
+              onClick={(e) => handleSectionClick(e, '#tech')}
               className="hover:text-white transition-colors duration-150 py-1"
             >
               Fonctionnalités
             </a>
             <a 
               href="#installation" 
+              onClick={(e) => handleSectionClick(e, '#installation')}
               className="hover:text-white transition-colors duration-150 py-1"
             >
               Installation
             </a>
             <a 
               href="#vision" 
+              onClick={(e) => handleSectionClick(e, '#vision')}
               className="hover:text-white transition-colors duration-150 py-1"
             >
               Esprit du Projet
             </a>
             <a 
               href="#faq" 
+              onClick={(e) => handleSectionClick(e, '#faq')}
               className="hover:text-white transition-colors duration-150 py-1"
             >
               FAQ
@@ -89,6 +132,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           <div className="hidden sm:flex items-center gap-2.5">
             <a
               href="#gratuite"
+              onClick={(e) => handleSectionClick(e, '#gratuite')}
               title="Pourquoi TrackPilot est gratuit et voué à le rester"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono font-semibold text-brand-300 bg-brand-500/10 hover:bg-brand-500/20 border border-brand-500/30 hover:border-brand-500/50 transition-all duration-150 whitespace-nowrap"
             >
@@ -96,35 +140,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               <span className="hidden sm:inline md:hidden lg:inline">Gratuit · Écosystème Libre</span>
               <span className="hidden md:inline lg:hidden">100% Gratuit</span>
             </a>
-
-            <button
-              type="button"
-              onClick={onOpenContact}
-              title="Contacter l'équipe TrackPilot"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-slate-300 hover:text-white bg-dark-850 hover:bg-dark-800 border border-white/10 hover:border-white/20 rounded-xl transition-all active:scale-[0.98] cursor-pointer"
-            >
-              <Mail className="w-3.5 h-3.5 text-teal-400" />
-              <span>Contact</span>
-            </button>
           </div>
 
           {/* Mobile menu trigger */}
           <div className="flex sm:hidden items-center gap-2">
             <a
               href="#gratuite"
+              onClick={(e) => handleSectionClick(e, '#gratuite')}
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 whitespace-nowrap"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
               <span>100% Gratuit</span>
             </a>
-            <button
-              type="button"
-              onClick={onOpenContact}
-              className="p-2 rounded-lg bg-dark-850 border border-white/10 text-slate-300 hover:text-white"
-              title="Contacter l'équipe"
-            >
-              <Mail className="w-4 h-4 text-teal-400" />
-            </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -142,69 +169,67 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           <div className="sm:hidden mt-4 pt-4 border-t border-white/10 pb-4 space-y-3">
             <a
               href="#modules"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleSectionClick(e, '#modules')}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Modules
             </a>
             <a
+              href="/plans"
+              onClick={handlePlansClick}
+              className={`block px-3 py-2 rounded-lg text-base font-medium hover:bg-dark-850 ${
+                activeView === 'plans' ? 'text-brand-300' : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              Plans publics
+            </a>
+            <a
               href="#formats"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleSectionClick(e, '#formats')}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Profil & Cockpit
             </a>
             <a
               href="#tech"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleSectionClick(e, '#tech')}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Fonctionnalités
             </a>
             <a
               href="#installation"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleSectionClick(e, '#installation')}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Installation
             </a>
             <a
               href="#vision"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleSectionClick(e, '#vision')}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               Esprit du Projet
             </a>
             <a
               href="#faq"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleSectionClick(e, '#faq')}
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               FAQ
             </a>
             <a
               href="#gratuite"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleSectionClick(e, '#gratuite')}
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-base font-medium text-brand-300 hover:text-white hover:bg-dark-850"
             >
               <span className="w-2 h-2 rounded-full bg-brand-neon shrink-0" aria-hidden="true" />
               <span>Gratuit · Écosystème Libre</span>
             </a>
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                if (onOpenContact) onOpenContact();
-              }}
-              className="flex items-center gap-2 w-full text-left px-3 py-2 rounded-lg text-base font-medium text-teal-300 hover:text-white hover:bg-dark-850"
-            >
-              <Mail className="w-4 h-4 text-teal-400" />
-              <span>Contacter l'équipe</span>
-            </button>
             <div className="pt-2">
               <a
                 href="#modules"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => handleSectionClick(e, '#modules')}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-dark-950 bg-brand-400 rounded-xl"
               >
                 <span>Explorer les modules</span>

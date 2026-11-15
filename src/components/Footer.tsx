@@ -5,11 +5,13 @@ import { LegalTab } from './LegalModal';
 interface FooterProps {
   onOpenLegal?: (tab: LegalTab) => void;
   onOpenCookies?: () => void;
+  onOpenAdmin?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onOpenLegal,
   onOpenCookies,
+  onOpenAdmin,
 }) => {
   return (
     <footer className="border-t border-white/[0.08] bg-dark-950 py-8">
@@ -61,7 +63,13 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Bar: Clean single line without wrapping on desktop, centered on mobile */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-mono text-center sm:text-left">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:whitespace-nowrap">
-            <span>© {new Date().getFullYear()} TrackPilot.fit • Développé avec</span>
+            <span
+              onDoubleClick={onOpenAdmin}
+              className="cursor-default select-none"
+            >
+              © {new Date().getFullYear()} TrackPilot.fit
+            </span>
+            <span>• Développé avec</span>
             <Heart className="w-3.5 h-3.5 text-brand-400 fill-brand-400 inline" />
             <span>pour les passionnés d'endurance.</span>
           </div>
