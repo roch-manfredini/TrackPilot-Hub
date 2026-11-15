@@ -29,8 +29,6 @@ export const Hero: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-850/90 border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-glow-sm">
             <Sparkles className="w-3.5 h-3.5 text-brand-neon" />
             <span>Projet collaboratif</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
-            <span className="font-mono text-slate-400">Accès libre &amp; gratuit</span>
           </div>
 
           {/* Headline */}
@@ -44,15 +42,7 @@ export const Hero: React.FC = () => {
           {/* Subtitle */}
           <p className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
             Transformez un simple fichier GPX ou FIT en véritable{' '}
-            <strong className="text-white font-semibold">plan de route</strong> : relief, vent réel sur le parcours, points d’eau et repères d’effort réunis au même endroit. Un outil{' '}
-            <a
-              href="#gratuite"
-              title="Découvrir pourquoi TrackPilot est gratuit et voué à le rester"
-              className="text-brand-300 hover:text-brand-neon font-semibold underline decoration-brand-400/60 underline-offset-4 transition-colors"
-            >
-              gratuit
-            </a>
-            , conçu par des passionnés dans le respect de vos données.
+            <strong className="text-white font-semibold">plan de route</strong> : relief, vent réel sur le parcours, points d’eau et repères d’effort réunis au même endroit. Un outil conçu par des passionnés dans le respect de vos données.
           </p>
 
           {/* Action CTAs */}

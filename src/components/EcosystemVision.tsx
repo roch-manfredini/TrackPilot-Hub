@@ -44,14 +44,9 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
               <Coffee className="w-5 h-5 text-brand-neon" />
             </div>
             <div className="flex-1 space-y-2">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                  Gratuit par principe, parce que bâti sur le partage
-                </h3>
-                <span className="text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-500/15 text-brand-300 border border-brand-500/30 font-semibold">
-                  100% Gratuit · Sans abonnement
-                </span>
-              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                Gratuit par principe, parce que bâti sur le partage
+              </h3>
               <p className="text-sm text-slate-300 leading-relaxed">
                 TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils <strong className="text-white font-semibold">open source</strong> et des bases de données collaboratives créées par la communauté (<strong className="text-white font-medium">OpenStreetMap</strong>, <strong className="text-white font-medium">BRouter</strong>, données météo ouvertes).
               </p>
@@ -67,35 +62,30 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
 
         {/* Big Final Call to Action */}
         <div className="mt-16 text-center">
-          <div className="inline-block p-1 rounded-2xl bg-gradient-to-r from-brand-neon via-brand-500 to-teal-400">
-            <div className="bg-dark-950 rounded-[14px] px-8 py-10 sm:py-12 max-w-3xl">
-              <span className="text-xs font-mono uppercase tracking-widest text-brand-400 font-bold">
-                Accès libre & gratuit
-              </span>
-              <h3 className="text-2xl sm:text-4xl font-extrabold text-white mt-2 mb-4">
-                Prêt à préparer votre prochain plan de route ?
-              </h3>
-              <p className="text-sm sm:text-base text-slate-300 mb-8 max-w-xl mx-auto">
-                Vélo, gravel, trail ou randonnée à pied : choisissez l’application adaptée à votre pratique et glissez un simple fichier GPX pour démarrer.
-              </p>
-              <a
-                href="#modules"
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold text-dark-950 bg-brand-neon hover:bg-brand-400 active:scale-[0.98] shadow-glow-md transition-all duration-150"
-              >
-                <span>Choisir mon module</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
+          <div className="inline-block rounded-2xl glass-panel border border-brand-500/30 bg-dark-950/90 px-8 py-10 sm:py-12 max-w-3xl shadow-card">
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-white mb-4">
+              Prêt à préparer votre prochain plan de route ?
+            </h3>
+            <p className="text-sm sm:text-base text-slate-300 mb-8 max-w-xl mx-auto">
+              Vélo, gravel, trail ou randonnée à pied : choisissez l’application adaptée à votre pratique et glissez un simple fichier GPX pour démarrer.
+            </p>
+            <a
+              href="#modules"
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold text-dark-950 bg-brand-neon hover:bg-brand-400 active:scale-[0.98] shadow-glow-md transition-all duration-150"
+            >
+              <span>Choisir mon module</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
 
-              <div className="mt-5">
-                <button
-                  type="button" 
-                  onClick={onOpenContact}
-                  className="text-xs text-slate-400 hover:text-brand-300 transition-colors inline-flex items-center gap-1.5 font-mono cursor-pointer"
-                >
-                  <span>Une idée, une remarque ou envie d'échanger ? Contactez l'équipe</span>
-                  <ArrowRight className="w-3 h-3 text-brand-400" />
-                </button>
-              </div>
+            <div className="mt-5">
+              <button
+                type="button" 
+                onClick={onOpenContact}
+                className="text-xs text-slate-400 hover:text-brand-300 transition-colors inline-flex items-center gap-1.5 font-mono cursor-pointer"
+              >
+                <span>Une idée, une remarque ou envie d'échanger ? Contactez l'équipe</span>
+                <ArrowRight className="w-3 h-3 text-brand-400" />
+              </button>
             </div>
           </div>
         </div>
