@@ -2,6 +2,7 @@ import { getApp, getApps, initializeApp, type FirebaseApp, type FirebaseOptions 
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -29,7 +30,9 @@ const CYCLING_SOURCE_CONFIG: FirebaseOptions = {
 };
 
 export interface SyncReport {
+  totalActiveCount: number;
   syncedCount: number;
+  unchangedCount: number;
   deletedCount: number;
   skippedCount: number;
   updatedAt: string;
@@ -119,9 +122,60 @@ function buildSanitizedPreview(
   };
 }
 
+function toSummaryItem(p: PublicPreviewDoc): CatalogSummaryItem {
+  return {
+    id: p.id,
+    app: p.app,
+    discipline: p.discipline,
+    name: p.name,
+    totalDistanceKm: p.totalDistanceKm,
+    totalElevationGain: p.totalElevationGain,
+    minAltitude: p.minAltitude,
+    maxAltitude: p.maxAltitude,
+    createdAt: p.createdAt,
+    updatedAt: p.updatedAt,
+    ...(typeof p.startLat === 'number' ? { startLat: p.startLat } : {}),
+    ...(typeof p.startLng === 'number' ? { startLng: p.startLng } : {}),
+  };
+}
+
+function isUnchangedRide(
+  existing: CatalogSummaryItem | undefined,
+  raw: DocumentData,
+  app: CatalogApp,
+  nowIso: string
+): boolean {
+  if (!existing || (!raw.updatedAt && !raw.createdAt)) {
+    return false;
+  }
+  const rawName = (typeof raw.name === 'string' ? raw.name.trim() : '') || 'Parcours sans titre';
+  const safeName = rawName.slice(0, 200);
+  const discipline: CatalogDiscipline = app === 'cycling' ? mapCyclingDiscipline(raw) : 'trail';
+  const createdAt = toIsoDateString(raw.createdAt, nowIso);
+  const updatedAt = toIsoDateString(raw.updatedAt, createdAt);
+
+  if (
+    existing.updatedAt !== updatedAt ||
+    existing.name !== safeName ||
+    existing.discipline !== discipline
+  ) {
+    return false;
+  }
+
+  if (typeof raw.totalDistanceKm === 'number' && Number.isFinite(raw.totalDistanceKm)) {
+    const roundedDist = Math.round(raw.totalDistanceKm * 10) / 10;
+    if (Math.abs(roundedDist - existing.totalDistanceKm) > 0.1) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 /**
- * Synchronizes public routes (`isPublic == true`) from active source apps into `trackpilot-hub`.
- * Runs client-side using the authenticated admin's Firestore write permission.
+ * Incrementally synchronizes public routes (`isPublic == true`) into `trackpilot-hub`.
+ * Uses `/catalog_meta/index` (1 read) to skip GPX parsing & Firestore writes for unchanged routes
+ * and detect orphaned/privatized routes without reading the full `public_previews` collection.
  */
 export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
   const auth = getHubAuth();
@@ -130,7 +184,22 @@ export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
   }
 
   const nowIso = new Date().toISOString();
-  const collectedPreviews: PublicPreviewDoc[] = [];
+  const hubDb = getHubDb();
+
+  // Single read on /catalog_meta/index for incremental diff & orphan detection
+  const existingIndexSnap = await getDoc(doc(hubDb, 'catalog_meta', 'index'));
+  const existingItems =
+    existingIndexSnap.exists() && Array.isArray(existingIndexSnap.data().items)
+      ? (existingIndexSnap.data().items as CatalogSummaryItem[])
+      : [];
+  const existingById = new Map<string, CatalogSummaryItem>(
+    existingItems.map((item) => [item.id, item])
+  );
+
+  const previewsToWrite: PublicPreviewDoc[] = [];
+  const summaryItems: CatalogSummaryItem[] = [];
+  const activeIds = new Set<string>();
+  let unchangedCount = 0;
   let skippedCount = 0;
 
   // Source 1: TrackPilot-Cycling
@@ -140,9 +209,22 @@ export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
   const cyclingSnap = await getDocs(cyclingQuery);
 
   cyclingSnap.forEach((docSnap) => {
-    const preview = buildSanitizedPreview('cycling', docSnap.id, docSnap.data(), nowIso);
+    const previewId = `cycling_${docSnap.id}`.slice(0, 128);
+    const raw = docSnap.data();
+    const existing = existingById.get(previewId);
+
+    if (isUnchangedRide(existing, raw, 'cycling', nowIso) && existing) {
+      activeIds.add(previewId);
+      summaryItems.push(existing);
+      unchangedCount += 1;
+      return;
+    }
+
+    const preview = buildSanitizedPreview('cycling', docSnap.id, raw, nowIso);
     if (preview) {
-      collectedPreviews.push(preview);
+      activeIds.add(preview.id);
+      previewsToWrite.push(preview);
+      summaryItems.push(toSummaryItem(preview));
     } else {
       skippedCount += 1;
     }
@@ -151,23 +233,19 @@ export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
   // Source 2: TrackPilot-Trail will be plugged in here when ready (public rides enabled).
 
   // Sort most recently updated first (with deterministic tie-break)
-  collectedPreviews.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  summaryItems.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 
-  const hubDb = getHubDb();
-  const existingSnap = await getDocs(collection(hubDb, 'public_previews'));
-  const activeIds = new Set(collectedPreviews.map((p) => p.id));
   const orphanIds: string[] = [];
-
-  existingSnap.forEach((docSnap) => {
-    if (!activeIds.has(docSnap.id)) {
-      orphanIds.push(docSnap.id);
+  existingById.forEach((_item, existingId) => {
+    if (!activeIds.has(existingId)) {
+      orphanIds.push(existingId);
     }
   });
 
-  // Upsert sanitized previews in safe Firestore batches (< 500 ops per batch)
+  // Upsert only new or changed previews in safe Firestore batches (< 500 ops per batch)
   const CHUNK_SIZE = 350;
-  for (let i = 0; i < collectedPreviews.length; i += CHUNK_SIZE) {
-    const chunk = collectedPreviews.slice(i, i + CHUNK_SIZE);
+  for (let i = 0; i < previewsToWrite.length; i += CHUNK_SIZE) {
+    const chunk = previewsToWrite.slice(i, i + CHUNK_SIZE);
     const batch = writeBatch(hubDb);
     for (const preview of chunk) {
       batch.set(doc(hubDb, 'public_previews', preview.id), preview);
@@ -185,21 +263,6 @@ export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
     await batch.commit();
   }
 
-  const summaryItems: CatalogSummaryItem[] = collectedPreviews.map((p) => ({
-    id: p.id,
-    app: p.app,
-    discipline: p.discipline,
-    name: p.name,
-    totalDistanceKm: p.totalDistanceKm,
-    totalElevationGain: p.totalElevationGain,
-    minAltitude: p.minAltitude,
-    maxAltitude: p.maxAltitude,
-    createdAt: p.createdAt,
-    updatedAt: p.updatedAt,
-    ...(typeof p.startLat === 'number' ? { startLat: p.startLat } : {}),
-    ...(typeof p.startLng === 'number' ? { startLng: p.startLng } : {}),
-  }));
-
   const indexDoc: CatalogIndexDoc = {
     updatedAt: nowIso,
     count: summaryItems.length,
@@ -211,7 +274,9 @@ export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
   await metaBatch.commit();
 
   return {
-    syncedCount: collectedPreviews.length,
+    totalActiveCount: summaryItems.length,
+    syncedCount: previewsToWrite.length,
+    unchangedCount,
     deletedCount: orphanIds.length,
     skippedCount,
     updatedAt: nowIso,

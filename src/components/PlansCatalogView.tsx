@@ -60,6 +60,7 @@ const DISCIPLINE_LABELS: Record<CatalogDiscipline, string> = {
 
 const CYCLING_DISCIPLINES: CatalogDiscipline[] = ['road', 'gravel', 'mtb'];
 const TRAIL_DISCIPLINES: CatalogDiscipline[] = ['trail', 'hike', 'walk'];
+const PAGE_SIZE = 40;
 
 export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
   onBackHome,
@@ -88,6 +89,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
   const [elevationBucket, setElevationBucket] = useState<ElevationBucket>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortMode, setSortMode] = useState<SortMode>('recent');
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // Admin sync state
   const [isSyncing, setIsSyncing] = useState(false);
@@ -173,6 +175,16 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
     return sorted;
   }, [items, universe, disciplineFilter, distanceBucket, elevationBucket, searchQuery, sortMode]);
+
+  // Reset DOM pagination cleanly whenever filters or sort order change
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [universe, disciplineFilter, distanceBucket, elevationBucket, searchQuery, sortMode]);
+
+  const visibleItems = useMemo(
+    () => filteredItems.slice(0, visibleCount),
+    [filteredItems, visibleCount]
+  );
 
   // Keep selectedId synced to visible filtered list when current selection is filtered out
   useEffect(() => {
@@ -402,11 +414,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
       await loadCatalog();
       setSyncFeedback({
         type: 'ok',
-        text: `Synchronisation réussie : ${report.syncedCount} parcours public${
-          report.syncedCount > 1 ? 's' : ''
-        }${report.deletedCount > 0 ? `, ${report.deletedCount} retiré(s)` : ''}${
-          report.skippedCount > 0 ? `, ${report.skippedCount} ignoré(s)` : ''
-        }.`,
+        text: `Catalogue à jour : ${report.totalActiveCount} parcours (${
+          report.syncedCount > 0 ? `${report.syncedCount} mis à jour` : 'aucune écriture'
+        }, ${report.unchangedCount} inchangé${report.unchangedCount > 1 ? 's' : ''}${
+          report.deletedCount > 0 ? `, ${report.deletedCount} retiré(s)` : ''
+        }${report.skippedCount > 0 ? `, ${report.skippedCount} ignoré(s)` : ''}).`,
       });
     } catch (err: unknown) {
       const message =
@@ -746,7 +758,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Left Route List */}
           <div className="lg:col-span-5 space-y-1.5 lg:max-h-[680px] lg:overflow-y-auto lg:pr-1">
-            {filteredItems.map((item) => {
+            {visibleItems.map((item) => {
               const isSelected = item.id === selectedId;
               const isCycling = item.app === 'cycling';
 
@@ -800,6 +812,17 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                 </button>
               );
             })}
+
+            {visibleCount < filteredItems.length && (
+              <button
+                type="button"
+                onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                className="w-full py-2.5 px-3 rounded-xl glass-panel border border-white/10 hover:border-brand-400/40 text-xs font-mono text-slate-300 hover:text-brand-300 transition-colors cursor-pointer"
+              >
+                Afficher plus ({filteredItems.length - visibleCount} restant
+                {filteredItems.length - visibleCount > 1 ? 's' : ''})
+              </button>
+            )}
           </div>
 
           {/* Right Inspection Panel (Sticky on Desktop) */}
