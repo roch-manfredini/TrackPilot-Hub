@@ -128,27 +128,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
           </nav>
 
-          {/* Quick CTA & Actions */}
-          <div className="hidden sm:flex items-center gap-2.5">
-            <a
-              href="#gratuite"
-              onClick={(e) => handleSectionClick(e, '#gratuite')}
-              title="Découvrir l'écosystème TrackPilot"
-              className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-mono font-semibold text-brand-300 bg-brand-500/10 hover:bg-brand-500/20 border border-brand-500/30 hover:border-brand-500/50 transition-all duration-150 whitespace-nowrap"
-            >
-              <span>Écosystème Libre</span>
-            </a>
-          </div>
-
           {/* Mobile menu trigger */}
-          <div className="flex sm:hidden items-center gap-2">
-            <a
-              href="#gratuite"
-              onClick={(e) => handleSectionClick(e, '#gratuite')}
-              className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold text-brand-300 bg-brand-500/10 border border-brand-500/30 whitespace-nowrap"
-            >
-              <span>Écosystème Libre</span>
-            </a>
+          <div className="flex md:hidden items-center gap-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -163,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="sm:hidden mt-4 pt-4 border-t border-white/10 pb-4 space-y-3">
+          <div className="md:hidden mt-4 pt-4 border-t border-white/10 pb-4 space-y-3">
             <a
               href="#modules"
               onClick={(e) => handleSectionClick(e, '#modules')}
@@ -214,13 +195,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-dark-850"
             >
               FAQ
-            </a>
-            <a
-              href="#gratuite"
-              onClick={(e) => handleSectionClick(e, '#gratuite')}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-brand-300 hover:text-white hover:bg-dark-850"
-            >
-              <span>Écosystème Libre</span>
             </a>
             <div className="pt-2">
               <a
