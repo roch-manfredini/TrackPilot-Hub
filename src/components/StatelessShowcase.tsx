@@ -145,6 +145,10 @@ export const StatelessShowcase: React.FC = () => {
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Guidage direct si vous êtes égaré :</strong> en cas de stress ou sans trace chargée, touchez simplement un point précis sur la carte et choisissez votre mode de déplacement pour y être ramené en toute simplicité (option disponible uniquement avec du réseau).</span>
+              </div>
+              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
                 <span><strong className="text-white font-medium">Autonomie préservée :</strong> sans enregistrement en boucle ni capteurs à maintenir en tâche de fond, et avec le mode éco OLED, le smartphone chauffe moins et tient plus longtemps.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
@@ -172,7 +176,7 @@ export const StatelessShowcase: React.FC = () => {
 
           <div className="mt-6 pt-4 border-t border-white/[0.08] text-xs font-mono text-emerald-400 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-brand-neon animate-pulse"></span>
-            <span>Résultat : usage simple, immédiat et sans stress, même sans réseau</span>
+            <span>Résultat : usage simple, immédiat et sans stress</span>
           </div>
         </div>
 
