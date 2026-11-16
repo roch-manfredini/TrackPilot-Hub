@@ -22,7 +22,7 @@ export const ScreenVersions: React.FC = () => {
           Une seule et même application : complète sur grand écran, épurée sur smartphone.
         </h2>
         <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-          Même lien, même compte, mêmes plans de route : l’affichage s’adapte automatiquement à la largeur de votre écran.
+          Même lien, même compte, mêmes plans de route : l’affichage s’adapte automatiquement à votre situation.
         </p>
       </div>
 

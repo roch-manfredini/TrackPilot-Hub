@@ -73,6 +73,53 @@ function mapCyclingDiscipline(raw: DocumentData): CatalogDiscipline {
   return 'road';
 }
 
+function formatAuthorName(rawName?: string | null): string {
+  if (!rawName) return '';
+  const cleaned = rawName.replace(/\s*\([^)]*\)/g, '').trim();
+  if (!cleaned || cleaned.includes('@')) return '';
+  const lower = cleaned.toLowerCase();
+  if (lower.includes('visiteur') || lower.includes('invité') || lower.includes('invite')) {
+    return 'Visiteur';
+  }
+  const parts = cleaned.split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '';
+  if (parts.length === 1) return parts[0];
+  const firstName = parts[0];
+  const lastName = parts[parts.length - 1];
+  const initial = lastName.charAt(0).toUpperCase();
+  return `${firstName} ${initial}.`;
+}
+
+function resolveRideAuthorName(raw: DocumentData): string {
+  const candidates = [
+    typeof raw.authorName === 'string' ? raw.authorName : '',
+    typeof raw?.tactics?.creatorProfile?.displayName === 'string'
+      ? raw.tactics.creatorProfile.displayName
+      : '',
+  ];
+
+  for (const candidate of candidates) {
+    const trimmed = candidate.trim();
+    const lower = trimmed.toLowerCase();
+    if (trimmed && lower !== 'moi' && !lower.includes('visiteur')) {
+      const formatted = formatAuthorName(trimmed);
+      if (formatted) {
+        return formatted.slice(0, 80);
+      }
+    }
+  }
+
+  if (typeof raw.authorEmail === 'string' && raw.authorEmail.includes('@')) {
+    const localPart = raw.authorEmail.split('@')[0].replace(/[._-]+/g, ' ');
+    const formatted = formatAuthorName(localPart);
+    if (formatted) {
+      return formatted.slice(0, 80);
+    }
+  }
+
+  return 'Pilote TrackPilot';
+}
+
 function buildSanitizedPreview(
   app: CatalogApp,
   docId: string,
@@ -100,6 +147,7 @@ function buildSanitizedPreview(
   const previewId = `${app}_${docId}`.slice(0, 128);
   const discipline: CatalogDiscipline =
     app === 'cycling' ? mapCyclingDiscipline(raw) : 'trail';
+  const authorName = resolveRideAuthorName(raw);
 
   const createdAt = toIsoDateString(raw.createdAt, nowIso);
   const updatedAt = toIsoDateString(raw.updatedAt, createdAt);
@@ -109,6 +157,7 @@ function buildSanitizedPreview(
     app,
     discipline,
     name: safeName,
+    authorName,
     totalDistanceKm: summary.totalDistanceKm,
     totalElevationGain: summary.totalElevationGain,
     minAltitude: Math.min(summary.minAltitude, rawMaxAlt),
@@ -128,6 +177,7 @@ function toSummaryItem(p: PublicPreviewDoc): CatalogSummaryItem {
     app: p.app,
     discipline: p.discipline,
     name: p.name,
+    ...(p.authorName ? { authorName: p.authorName } : {}),
     totalDistanceKm: p.totalDistanceKm,
     totalElevationGain: p.totalElevationGain,
     minAltitude: p.minAltitude,
@@ -151,13 +201,15 @@ function isUnchangedRide(
   const rawName = (typeof raw.name === 'string' ? raw.name.trim() : '') || 'Parcours sans titre';
   const safeName = rawName.slice(0, 200);
   const discipline: CatalogDiscipline = app === 'cycling' ? mapCyclingDiscipline(raw) : 'trail';
+  const authorName = resolveRideAuthorName(raw);
   const createdAt = toIsoDateString(raw.createdAt, nowIso);
   const updatedAt = toIsoDateString(raw.updatedAt, createdAt);
 
   if (
     existing.updatedAt !== updatedAt ||
     existing.name !== safeName ||
-    existing.discipline !== discipline
+    existing.discipline !== discipline ||
+    (existing.authorName ?? '') !== authorName
   ) {
     return false;
   }

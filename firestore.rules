@@ -21,6 +21,7 @@ rules_version = '2';
 //   - app: string (required, in ['cycling', 'trail'])
 //   - discipline: string (required, in ['road', 'gravel', 'mtb', 'trail', 'hike', 'walk'])
 //   - name: string (required, 1..200 chars)
+//   - authorName: string (optional, 1..80 chars, must not contain '@')
 //   - totalDistanceKm: int | float (required, 0..10000)
 //   - totalElevationGain: int | float (required, 0..50000)
 //   - minAltitude: int | float (required, -500..9000)
@@ -126,6 +127,7 @@ service cloud.firestore {
         'app',
         'discipline',
         'name',
+        'authorName',
         'totalDistanceKm',
         'totalElevationGain',
         'minAltitude',
@@ -151,6 +153,12 @@ service cloud.firestore {
              data.name is string &&
              data.name.size() >= 1 &&
              data.name.size() <= 200 &&
+             (!('authorName' in data) ||
+               (data.authorName is string &&
+                data.authorName.size() >= 1 &&
+                data.authorName.size() <= 80 &&
+                !data.authorName.matches('.*@.*') &&
+                data.authorName.matches('^[^@]+$'))) &&
              isNumber(data.totalDistanceKm) &&
              data.totalDistanceKm >= 0 &&
              data.totalDistanceKm <= 10000 &&

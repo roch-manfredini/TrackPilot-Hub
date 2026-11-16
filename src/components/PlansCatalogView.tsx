@@ -16,6 +16,7 @@ import {
   Route as RouteIcon,
   Search,
   SlidersHorizontal,
+  User as UserIcon,
   X,
 } from 'lucide-react';
 import type { User } from 'firebase/auth';
@@ -159,7 +160,13 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
       }
       if (elevationBucket === 'high' && item.totalElevationGain < 2000) return false;
 
-      if (q && !item.name.toLowerCase().includes(q)) return false;
+      if (
+        q &&
+        !item.name.toLowerCase().includes(q) &&
+        !(item.authorName && item.authorName.toLowerCase().includes(q))
+      ) {
+        return false;
+      }
       return true;
     });
 
@@ -853,8 +860,8 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                       <span className="text-[10px] text-slate-500">m</span>
                     </span>
 
-                    <span className="text-[10px] text-slate-500 ml-auto truncate">
-                      {Math.round(item.maxAltitude)}m • {isCycling ? 'Cycling' : 'Trail'}
+                    <span className="text-[10px] text-slate-400 ml-auto truncate max-w-[140px]">
+                      {item.authorName || `${Math.round(item.maxAltitude)}m • ${isCycling ? 'Cycling' : 'Trail'}`}
                     </span>
                   </div>
                 </button>
@@ -894,6 +901,17 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                     <h2 className="text-lg sm:text-xl font-bold text-white leading-snug">
                       {activeSummary.name}
                     </h2>
+                    {activeSummary.authorName && (
+                      <div className="mt-1 inline-flex items-center gap-1.5 text-xs text-slate-300">
+                        <UserIcon
+                          className={`w-3.5 h-3.5 shrink-0 ${
+                            activeSummary.app === 'cycling' ? 'text-brand-400' : 'text-trail-400'
+                          }`}
+                          aria-hidden="true"
+                        />
+                        <span>{activeSummary.authorName}</span>
+                      </div>
+                    )}
                   </div>
 
                   <a

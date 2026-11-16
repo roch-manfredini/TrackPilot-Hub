@@ -13,6 +13,7 @@ export interface CatalogSummaryItem {
   app: CatalogApp;
   discipline: CatalogDiscipline;
   name: string;
+  authorName?: string;
   totalDistanceKm: number;
   totalElevationGain: number;
   minAltitude: number;
@@ -39,6 +40,7 @@ export interface PublicPreviewDoc {
   app: CatalogApp;
   discipline: CatalogDiscipline;
   name: string;
+  authorName?: string;
   totalDistanceKm: number;
   totalElevationGain: number;
   minAltitude: number;
