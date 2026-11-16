@@ -27,7 +27,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 'guidage-hors-ligne',
     question: 'Le guidage fonctionne-t-il hors-ligne quand il n’y a plus de réseau ?',
     answer:
-      'Oui. Vos plans de route sont stockés automatiquement en local et les tuiles cartographiques peuvent être mises en cache dans votre navigateur (IndexedDB). Grâce à une architecture sans état (stateless), le guidage reprend en 1 seconde après une coupure de batterie, sans session corrompue.',
+      'Oui. Vos plans de route sont stockés automatiquement en local. Inutile de télécharger la carte d’une région ou d’un pays entier avant de partir : les zones traversées se chargent au fur et à mesure, et dès que vous ouvrez un plan de route chez vous, un simple bouton dans le guidage permet de précharger provisoirement ses tuiles (en cache local IndexedDB) pour anticiper les passages sans réseau. Grâce à une architecture sans état (stateless), le guidage reprend en 1 seconde après un redémarrage imprévu du smartphone.',
   },
   {
     id: 'cycling-vs-trail',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bike, Footprints, Mountain, ChevronDown, CheckCircle2, Clock, Wrench, Watch, Compass, ArrowRight } from 'lucide-react';
+import { Bike, Footprints, Mountain, ChevronDown, CheckCircle2, Clock, Wrench, Watch, Compass, ArrowRight, Smartphone, Navigation } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { ModuleInfo } from '../types';
 
@@ -165,18 +165,62 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
           })}
         </div>
 
-        {/* Clarification Box: Preparation & Guidance vs GPS Track/Stats Recording */}
-        <div className="mt-12 max-w-4xl mx-auto p-5 sm:p-6 rounded-2xl glass-panel border border-white/10 bg-dark-850/60 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="p-3 rounded-xl bg-brand-500/10 border border-brand-500/25 text-brand-400 shrink-0">
-            <Watch className="w-5 h-5" />
+        {/* Clarification Box: Complementary Role & Two Field Usage Modes */}
+        <div className="mt-12 max-w-4xl mx-auto p-5 sm:p-6 rounded-2xl glass-panel border border-white/10 bg-dark-850/60 space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="p-3 rounded-xl bg-brand-500/10 border border-brand-500/25 text-brand-400 shrink-0">
+              <Watch className="w-5 h-5" />
+            </div>
+            <div className="space-y-1">
+              <h4 className="text-sm font-bold text-white">
+                Un positionnement clair : le complément terrain de votre montre ou compteur GPS
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <strong className="text-white font-medium">Vos montres et compteurs GPS restent indispensables</strong> pour enregistrer vos traces, vos performances (fréquence cardiaque, puissance, allure) et votre historique. Côté smartphone, grâce à son démarrage instantané, vous utilisez TrackPilot de deux façons :
+              </p>
+            </div>
           </div>
-          <div className="space-y-1">
-            <h4 className="text-sm font-bold text-white flex items-center gap-2">
-              <span>Un positionnement clair : un plan de route global, pas un carnet de statistiques</span>
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              TrackPilot n’est pas un outil d’enregistrement d’activités ni un carnet de statistiques (type Strava ou Garmin Connect). Son but n’est pas seulement de tracer un GPX ou de vous guider, mais de réunir toute votre sortie dans un véritable plan de route - relief, météo, eau et effort. <strong className="text-white font-medium">Vos montres et compteurs GPS restent indispensables</strong> pour enregistrer vos traces réelles, vos données de performance (fréquence cardiaque, puissance, allure) et votre historique d'entraînement.
-            </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div className="p-3.5 rounded-xl bg-dark-900/70 border border-white/[0.08] flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 shrink-0 mt-0.5">
+                <Smartphone className="w-4 h-4" />
+              </div>
+              <div className="flex-1 space-y-1">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs sm:text-sm font-semibold text-white">
+                    Dans la poche ou le sac
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-slate-400 shrink-0" aria-hidden="true">
+                    <Bike className="w-3.5 h-3.5" />
+                    <Footprints className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  À vélo comme à pied, sortez le smartphone uniquement quand une question se pose : son démarrage express permet de faire le point sur votre plan de route en quelques secondes, puis de le ranger.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-dark-900/70 border border-white/[0.08] flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 shrink-0 mt-0.5">
+                <Navigation className="w-4 h-4" />
+              </div>
+              <div className="flex-1 space-y-1">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs sm:text-sm font-semibold text-white">
+                    Sur le guidon ou en main
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-slate-400 shrink-0" aria-hidden="true">
+                    <Bike className="w-3.5 h-3.5" />
+                    <Footprints className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Fixé sur le guidon ou tenu à la main pendant la marche, profitez d'un écran de guidage nettement plus grand et lisible que celui d'une montre ou d'un compteur GPS.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -96,14 +96,14 @@ export const TECH_PILLARS: TechPillar[] = [
     id: 'guidance',
     title: 'Guidage Temps Réel & Cockpit Hors-Ligne',
     subtitle: 'Un guidage épuré sur votre smartphone',
-    description: 'Pensé pour être lisible d’un coup d’œil au cintre ou sur une bretelle. Grâce à une projection directe sur le tracé (architecture sans état), le guidage reprend en 1 seconde après une coupure de batterie, sans session corrompue.',
+    description: 'Pensé pour être lisible d’un coup d’œil au cintre ou sur une bretelle. Grâce à une projection directe sur le tracé (architecture sans état), le guidage reprend en 1 seconde après un redémarrage imprévu du smartphone, sans session à restaurer.',
     iconName: 'Navigation',
     badge: 'Stateless & Zéro Réseau',
     technicalDetails: [
-      'Reprise instantanée en 1s après coupure batterie, sans session corrompue',
+      'Reprise instantanée en 1s après un redémarrage du smartphone, sans session à restaurer',
       'Stockage local automatique de vos plans de route pour un accès 100% hors-ligne',
       'Recalcul en direct de la distance restante, du D+ et des fontaines en aval',
-      'Cache hors-ligne intégral des tuiles cartographiques stockées en local (IndexedDB)',
+      'Chargement des cartes au fil de l’avancée ou préchargement provisoire du plan de route via un bouton dans le guidage (IndexedDB)',
       'Maintien d’écran allumé automatique (Screen WakeLock API) et mode Fil d’Ariane éco-batterie OLED'
     ]
   },

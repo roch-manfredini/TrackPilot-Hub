@@ -8,6 +8,7 @@ interface NavbarProps {
 }
 
 const SECTION_LINKS_BEFORE_PLANS = [
+  { href: '#pourquoi', label: 'Pourquoi ?' },
   { href: '#modules', label: 'Modules' },
   { href: '#formats', label: 'Profil & Cockpit' },
   { href: '#tech', label: 'Fonctionnalités' },
@@ -107,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </a>
 
           {/* Desktop Nav Links */}
-          <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-4 lg:gap-7 text-sm font-medium text-slate-300">
+          <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-3 lg:gap-5 xl:gap-6 text-[13px] lg:text-sm font-medium text-slate-300 whitespace-nowrap">
             {SECTION_LINKS_BEFORE_PLANS.map((link) => (
               <a
                 key={link.href}
