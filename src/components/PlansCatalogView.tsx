@@ -738,16 +738,20 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
       {/* State 2: Initial Skeleton Loading */}
       {!indexError && isLoadingIndex && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-5 space-y-1.5">
-            {[0, 1, 2, 3, 4, 5, 6].map((n) => (
-              <div
-                key={n}
-                className="h-14 rounded-xl glass-panel border border-white/5 animate-pulse bg-dark-900/60"
-              />
-            ))}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-stretch">
+          <div className="lg:col-span-5 lg:relative lg:min-h-0">
+            <div className="space-y-1.5 lg:absolute lg:inset-0 lg:overflow-hidden">
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => (
+                <div
+                  key={n}
+                  className={`h-14 rounded-xl glass-panel border border-white/5 animate-pulse bg-dark-900/60 ${
+                    n >= 7 ? 'hidden lg:block' : ''
+                  }`}
+                />
+              ))}
+            </div>
           </div>
-          <div className="lg:col-span-7 h-[520px] rounded-2xl glass-panel border border-white/5 animate-pulse bg-dark-900/60" />
+          <div className="lg:col-span-7 h-[520px] lg:h-[760px] rounded-2xl glass-panel border border-white/5 animate-pulse bg-dark-900/60" />
         </div>
       )}
 
@@ -787,10 +791,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
       {/* State 4: Nominal Catalog + Map & Elevation Inspection */}
       {!indexError && !isLoadingIndex && filteredItems.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Route List */}
-          <div className="lg:col-span-5 space-y-1.5 lg:max-h-[680px] lg:overflow-y-auto lg:pr-1">
-            {visibleItems.map((item) => {
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-stretch">
+          {/* Left Route List (height matched to right inspection panel on desktop) */}
+          <div className="lg:col-span-5 lg:relative lg:min-h-0">
+            <div className="space-y-1.5 lg:absolute lg:inset-0 lg:overflow-y-auto lg:pr-1.5 plans-list-scroller">
+              {visibleItems.map((item) => {
               const isSelected = item.id === selectedId;
               const isCycling = item.app === 'cycling';
 
@@ -814,7 +819,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                       ? isCycling
                         ? 'bg-brand-500/[0.1] border-brand-400/55 shadow-md shadow-brand-500/5'
                         : 'bg-trail-500/[0.1] border-trail-400/55 shadow-md shadow-trail-500/5'
-                      : 'glass-panel border-white/8 hover:border-white/20 hover:bg-dark-850/80'
+                      : 'bg-[#0b0e15]/90 border-white/10 hover:border-white/20 hover:bg-dark-850/90'
                   }`}
                 >
                   <h3 className="text-[13px] sm:text-sm font-semibold text-white truncate leading-snug">
@@ -869,16 +874,17 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                     resultsCount: Math.min(nextCount, filteredItems.length),
                   });
                 }}
-                className="w-full py-2.5 px-3 rounded-xl glass-panel border border-white/10 hover:border-brand-400/40 text-xs font-mono text-slate-300 hover:text-brand-300 transition-colors cursor-pointer"
+                className="w-full py-2.5 px-3 rounded-xl bg-[#0b0e15]/90 border border-white/10 hover:border-brand-400/40 text-xs font-mono text-slate-300 hover:text-brand-300 transition-colors cursor-pointer"
               >
                 Afficher plus ({filteredItems.length - visibleCount} restant
                 {filteredItems.length - visibleCount > 1 ? 's' : ''})
               </button>
             )}
+            </div>
           </div>
 
-          {/* Right Inspection Panel (Sticky on Desktop) */}
-          <div className="lg:col-span-7 lg:sticky lg:top-24 rounded-2xl glass-panel border border-white/10 p-4 sm:p-5 space-y-4">
+          {/* Right Inspection Panel */}
+          <div className="lg:col-span-7 rounded-2xl glass-panel border border-white/10 p-4 sm:p-5 space-y-4">
             {activeSummary && (
               <>
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">

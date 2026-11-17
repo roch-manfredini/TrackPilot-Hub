@@ -30,6 +30,38 @@
   background: #22293d;
 }
 
+/* Plans catalog list scroller: height-locked to right inspection panel on desktop */
+@media (min-width: 1024px) {
+  .plans-list-scroller {
+    --scrollbar-thumb: #58667d;
+    --scrollbar-track: #07080b;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+  }
+
+  @supports not (scrollbar-color: auto) {
+    .plans-list-scroller {
+      scrollbar-width: auto;
+    }
+
+    .plans-list-scroller::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .plans-list-scroller::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+    }
+
+    .plans-list-scroller::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 9999px;
+    }
+  }
+}
+
 /* Glassmorphic card surface with sharp subtle micro-border */
 .glass-panel {
   background: rgba(11, 14, 21, 0.88);
