@@ -3,7 +3,7 @@ import { Menu, X, Compass, Mail } from 'lucide-react';
 import { recordHubEvent } from '../services/historyService';
 
 interface NavbarProps {
-  activeView?: 'home' | 'plans';
+  activeView?: 'home' | 'plans' | 'admin';
   onNavigateHome?: (hash?: string) => void;
   onNavigatePlans?: () => void;
 }
@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       type: 'cta_click',
       target: hash ? `navbar_${hash.replace('#', '')}` : 'navbar_logo',
     });
-    if (activeView === 'plans' && onNavigateHome) {
+    if (activeView !== 'home' && onNavigateHome) {
       e.preventDefault();
       onNavigateHome(hash);
     }

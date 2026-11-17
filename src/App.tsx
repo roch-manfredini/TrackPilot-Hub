@@ -22,14 +22,11 @@ import {
 } from './services/historyService';
 
 const PlansCatalogView = lazy(() => import('./components/PlansCatalogView'));
-const AdminStatsModal = lazy(() =>
-  import('./components/AdminStatsModal').then((m) => ({ default: m.AdminStatsModal }))
-);
+const AdminBackendView = lazy(() => import('./components/AdminBackendView'));
 
 export const App: React.FC = () => {
-  const [view, setView] = useState<'home' | 'plans'>('home');
+  const [view, setView] = useState<'home' | 'plans' | 'admin'>('home');
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isAuthChecking, setIsAuthChecking] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [legalTab, setLegalTab] = useState<LegalTab | null>(null);
@@ -103,7 +100,7 @@ export const App: React.FC = () => {
       }
     };
 
-    if (isAdminModalOpen) {
+    if (view === 'admin') {
       void attachAuthListener();
     }
 
@@ -111,7 +108,7 @@ export const App: React.FC = () => {
       cancelled = true;
       unsubscribe?.();
     };
-  }, [isAdminModalOpen]);
+  }, [view]);
 
   const handleNavigatePlans = useCallback(() => {
     const alreadyPlans = window.location.pathname === '/plans';
@@ -159,9 +156,10 @@ export const App: React.FC = () => {
     }
   }, [view]);
 
-  const handleCloseAdminModal = () => {
-    setIsAdminModalOpen(false);
-  };
+  const handleOpenAdminBackend = useCallback(() => {
+    setView('admin');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   useEffect(() => {
     const consent = getCookieConsent();
@@ -188,7 +186,9 @@ export const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setTrackedView(view);
+    if (view === 'home' || view === 'plans') {
+      setTrackedView(view);
+    }
   }, [view]);
 
   // Passive scroll-depth tracking across home sections (once per section per visit)
@@ -269,7 +269,25 @@ export const App: React.FC = () => {
         onNavigatePlans={handleNavigatePlans}
       />
       <main className="flex-1">
-        {view === 'plans' ? (
+        {view === 'admin' ? (
+          <Suspense
+            fallback={
+              <div className="pt-28 pb-20 px-4 max-w-7xl mx-auto min-h-[80vh]">
+                <div className="h-10 w-64 rounded-xl bg-dark-900/70 animate-pulse mb-6" />
+                <div className="h-24 rounded-2xl bg-dark-900/60 animate-pulse mb-6" />
+                <div className="h-[420px] rounded-2xl bg-dark-900/60 animate-pulse" />
+              </div>
+            }
+          >
+            <AdminBackendView
+              onBackHome={handleNavigateHome}
+              currentUser={currentUser}
+              isAuthChecking={isAuthChecking}
+              onAuthenticated={(user) => setCurrentUser(user)}
+              onSignedOut={() => setCurrentUser(null)}
+            />
+          </Suspense>
+        ) : view === 'plans' ? (
           <Suspense
             fallback={
               <div className="pt-28 pb-20 px-4 max-w-7xl mx-auto min-h-[80vh]">
@@ -309,24 +327,12 @@ export const App: React.FC = () => {
       <Footer
         onOpenLegal={handleOpenLegal}
         onOpenCookies={handleReopenCookies}
-        onOpenAdmin={() => setIsAdminModalOpen(true)}
+        onOpenAdmin={handleOpenAdminBackend}
       />
       <ContactModal 
         isOpen={isContactModalOpen} 
         onClose={() => setIsContactModalOpen(false)} 
       />
-      {isAdminModalOpen && (
-        <Suspense fallback={null}>
-          <AdminStatsModal
-            isOpen={isAdminModalOpen}
-            onClose={handleCloseAdminModal}
-            currentUser={currentUser}
-            isAuthChecking={isAuthChecking}
-            onAuthenticated={(user) => setCurrentUser(user)}
-            onSignedOut={() => setCurrentUser(null)}
-          />
-        </Suspense>
-      )}
       <LegalModal
         activeTab={legalTab}
         onSelectTab={handleOpenLegal}

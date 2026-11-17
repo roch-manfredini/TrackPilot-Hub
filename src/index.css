@@ -86,6 +86,19 @@ dialog::backdrop {
   overscroll-behavior: contain;
 }
 
+/* Accessible scrollable table region with sticky header */
+.hub-table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  container-type: inline-size;
+}
+.hub-table-wrapper thead th {
+  position: sticky;
+  inset-block-start: 0;
+  background: #08090d;
+  z-index: 1;
+}
+
 /* Native <details> FAQ disclosure styling & progressive slide animation */
 .faq-details > summary {
   list-style: none;

@@ -1,16 +1,19 @@
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import {
   Activity,
-  BarChart3,
-  Download,
-  LogOut,
-  RefreshCw,
-  ShieldCheck,
-  X,
   AlertCircle,
+  ArrowLeft,
+  ArrowUpRight,
+  BarChart3,
   Clock,
   Compass,
+  Download,
+  LogOut,
   MousePointerClick,
+  RefreshCw,
+  Search,
+  ShieldCheck,
+  X,
 } from 'lucide-react';
 import { signInWithPopup, signOut, type User } from 'firebase/auth';
 import {
@@ -18,32 +21,42 @@ import {
   getHubAuth,
   isAllowedAdminUser,
 } from '../config/firebase';
+import { fetchCatalogIndex, getAppLaunchUrl } from '../services/catalogService';
 import { fetchHubAnalyticsSummary, recordHubEvent } from '../services/historyService';
+import type { CatalogDiscipline, CatalogSummaryItem } from '../types/catalog';
 import type { HubAnalyticsSummary, RankedCounterItem } from '../types/history';
 
-interface AdminStatsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface AdminBackendViewProps {
+  onBackHome: (sectionHash?: string) => void;
   currentUser: User | null;
-  isAuthChecking?: boolean;
+  isAuthChecking: boolean;
   onAuthenticated: (user: User) => void;
   onSignedOut: () => void;
 }
 
-type StatsTab = 'overview' | 'plans' | 'content' | 'logs';
+type BackendTab = 'overview' | 'catalog' | 'plans' | 'content' | 'logs';
+
+const DISCIPLINE_LABELS: Record<CatalogDiscipline, string> = {
+  road: 'Route',
+  gravel: 'Gravel',
+  mtb: 'VTT',
+  trail: 'Trail',
+  hike: 'Rando',
+  walk: 'Marche',
+};
 
 const EVENT_TYPE_LABELS: Record<string, string> = {
   page_view: 'Vue page',
   section_view: 'Section vue',
   cta_click: 'Clic CTA',
-  route_preview: 'Apercu parcours',
+  route_preview: 'Aperçu parcours',
   app_launch: 'Lancement app',
   catalog_filter: 'Filtre catalogue',
   catalog_search: 'Recherche catalogue',
   install_tab: 'Onglet installation',
   faq_toggle: 'Ouverture FAQ',
   contact_action: 'Action contact',
-  legal_open: 'Ouverture legal',
+  legal_open: 'Ouverture légal',
   cookie_choice: 'Choix cookies',
   admin_event: 'Action admin',
   client_error: 'Erreur client',
@@ -56,6 +69,18 @@ function formatShortDateTime(ms: number): string {
       dateStyle: 'short',
       timeStyle: 'medium',
     }).format(new Date(ms));
+  } catch {
+    return '-';
+  }
+}
+
+function formatIsoDateTime(iso: string): string {
+  if (!iso) return '-';
+  try {
+    return new Intl.DateTimeFormat('fr-FR', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(new Date(iso));
   } catch {
     return '-';
   }
@@ -108,105 +133,78 @@ const RankedBarList: React.FC<{
   );
 };
 
-export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
-  isOpen,
-  onClose,
+export const AdminBackendView: React.FC<AdminBackendViewProps> = ({
+  onBackHome,
   currentUser,
-  isAuthChecking = false,
+  isAuthChecking,
   onAuthenticated,
   onSignedOut,
 }) => {
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
-  const titleId = useId();
   const isAdmin = isAllowedAdminUser(currentUser);
+  const dailyCaptionId = useId();
+  const catalogCaptionId = useId();
+  const syncCaptionId = useId();
+  const eventsCaptionId = useId();
 
-  // Auth & sync states
+  // Auth states
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+
+  // Sync & catalog states
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncFeedback, setSyncFeedback] = useState<{ type: 'ok' | 'err'; text: string } | null>(
     null
   );
+  const [catalogItems, setCatalogItems] = useState<CatalogSummaryItem[]>([]);
+  const [catalogUpdatedAt, setCatalogUpdatedAt] = useState<string>('');
+  const [isLoadingCatalog, setIsLoadingCatalog] = useState(false);
+  const [catalogFilter, setCatalogFilter] = useState('');
 
   // Stats states
   const [daysBack, setDaysBack] = useState<7 | 30 | 90>(30);
   const [includeAdmin, setIncludeAdmin] = useState(false);
-  const [activeTab, setActiveTab] = useState<StatsTab>('overview');
+  const [activeTab, setActiveTab] = useState<BackendTab>('overview');
   const [summary, setSummary] = useState<HubAnalyticsSummary | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isLoadingStats, setIsLoadingStats] = useState(false);
+  const [statsError, setStatsError] = useState<string | null>(null);
 
-  const loadStats = useCallback(async () => {
+  const loadBackendData = useCallback(async () => {
     if (!isAdmin) return;
-    setIsLoading(true);
-    setErrorMsg(null);
-    try {
-      const data = await fetchHubAnalyticsSummary(daysBack, includeAdmin);
-      setSummary(data);
-    } catch (err: unknown) {
-      setErrorMsg(
+    setIsLoadingStats(true);
+    setIsLoadingCatalog(true);
+    setStatsError(null);
+
+    const [statsRes, catalogRes] = await Promise.allSettled([
+      fetchHubAnalyticsSummary(daysBack, includeAdmin),
+      fetchCatalogIndex(),
+    ]);
+
+    if (statsRes.status === 'fulfilled') {
+      setSummary(statsRes.value);
+    } else {
+      const err = statsRes.reason;
+      setStatsError(
         err instanceof Error && err.message
           ? err.message
           : 'Impossible de charger les statistiques Firestore.'
       );
-    } finally {
-      setIsLoading(false);
     }
+
+    if (catalogRes.status === 'fulfilled') {
+      setCatalogItems(catalogRes.value.items);
+      setCatalogUpdatedAt(catalogRes.value.updatedAt);
+    }
+
+    setIsLoadingStats(false);
+    setIsLoadingCatalog(false);
   }, [daysBack, includeAdmin, isAdmin]);
 
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    if (isOpen) {
-      setAuthError(null);
-      if (!dialog.open) {
-        dialog.showModal();
-      }
-      if (isAdmin) {
-        recordHubEvent({ type: 'admin_event', target: 'stats_opened' });
-        void loadStats();
-      }
-    } else if (dialog.open) {
-      dialog.close();
-      dialog.returnValue = '';
+    if (isAdmin) {
+      recordHubEvent({ type: 'admin_event', target: 'stats_opened' });
+      void loadBackendData();
     }
-  }, [isOpen, isAdmin, loadStats]);
-
-  // Fallback light-dismiss for Safari without native `closedBy`
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog || 'closedBy' in HTMLDialogElement.prototype) return;
-
-    const isOutside = (e: PointerEvent) => {
-      const r = dialog.getBoundingClientRect();
-      return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
-    };
-
-    let pressedOutside = false;
-    const onPointerDown = (e: PointerEvent) => {
-      pressedOutside = isOutside(e);
-    };
-    const onPointerUp = (e: PointerEvent) => {
-      if (pressedOutside && isOutside(e)) {
-        dialog.close();
-      }
-    };
-
-    dialog.addEventListener('pointerdown', onPointerDown);
-    dialog.addEventListener('pointerup', onPointerUp);
-    return () => {
-      dialog.removeEventListener('pointerdown', onPointerDown);
-      dialog.removeEventListener('pointerup', onPointerUp);
-    };
-  }, []);
-
-  const handleClose = () => {
-    const dialog = dialogRef.current;
-    if (dialog) {
-      dialog.returnValue = '';
-    }
-    onClose();
-  };
+  }, [isAdmin, loadBackendData]);
 
   const handleGoogleSignIn = async () => {
     setAuthLoading(true);
@@ -250,7 +248,6 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
       setSummary(null);
       setSyncFeedback(null);
       onSignedOut();
-      handleClose();
     } catch {
       setAuthError('Erreur lors de la déconnexion.');
     } finally {
@@ -272,7 +269,7 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
           report.deletedCount > 0 ? `, ${report.deletedCount} retiré(s)` : ''
         }${report.skippedCount > 0 ? `, ${report.skippedCount} ignoré(s)` : ''}).`,
       });
-      await loadStats();
+      await loadBackendData();
     } catch (err: unknown) {
       const message =
         err instanceof Error && err.message
@@ -286,196 +283,160 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
 
   const handleExportJson = () => {
     if (!summary) return;
-    const blob = new Blob([JSON.stringify(summary, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify({ summary, catalogItems }, null, 2)], {
+      type: 'application/json',
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `trackpilot-hub-stats-${daysBack}d-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `trackpilot-hub-backend-${daysBack}d-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
 
-  const tabs: Array<{ id: StatsTab; label: string }> = [
+  const filteredCatalog = useMemo(() => {
+    const q = catalogFilter.trim().toLowerCase();
+    if (!q) return catalogItems;
+    return catalogItems.filter(
+      (item) =>
+        item.name.toLowerCase().includes(q) ||
+        (item.authorName && item.authorName.toLowerCase().includes(q)) ||
+        DISCIPLINE_LABELS[item.discipline].toLowerCase().includes(q) ||
+        item.app.toLowerCase().includes(q)
+    );
+  }, [catalogItems, catalogFilter]);
+
+  const tabs: Array<{ id: BackendTab; label: string }> = [
     { id: 'overview', label: 'Vue générale' },
-    { id: 'plans', label: 'Plans & filtres' },
+    { id: 'catalog', label: `Plans partagés (${catalogItems.length})` },
+    { id: 'plans', label: 'Stats plans & filtres' },
     { id: 'content', label: 'Sections & FAQ' },
     { id: 'logs', label: 'Journal & synchros' },
   ];
 
-  const dialogWidthClass = isAdmin ? 'max-w-5xl' : 'max-w-md';
-
   return (
-    <dialog
-      ref={dialogRef}
-      aria-labelledby={titleId}
-      {...({ closedby: 'any' } as Record<string, string>)}
-      onClose={handleClose}
-      className={`m-auto w-[calc(100%-1.5rem)] ${dialogWidthClass} rounded-2xl border border-white/15 bg-[#090a0f] p-0 text-slate-100 shadow-2xl`}
-    >
-      {isAuthChecking ? (
-        <div className="p-6 space-y-4">
-          <div className="h-6 w-48 rounded-lg bg-[#08090d] border border-white/10 animate-pulse" />
-          <div className="h-24 rounded-xl bg-[#08090d] border border-white/10 animate-pulse" />
+    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[82vh] space-y-6">
+      {/* Top Bar */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <button
+            type="button"
+            onClick={() => onBackHome()}
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-brand-300 transition-colors mb-3 cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Retour à l'accueil TrackPilot</span>
+          </button>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+            <ShieldCheck className="w-6 h-6 text-brand-400 shrink-0" />
+            <span>Back-office TrackPilot Hub</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Synchronisation du catalogue public, aperçu des parcours partagés et statistiques du Hub
+          </p>
         </div>
-      ) : !isAdmin ? (
-        <div className="p-6 sm:p-7">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/25 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5 text-brand-400" />
-              </div>
-              <div>
-                <h2 id={titleId} className="text-base font-bold text-white">
-                  Cockpit TrackPilot Hub
-                </h2>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Statistiques et synchronisation du catalogue
-                </p>
-              </div>
-            </div>
+
+        {isAdmin && currentUser && (
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            <button
+              type="button"
+              onClick={handleSyncCatalog}
+              disabled={isSyncing}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 transition-colors cursor-pointer disabled:opacity-60"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
+              <span>{isSyncing ? 'Synchronisation...' : 'Synchroniser le catalogue'}</span>
+            </button>
 
             <button
               type="button"
-              onClick={() => dialogRef.current?.close()}
-              aria-label="Fermer"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              onClick={loadBackendData}
+              disabled={isLoadingStats || isSyncing}
+              className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-200 bg-[#08090d] hover:bg-white/5 border border-white/10 transition-colors cursor-pointer disabled:opacity-50"
             >
-              <X className="w-4 h-4" />
+              <RefreshCw className={`w-3.5 h-3.5 ${isLoadingStats ? 'animate-spin' : ''}`} />
+              <span>Actualiser</span>
             </button>
-          </div>
-
-          <div className="mt-5 space-y-4">
-            {authError && (
-              <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/25 flex items-start gap-2.5 text-xs text-red-200 leading-relaxed">
-                <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                <span>{authError}</span>
-              </div>
-            )}
-
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Connectez-vous avec votre compte Google gestionnaire pour accéder aux statistiques et
-              à la synchronisation du catalogue.
-            </p>
 
             <button
               type="button"
-              onClick={handleGoogleSignIn}
-              disabled={authLoading}
-              autoFocus
-              className="w-full inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl text-sm font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 transition-all active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+              onClick={handleSignOut}
+              disabled={authLoading || isSyncing}
+              className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:text-white bg-[#08090d] hover:bg-white/5 border border-white/10 transition-colors cursor-pointer disabled:opacity-50"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81Z"
-                />
-              </svg>
-              <span>{authLoading ? 'Connexion en cours...' : 'Continuer avec Google'}</span>
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Déconnexion</span>
             </button>
           </div>
+        )}
+      </div>
+
+      {/* State 1: Checking Auth */}
+      {isAuthChecking && (
+        <div className="max-w-lg mx-auto p-6 rounded-2xl bg-[#08090d] border border-white/10 space-y-4">
+          <div className="h-6 w-52 rounded-lg bg-white/5 animate-pulse" />
+          <div className="h-24 rounded-xl bg-white/5 animate-pulse" />
         </div>
-      ) : (
-        <div className="flex flex-col max-h-[88dvh]">
-          {/* Header + Synchroniser button */}
-          <div className="px-5 py-4 border-b border-white/10 bg-[#08090d] flex flex-wrap items-center justify-between gap-3 shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/25 flex items-center justify-center text-brand-400">
-                <BarChart3 className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 id={titleId} className="text-sm sm:text-base font-bold text-white">
-                  Statistiques et synchronisation Hub
-                </h2>
-                <p className="text-[11px] font-mono text-slate-400 truncate max-w-[260px] sm:max-w-none">
-                  {currentUser?.email}
-                </p>
-              </div>
+      )}
+
+      {/* State 2: Not Authenticated */}
+      {!isAuthChecking && !isAdmin && (
+        <div className="max-w-md mx-auto mt-8 p-6 sm:p-7 rounded-2xl bg-[#08090d] border border-white/10 space-y-5 shadow-card">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/25 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5 text-brand-400" />
             </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={handleSyncCatalog}
-                disabled={isSyncing}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-400 hover:bg-brand-300 text-xs font-semibold text-dark-950 transition-colors cursor-pointer disabled:opacity-60"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-                <span>{isSyncing ? 'Synchronisation...' : 'Synchroniser le catalogue'}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleSignOut}
-                disabled={authLoading || isSyncing}
-                title="Quitter la session gestionnaire"
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#0c1017] hover:bg-white/5 border border-white/10 text-xs text-slate-300 hover:text-white cursor-pointer disabled:opacity-50"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Déconnexion</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => dialogRef.current?.close()}
-                aria-label="Fermer"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
+            <div>
+              <h2 className="text-base font-bold text-white">Connexion gestionnaire requise</h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Accès réservé à l'administration du Hub
+              </p>
             </div>
           </div>
 
-          {/* Sync Feedback Banner */}
-          {syncFeedback && (
-            <div
-              className={`px-5 py-2.5 border-b border-white/10 text-xs flex items-center justify-between gap-2 ${
-                syncFeedback.type === 'ok'
-                  ? 'bg-emerald-500/10 text-emerald-300'
-                  : 'bg-red-500/10 text-red-200'
-              }`}
-            >
-              <span>{syncFeedback.text}</span>
-              <button
-                type="button"
-                onClick={() => setSyncFeedback(null)}
-                aria-label="Masquer le message"
-                className="text-slate-400 hover:text-white cursor-pointer"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
+          {authError && (
+            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/25 flex items-start gap-2.5 text-xs text-red-200 leading-relaxed">
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+              <span>{authError}</span>
             </div>
           )}
 
-          {/* Filter & Tabs Bar */}
-          <div className="px-5 py-2 border-b border-white/10 bg-[#08090d] flex flex-wrap items-center justify-between gap-3 shrink-0">
-            <div
-              role="tablist"
-              aria-label="Sections des statistiques"
-              className="flex items-center gap-4 overflow-x-auto"
-            >
-              {tabs.map((tab) => {
-                const selected = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={selected}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`relative py-2 text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
-                      selected ? 'text-brand-300' : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <span>{tab.label}</span>
-                    {selected && (
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-0 bottom-0 h-0.5 bg-brand-400"
-                      />
-                    )}
-                  </button>
-                );
-              })}
+          <p className="text-xs text-slate-300 leading-relaxed">
+            Connectez-vous avec votre compte Google gestionnaire pour synchroniser le catalogue des
+            plans publics, inspecter les parcours partagés et consulter les statistiques.
+          </p>
+
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={authLoading}
+            autoFocus
+            className="w-full inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl text-sm font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 transition-all active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81Z"
+              />
+            </svg>
+            <span>{authLoading ? 'Connexion en cours...' : 'Continuer avec Google'}</span>
+          </button>
+        </div>
+      )}
+
+      {/* State 3: Authenticated Backend Workspace */}
+      {!isAuthChecking && isAdmin && currentUser && (
+        <div className="space-y-6">
+          {/* Session & Sync Status Strip */}
+          <div className="p-4 rounded-2xl bg-[#08090d] border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-1 text-xs">
+              <div className="flex flex-wrap items-center gap-2 font-mono text-brand-300">
+                <span className="w-2 h-2 rounded-full bg-brand-400" aria-hidden="true" />
+                <span>Session active : {currentUser.email}</span>
+              </div>
+              <p className="text-slate-400 font-mono tabular-nums">
+                Dernière synchronisation catalogue : {formatIsoDateTime(catalogUpdatedAt)} ({catalogItems.length} parcours publics actifs)
+              </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
@@ -483,14 +444,14 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                 value={daysBack}
                 onChange={(e) => setDaysBack(Number(e.target.value) as 7 | 30 | 90)}
                 aria-label="Période d'analyse"
-                className="px-2.5 py-1 rounded-lg bg-[#0c1017] border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-brand-400"
+                className="px-2.5 py-1.5 rounded-lg bg-[#090a0f] border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-brand-400"
               >
-                <option value={7}>7 jours</option>
-                <option value={30}>30 jours</option>
-                <option value={90}>90 jours</option>
+                <option value={7}>7 derniers jours</option>
+                <option value={30}>30 derniers jours</option>
+                <option value={90}>90 derniers jours</option>
               </select>
 
-              <label className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0c1017] border border-white/10 text-xs text-slate-300 cursor-pointer select-none">
+              <label className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#090a0f] border border-white/10 text-xs text-slate-300 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={includeAdmin}
@@ -502,63 +463,242 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
 
               <button
                 type="button"
-                onClick={loadStats}
-                disabled={isLoading}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0c1017] hover:bg-white/5 border border-white/10 text-xs text-slate-200 cursor-pointer disabled:opacity-50"
-              >
-                <RefreshCw className={`w-3 h-3 ${isLoading ? 'animate-spin' : ''}`} />
-                <span>Actualiser</span>
-              </button>
-
-              <button
-                type="button"
                 onClick={handleExportJson}
-                disabled={!summary || isLoading}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/30 text-xs font-medium text-brand-300 cursor-pointer disabled:opacity-40"
+                disabled={!summary || isLoadingStats}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/30 text-xs font-medium text-brand-300 cursor-pointer disabled:opacity-40"
               >
-                <Download className="w-3 h-3" />
-                <span>JSON</span>
+                <Download className="w-3.5 h-3.5" />
+                <span>Export JSON</span>
               </button>
             </div>
           </div>
 
-          {/* Scrollable Body */}
-          <div className="p-5 overflow-y-auto space-y-5 flex-1">
-            {errorMsg && (
-              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center justify-between gap-3 text-xs text-red-200">
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
-                  <span>{errorMsg}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={loadStats}
-                  className="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-white font-semibold cursor-pointer"
-                >
-                  Réessayer
-                </button>
-              </div>
-            )}
+          {/* Sync Feedback */}
+          {syncFeedback && (
+            <div
+              className={`p-3.5 rounded-xl border text-xs flex items-center justify-between gap-2 ${
+                syncFeedback.type === 'ok'
+                  ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300'
+                  : 'bg-red-500/10 border-red-500/25 text-red-200'
+              }`}
+            >
+              <span>{syncFeedback.text}</span>
+              <button
+                type="button"
+                onClick={() => setSyncFeedback(null)}
+                aria-label="Fermer le message"
+                className="text-slate-400 hover:text-white cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
 
-            {isLoading && !summary && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                  {[0, 1, 2, 3, 4, 5].map((n) => (
+          {/* Error Banner */}
+          {statsError && (
+            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center justify-between gap-3 text-xs text-red-200">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+                <span>{statsError}</span>
+              </div>
+              <button
+                type="button"
+                onClick={loadBackendData}
+                className="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-white font-semibold cursor-pointer"
+              >
+                Réessayer
+              </button>
+            </div>
+          )}
+
+          {/* Navigation Tabs */}
+          <div
+            role="tablist"
+            aria-label="Sections du back-office"
+            className="border-b border-white/10 flex items-center gap-5 overflow-x-auto"
+          >
+            {tabs.map((tab) => {
+              const selected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`relative py-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors cursor-pointer ${
+                    selected ? 'text-brand-300' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <span>{tab.label}</span>
+                  {selected && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-0 bottom-0 h-0.5 bg-brand-400"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Skeleton while loading initial stats */}
+          {isLoadingStats && !summary && activeTab !== 'catalog' && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                {[0, 1, 2, 3, 4, 5].map((n) => (
+                  <div
+                    key={n}
+                    className="h-20 rounded-xl bg-[#08090d] border border-white/10 animate-pulse"
+                  />
+                ))}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="h-52 rounded-xl bg-[#08090d] border border-white/10 animate-pulse" />
+                <div className="h-52 rounded-xl bg-[#08090d] border border-white/10 animate-pulse" />
+              </div>
+            </div>
+          )}
+
+          {/* Tab: Catalog of shared public plans */}
+          {activeTab === 'catalog' && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#08090d] border border-white/10 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h2 id={catalogCaptionId} className="text-sm font-bold text-white flex items-center gap-2">
+                    <Compass className="w-4 h-4 text-brand-400" />
+                    <span>Plans publics actuellement partagés ({filteredCatalog.length})</span>
+                  </h2>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Vue lecture directe de l'index synchronisé depuis TrackPilot Cycling et Trail
+                  </p>
+                </div>
+
+                <div className="relative w-full sm:w-72">
+                  <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <input
+                    type="search"
+                    value={catalogFilter}
+                    onChange={(e) => setCatalogFilter(e.target.value)}
+                    placeholder="Filtrer par nom, auteur, discipline..."
+                    aria-label="Filtrer les plans partagés"
+                    className="w-full pl-8 pr-8 py-1.5 rounded-xl bg-[#090a0f] border border-white/10 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-brand-400"
+                  />
+                  {catalogFilter && (
+                    <button
+                      type="button"
+                      onClick={() => setCatalogFilter('')}
+                      aria-label="Effacer le filtre"
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {isLoadingCatalog ? (
+                <div className="space-y-2">
+                  {[0, 1, 2, 3].map((n) => (
                     <div
                       key={n}
-                      className="h-20 rounded-xl bg-[#08090d] border border-white/10 animate-pulse"
+                      className="h-12 rounded-xl bg-white/[0.03] border border-white/5 animate-pulse"
                     />
                   ))}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="h-52 rounded-xl bg-[#08090d] border border-white/10 animate-pulse" />
-                  <div className="h-52 rounded-xl bg-[#08090d] border border-white/10 animate-pulse" />
+              ) : filteredCatalog.length === 0 ? (
+                <div className="py-8 text-center text-xs text-slate-400">
+                  {catalogItems.length === 0
+                    ? 'Aucun plan public synchronisé pour le moment. Cliquez sur « Synchroniser le catalogue ».'
+                    : 'Aucun parcours ne correspond à ce filtre.'}
                 </div>
-              </div>
-            )}
+              ) : (
+                <div
+                  tabIndex={0}
+                  role="region"
+                  aria-labelledby={catalogCaptionId}
+                  className="hub-table-wrapper max-h-[540px]"
+                >
+                  <table className="w-full text-xs text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-white/10 text-[11px] font-mono text-slate-400">
+                        <th className="py-2.5 pr-3">Nom du parcours</th>
+                        <th className="py-2.5 px-2">App</th>
+                        <th className="py-2.5 px-2">Discipline</th>
+                        <th className="py-2.5 px-2">Auteur</th>
+                        <th className="py-2.5 px-2 text-right">Distance</th>
+                        <th className="py-2.5 px-2 text-right">D+</th>
+                        <th className="py-2.5 px-2 text-right">Sommet</th>
+                        <th className="py-2.5 px-2">Mise à jour</th>
+                        <th className="py-2.5 pl-2 text-right">Lien</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/[0.06]">
+                      {filteredCatalog.map((item) => (
+                        <tr key={item.id} className="text-slate-200 hover:bg-white/[0.02]">
+                          <th
+                            scope="row"
+                            className="py-2.5 pr-3 font-semibold text-white max-w-[260px] truncate"
+                            title={`${item.name} (${item.id})`}
+                          >
+                            {item.name}
+                          </th>
+                          <td className="py-2.5 px-2 font-mono uppercase text-[10px]">
+                            <span
+                              className={
+                                item.app === 'cycling' ? 'text-brand-300' : 'text-trail-300'
+                              }
+                            >
+                              {item.app}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-2 font-mono text-slate-300">
+                            {DISCIPLINE_LABELS[item.discipline]}
+                          </td>
+                          <td className="py-2.5 px-2 text-slate-300 max-w-[140px] truncate">
+                            {item.authorName || '-'}
+                          </td>
+                          <td className="py-2.5 px-2 text-right font-mono tabular-nums whitespace-nowrap">
+                            {item.totalDistanceKm.toFixed(1)}{' '}
+                            <span className="text-slate-500">km</span>
+                          </td>
+                          <td className="py-2.5 px-2 text-right font-mono tabular-nums whitespace-nowrap text-brand-300">
+                            +{Math.round(item.totalElevationGain)}{' '}
+                            <span className="text-slate-500">m</span>
+                          </td>
+                          <td className="py-2.5 px-2 text-right font-mono tabular-nums whitespace-nowrap">
+                            {Math.round(item.maxAltitude)}{' '}
+                            <span className="text-slate-500">m</span>
+                          </td>
+                          <td className="py-2.5 px-2 font-mono text-[11px] text-slate-400 whitespace-nowrap">
+                            {formatIsoDateTime(item.updatedAt)}
+                          </td>
+                          <td className="py-2.5 pl-2 text-right">
+                            <a
+                              href={getAppLaunchUrl(item.app, item.id)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] font-mono text-brand-300 hover:text-brand-neon"
+                            >
+                              <span>Ouvrir</span>
+                              <ArrowUpRight className="w-3 h-3" />
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
 
-            {summary && summary.totalEvents === 0 && summary.syncHistory.length === 0 && (
-              <div className="p-8 rounded-xl bg-[#08090d] border border-white/10 text-center space-y-2">
+          {/* Empty state for stats */}
+          {activeTab !== 'catalog' &&
+            summary &&
+            summary.totalEvents === 0 &&
+            summary.syncHistory.length === 0 && (
+              <div className="p-8 rounded-2xl bg-[#08090d] border border-white/10 text-center space-y-2">
                 <Activity className="w-7 h-7 text-slate-500 mx-auto" />
                 <p className="text-sm font-semibold text-white">
                   Aucun événement enregistré sur cette période
@@ -570,8 +710,11 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
               </div>
             )}
 
-            {summary && (summary.totalEvents > 0 || summary.syncHistory.length > 0) && (
-              <>
+          {/* Stats Tabs */}
+          {activeTab !== 'catalog' &&
+            summary &&
+            (summary.totalEvents > 0 || summary.syncHistory.length > 0) && (
+              <div className="space-y-5">
                 {/* KPI Strip */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                   <div className="p-3.5 rounded-xl bg-[#08090d] border border-white/10">
@@ -645,13 +788,22 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                   <div className="space-y-4">
                     {/* Daily Table */}
                     <div className="p-4 rounded-xl bg-[#08090d] border border-white/10 space-y-3">
-                      <h3 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">
-                        Activité quotidienne
+                      <h3
+                        id={dailyCaptionId}
+                        className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-2"
+                      >
+                        <BarChart3 className="w-3.5 h-3.5 text-brand-400" />
+                        <span>Activité quotidienne</span>
                       </h3>
                       {summary.dailyActivity.length === 0 ? (
                         <p className="text-xs text-slate-500">Aucune donnée quotidienne.</p>
                       ) : (
-                        <div className="overflow-x-auto">
+                        <div
+                          tabIndex={0}
+                          role="region"
+                          aria-labelledby={dailyCaptionId}
+                          className="hub-table-wrapper max-h-80"
+                        >
                           <table className="w-full text-xs text-left">
                             <thead>
                               <tr className="border-b border-white/10 text-[11px] font-mono text-slate-400">
@@ -667,7 +819,9 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                             <tbody className="divide-y divide-white/[0.06] font-mono tabular-nums">
                               {[...summary.dailyActivity].reverse().map((day) => (
                                 <tr key={day.date} className="text-slate-200">
-                                  <td className="py-2 pr-4 text-white">{day.date}</td>
+                                  <th scope="row" className="py-2 pr-4 text-white font-semibold">
+                                    {day.date}
+                                  </th>
                                   <td className="py-2 px-3 text-right">{day.visits}</td>
                                   <td className="py-2 px-3 text-right">{day.homeViews}</td>
                                   <td className="py-2 px-3 text-right">{day.plansViews}</td>
@@ -806,7 +960,10 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                     <div className="p-4 rounded-xl bg-[#08090d] border border-white/10 space-y-3">
                       <div className="flex items-center gap-2">
                         <ShieldCheck className="w-4 h-4 text-brand-400" />
-                        <h3 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">
+                        <h3
+                          id={syncCaptionId}
+                          className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold"
+                        >
                           Historique des synchronisations catalogue ({summary.syncHistory.length})
                         </h3>
                       </div>
@@ -815,7 +972,12 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                           Aucune synchronisation enregistrée dans hub_sync_history pour l'instant.
                         </p>
                       ) : (
-                        <div className="overflow-x-auto">
+                        <div
+                          tabIndex={0}
+                          role="region"
+                          aria-labelledby={syncCaptionId}
+                          className="hub-table-wrapper max-h-80"
+                        >
                           <table className="w-full text-xs text-left">
                             <thead>
                               <tr className="border-b border-white/10 text-[11px] font-mono text-slate-400">
@@ -831,9 +993,9 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                             <tbody className="divide-y divide-white/[0.06] font-mono tabular-nums">
                               {summary.syncHistory.map((sync) => (
                                 <tr key={sync.id} className="text-slate-200">
-                                  <td className="py-2 pr-3 whitespace-nowrap">
+                                  <th scope="row" className="py-2 pr-3 whitespace-nowrap font-normal">
                                     {formatShortDateTime(sync.syncedAtMs)}
-                                  </td>
+                                  </th>
                                   <td className="py-2 px-2 truncate max-w-[160px]">
                                     {sync.adminEmail}
                                   </td>
@@ -864,14 +1026,22 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                     <div className="p-4 rounded-xl bg-[#08090d] border border-white/10 space-y-3">
                       <div className="flex items-center gap-2">
                         <MousePointerClick className="w-4 h-4 text-brand-400" />
-                        <h3 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">
+                        <h3
+                          id={eventsCaptionId}
+                          className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold"
+                        >
                           Derniers événements enregistrés ({summary.recentEvents.length})
                         </h3>
                       </div>
                       {summary.recentEvents.length === 0 ? (
                         <p className="text-xs text-slate-500">Aucun événement récent.</p>
                       ) : (
-                        <div className="overflow-x-auto max-h-80 overflow-y-auto">
+                        <div
+                          tabIndex={0}
+                          role="region"
+                          aria-labelledby={eventsCaptionId}
+                          className="hub-table-wrapper max-h-96"
+                        >
                           <table className="w-full text-xs text-left">
                             <thead>
                               <tr className="border-b border-white/10 text-[11px] font-mono text-slate-400">
@@ -896,9 +1066,12 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                                   .join(' | ');
                                 return (
                                   <tr key={ev.id} className="text-slate-300">
-                                    <td className="py-1.5 pr-3 whitespace-nowrap text-slate-400">
+                                    <th
+                                      scope="row"
+                                      className="py-1.5 pr-3 whitespace-nowrap text-slate-400 font-normal"
+                                    >
                                       {formatShortDateTime(ev.tsMs)}
-                                    </td>
+                                    </th>
                                     <td className="py-1.5 px-2 text-white whitespace-nowrap">
                                       {EVENT_TYPE_LABELS[ev.type] ?? ev.type}
                                     </td>
@@ -923,28 +1096,12 @@ export const AdminStatsModal: React.FC<AdminStatsModalProps> = ({
                     </div>
                   </div>
                 )}
-              </>
+              </div>
             )}
-          </div>
-
-          {/* Footer */}
-          <div className="px-5 py-3 border-t border-white/10 bg-[#08090d] flex items-center justify-between text-xs text-slate-500 font-mono shrink-0">
-            <div className="flex items-center gap-2">
-              <Compass className="w-3.5 h-3.5 text-brand-400" />
-              <span>Collections Firestore : hub_events &amp; hub_sync_history</span>
-            </div>
-            <button
-              type="button"
-              onClick={() => dialogRef.current?.close()}
-              className="px-3.5 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:border-white/20 text-slate-300 hover:text-white cursor-pointer"
-            >
-              Fermer
-            </button>
-          </div>
         </div>
       )}
-    </dialog>
+    </div>
   );
 };
 
-export default AdminStatsModal;
+export default AdminBackendView;
