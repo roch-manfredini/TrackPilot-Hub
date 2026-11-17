@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Compass, Mail } from 'lucide-react';
+import { recordHubEvent } from '../services/historyService';
 
 interface NavbarProps {
   activeView?: 'home' | 'plans';
@@ -30,6 +31,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
     setMobileMenuOpen(false);
+    recordHubEvent({
+      type: 'cta_click',
+      target: hash ? `navbar_${hash.replace('#', '')}` : 'navbar_logo',
+    });
     if (activeView === 'plans' && onNavigateHome) {
       e.preventDefault();
       onNavigateHome(hash);
@@ -38,6 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const handlePlansClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setMobileMenuOpen(false);
+    recordHubEvent({ type: 'cta_click', target: 'navbar_plans' });
     if (onNavigatePlans) {
       e.preventDefault();
       onNavigatePlans();

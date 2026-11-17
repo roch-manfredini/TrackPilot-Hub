@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, Heart } from 'lucide-react';
 import { LegalTab } from './LegalModal';
+import { recordHubEvent } from '../services/historyService';
 
 interface FooterProps {
   onOpenLegal?: (tab: LegalTab) => void;
@@ -50,6 +51,7 @@ export const Footer: React.FC<FooterProps> = ({
             </button>
             <a
               href="#faq"
+              onClick={() => recordHubEvent({ type: 'cta_click', target: 'footer_faq' })}
               className="hover:text-white transition-colors"
             >
               FAQ
@@ -76,6 +78,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           <a 
             href="#modules" 
+            onClick={() => recordHubEvent({ type: 'cta_click', target: 'footer_trackpilot' })}
             className="text-slate-400 hover:text-emerald-400 transition-colors flex items-center justify-center gap-1 whitespace-nowrap"
           >
             <span>trackpilot.fit</span>

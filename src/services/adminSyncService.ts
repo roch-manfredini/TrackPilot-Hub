@@ -19,6 +19,7 @@ import type {
   PublicPreviewDoc,
 } from '../types/catalog';
 import { buildCompactTrackSummary } from '../utils/trackGeometry';
+import { recordHubEvent, recordSyncHistoryEntry } from './historyService';
 
 const CYCLING_SOURCE_CONFIG: FirebaseOptions = {
   apiKey: 'AIzaSyBFZjmZZxRRSiTZbnS-FuV0edD7KadaIJc',
@@ -235,102 +236,149 @@ export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
     throw new Error('Authentification administrateur requise pour synchroniser le catalogue.');
   }
 
+  const startedAt = Date.now();
   const nowIso = new Date().toISOString();
   const hubDb = getHubDb();
 
-  // Single read on /catalog_meta/index for incremental diff & orphan detection
-  const existingIndexSnap = await getDoc(doc(hubDb, 'catalog_meta', 'index'));
-  const existingItems =
-    existingIndexSnap.exists() && Array.isArray(existingIndexSnap.data().items)
-      ? (existingIndexSnap.data().items as CatalogSummaryItem[])
-      : [];
-  const existingById = new Map<string, CatalogSummaryItem>(
-    existingItems.map((item) => [item.id, item])
-  );
+  try {
+    // Single read on /catalog_meta/index for incremental diff & orphan detection
+    const existingIndexSnap = await getDoc(doc(hubDb, 'catalog_meta', 'index'));
+    const existingItems =
+      existingIndexSnap.exists() && Array.isArray(existingIndexSnap.data().items)
+        ? (existingIndexSnap.data().items as CatalogSummaryItem[])
+        : [];
+    const existingById = new Map<string, CatalogSummaryItem>(
+      existingItems.map((item) => [item.id, item])
+    );
 
-  const previewsToWrite: PublicPreviewDoc[] = [];
-  const summaryItems: CatalogSummaryItem[] = [];
-  const activeIds = new Set<string>();
-  let unchangedCount = 0;
-  let skippedCount = 0;
+    const previewsToWrite: PublicPreviewDoc[] = [];
+    const summaryItems: CatalogSummaryItem[] = [];
+    const activeIds = new Set<string>();
+    let unchangedCount = 0;
+    let skippedCount = 0;
 
-  // Source 1: TrackPilot-Cycling
-  const cyclingApp = getSecondaryApp('trackpilot-cycling-readonly', CYCLING_SOURCE_CONFIG);
-  const cyclingDb = getFirestore(cyclingApp);
-  const cyclingQuery = query(collection(cyclingDb, 'rides'), where('isPublic', '==', true));
-  const cyclingSnap = await getDocs(cyclingQuery);
+    // Source 1: TrackPilot-Cycling
+    const cyclingApp = getSecondaryApp('trackpilot-cycling-readonly', CYCLING_SOURCE_CONFIG);
+    const cyclingDb = getFirestore(cyclingApp);
+    const cyclingQuery = query(collection(cyclingDb, 'rides'), where('isPublic', '==', true));
+    const cyclingSnap = await getDocs(cyclingQuery);
 
-  cyclingSnap.forEach((docSnap) => {
-    const previewId = `cycling_${docSnap.id}`.slice(0, 128);
-    const raw = docSnap.data();
-    const existing = existingById.get(previewId);
+    cyclingSnap.forEach((docSnap) => {
+      const previewId = `cycling_${docSnap.id}`.slice(0, 128);
+      const raw = docSnap.data();
+      const existing = existingById.get(previewId);
 
-    if (isUnchangedRide(existing, raw, 'cycling', nowIso) && existing) {
-      activeIds.add(previewId);
-      summaryItems.push(existing);
-      unchangedCount += 1;
-      return;
+      if (isUnchangedRide(existing, raw, 'cycling', nowIso) && existing) {
+        activeIds.add(previewId);
+        summaryItems.push(existing);
+        unchangedCount += 1;
+        return;
+      }
+
+      const preview = buildSanitizedPreview('cycling', docSnap.id, raw, nowIso);
+      if (preview) {
+        activeIds.add(preview.id);
+        previewsToWrite.push(preview);
+        summaryItems.push(toSummaryItem(preview));
+      } else {
+        skippedCount += 1;
+      }
+    });
+
+    // Source 2: TrackPilot-Trail will be plugged in here when ready (public rides enabled).
+
+    // Sort most recently updated first (with deterministic tie-break)
+    summaryItems.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+
+    const orphanIds: string[] = [];
+    existingById.forEach((_item, existingId) => {
+      if (!activeIds.has(existingId)) {
+        orphanIds.push(existingId);
+      }
+    });
+
+    // Upsert only new or changed previews in safe Firestore batches (< 500 ops per batch)
+    const CHUNK_SIZE = 350;
+    for (let i = 0; i < previewsToWrite.length; i += CHUNK_SIZE) {
+      const chunk = previewsToWrite.slice(i, i + CHUNK_SIZE);
+      const batch = writeBatch(hubDb);
+      for (const preview of chunk) {
+        batch.set(doc(hubDb, 'public_previews', preview.id), preview);
+      }
+      await batch.commit();
     }
 
-    const preview = buildSanitizedPreview('cycling', docSnap.id, raw, nowIso);
-    if (preview) {
-      activeIds.add(preview.id);
-      previewsToWrite.push(preview);
-      summaryItems.push(toSummaryItem(preview));
-    } else {
-      skippedCount += 1;
+    // Delete orphaned / privatized routes from hub catalog
+    for (let i = 0; i < orphanIds.length; i += CHUNK_SIZE) {
+      const chunk = orphanIds.slice(i, i + CHUNK_SIZE);
+      const batch = writeBatch(hubDb);
+      for (const orphanId of chunk) {
+        batch.delete(doc(hubDb, 'public_previews', orphanId));
+      }
+      await batch.commit();
     }
-  });
 
-  // Source 2: TrackPilot-Trail will be plugged in here when ready (public rides enabled).
+    const indexDoc: CatalogIndexDoc = {
+      updatedAt: nowIso,
+      count: summaryItems.length,
+      items: summaryItems,
+    };
 
-  // Sort most recently updated first (with deterministic tie-break)
-  summaryItems.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    const metaBatch = writeBatch(hubDb);
+    metaBatch.set(doc(hubDb, 'catalog_meta', 'index'), indexDoc);
+    await metaBatch.commit();
 
-  const orphanIds: string[] = [];
-  existingById.forEach((_item, existingId) => {
-    if (!activeIds.has(existingId)) {
-      orphanIds.push(existingId);
-    }
-  });
+    const durationMs = Date.now() - startedAt;
+    void recordSyncHistoryEntry({
+      syncedAtIso: nowIso,
+      status: 'ok',
+      totalActiveCount: summaryItems.length,
+      syncedCount: previewsToWrite.length,
+      unchangedCount,
+      deletedCount: orphanIds.length,
+      skippedCount,
+      durationMs,
+      addedOrUpdatedIds: previewsToWrite.map((p) => p.id),
+      deletedIds: orphanIds,
+    }).catch(() => {});
 
-  // Upsert only new or changed previews in safe Firestore batches (< 500 ops per batch)
-  const CHUNK_SIZE = 350;
-  for (let i = 0; i < previewsToWrite.length; i += CHUNK_SIZE) {
-    const chunk = previewsToWrite.slice(i, i + CHUNK_SIZE);
-    const batch = writeBatch(hubDb);
-    for (const preview of chunk) {
-      batch.set(doc(hubDb, 'public_previews', preview.id), preview);
-    }
-    await batch.commit();
+    recordHubEvent({
+      type: 'admin_event',
+      target: 'sync_ok',
+      resultsCount: summaryItems.length,
+      filterValue: `+${previewsToWrite.length}/-${orphanIds.length}`,
+    });
+
+    return {
+      totalActiveCount: summaryItems.length,
+      syncedCount: previewsToWrite.length,
+      unchangedCount,
+      deletedCount: orphanIds.length,
+      skippedCount,
+      updatedAt: nowIso,
+    };
+  } catch (err: unknown) {
+    const durationMs = Date.now() - startedAt;
+    const errorMessage = err instanceof Error ? err.message : 'Erreur inconnue';
+    void recordSyncHistoryEntry({
+      syncedAtIso: nowIso,
+      status: 'error',
+      totalActiveCount: 0,
+      syncedCount: 0,
+      unchangedCount: 0,
+      deletedCount: 0,
+      skippedCount: 0,
+      durationMs,
+      addedOrUpdatedIds: [],
+      deletedIds: [],
+      errorMessage,
+    }).catch(() => {});
+
+    recordHubEvent({
+      type: 'admin_event',
+      target: 'sync_err',
+    });
+
+    throw err;
   }
-
-  // Delete orphaned / privatized routes from hub catalog
-  for (let i = 0; i < orphanIds.length; i += CHUNK_SIZE) {
-    const chunk = orphanIds.slice(i, i + CHUNK_SIZE);
-    const batch = writeBatch(hubDb);
-    for (const orphanId of chunk) {
-      batch.delete(doc(hubDb, 'public_previews', orphanId));
-    }
-    await batch.commit();
-  }
-
-  const indexDoc: CatalogIndexDoc = {
-    updatedAt: nowIso,
-    count: summaryItems.length,
-    items: summaryItems,
-  };
-
-  const metaBatch = writeBatch(hubDb);
-  metaBatch.set(doc(hubDb, 'catalog_meta', 'index'), indexDoc);
-  await metaBatch.commit();
-
-  return {
-    totalActiveCount: summaryItems.length,
-    syncedCount: previewsToWrite.length,
-    unchangedCount,
-    deletedCount: orphanIds.length,
-    skippedCount,
-    updatedAt: nowIso,
-  };
 }

@@ -35,6 +35,46 @@ rules_version = '2';
 //   Note: Private fields (e.g., gpxContent, authorEmail, tactics) are
 //         strictly forbidden by hasOnly() schema enforcement.
 //
+// Collection: hub_events
+// Document ID: {eventId} (auto-generated)
+// Fields (anonymous, cookie-less, zero-PII append-only event telemetry):
+//   - ts: timestamp (required, == request.time, immutable)
+//   - date: string (required, matches ^\d{4}-\d{2}-\d{2}$, length 10)
+//   - hour: int (required, 0..23)
+//   - visitToken: string (required, matches ^[A-Za-z0-9_-]{8,24}$)
+//   - type: string (required, enum of 14 event types; 'admin_event' requires isAdmin())
+//   - view: string (required, in ['home', 'plans'])
+//   - viewport: string (required, in ['mobile', 'tablet', 'desktop'])
+//   - pointer: string (required, in ['coarse', 'fine'])
+//   - standalone: bool (required)
+//   - consent: string (required, in ['accepted', 'refused', 'pending'])
+//   - actor: string (required, in ['visitor', 'admin']; 'admin' requires isAdmin())
+//   - target: string (optional, 1..80 chars, must not contain '@')
+//   - app: string (optional, in ['cycling', 'trail'])
+//   - discipline: string (optional, in ['road', 'gravel', 'mtb', 'trail', 'hike', 'walk'])
+//   - previewId: string (optional, 1..128 chars, must not contain '@')
+//   - routeName: string (optional, 1..200 chars, must not contain '@')
+//   - filterValue: string (optional, 1..64 chars, must not contain '@')
+//   - referrerCategory: string (optional, in ['direct', 'search', 'trackpilot_app', 'social', 'other'])
+//   - resultsCount: int (optional, 0..10000)
+//
+// Collection: hub_sync_history
+// Document ID: {syncId} (auto-generated)
+// Fields (admin-only catalog synchronization audit trail, immutable):
+//   - syncedAt: timestamp (required, == request.time)
+//   - syncedAtIso: string (required, valid ISO 8601 date string 10..40 chars)
+//   - adminEmail: string (required, 3..120 chars, == request.auth.token.email)
+//   - status: string (required, in ['ok', 'error'])
+//   - totalActiveCount: int (required, 0..10000)
+//   - syncedCount: int (required, 0..10000)
+//   - unchangedCount: int (required, 0..10000)
+//   - deletedCount: int (required, 0..10000)
+//   - skippedCount: int (required, 0..10000)
+//   - durationMs: int (required, 0..600000)
+//   - addedOrUpdatedIds: list (required, size <= 200)
+//   - deletedIds: list (required, size <= 200)
+//   - errorMessage: string (optional, 1..300 chars)
+//
 // ===============================================================
 
 service cloud.firestore {
@@ -91,6 +131,20 @@ service cloud.firestore {
     // Validate that the document contains only allowed fields
     function hasOnlyAllowedFields(data, fields) {
       return data.keys().hasOnly(fields);
+    }
+
+    // Validate that a value is an int within [minVal, maxVal] inclusive
+    function isIntInRange(val, minVal, maxVal) {
+      return val is int && val >= minVal && val <= maxVal;
+    }
+
+    // Validate that a value is a bounded non-PII string without '@'
+    function isCleanBoundedString(val, minLen, maxLen) {
+      return val is string &&
+             val.size() >= minLen &&
+             val.size() <= maxLen &&
+             !val.matches('.*@.*') &&
+             val.matches('^[^@]+$');
     }
 
     // ===============================================================
@@ -182,6 +236,156 @@ service cloud.firestore {
              (!('startLng' in data) || (isNumber(data.startLng) && data.startLng >= -180 && data.startLng <= 180));
     }
 
+    // Validate /hub_events/{eventId} anonymous zero-PII telemetry payload
+    function isValidHubEvent(data) {
+      let requiredFields = [
+        'ts',
+        'date',
+        'hour',
+        'visitToken',
+        'type',
+        'view',
+        'viewport',
+        'pointer',
+        'standalone',
+        'consent',
+        'actor'
+      ];
+      let allowedFields = [
+        'ts',
+        'date',
+        'hour',
+        'visitToken',
+        'type',
+        'view',
+        'viewport',
+        'pointer',
+        'standalone',
+        'consent',
+        'actor',
+        'target',
+        'app',
+        'discipline',
+        'previewId',
+        'routeName',
+        'filterValue',
+        'referrerCategory',
+        'resultsCount'
+      ];
+      let validTypes = [
+        'page_view',
+        'section_view',
+        'cta_click',
+        'route_preview',
+        'app_launch',
+        'catalog_filter',
+        'catalog_search',
+        'install_tab',
+        'faq_toggle',
+        'contact_action',
+        'legal_open',
+        'cookie_choice',
+        'admin_event',
+        'client_error'
+      ];
+
+      return hasRequiredFields(data, requiredFields) &&
+             hasOnlyAllowedFields(data, allowedFields) &&
+             data.ts is timestamp &&
+             data.ts == request.time &&
+             data.date is string &&
+             data.date.size() == 10 &&
+             data.date.matches("^\\d{4}-\\d{2}-\\d{2}$") &&
+             isIntInRange(data.hour, 0, 23) &&
+             data.visitToken is string &&
+             data.visitToken.size() >= 8 &&
+             data.visitToken.size() <= 24 &&
+             data.visitToken.matches("^[A-Za-z0-9_-]{8,24}$") &&
+             data.type is string &&
+             data.type in validTypes &&
+             data.view is string &&
+             data.view in ['home', 'plans'] &&
+             data.viewport is string &&
+             data.viewport in ['mobile', 'tablet', 'desktop'] &&
+             data.pointer is string &&
+             data.pointer in ['coarse', 'fine'] &&
+             data.standalone is bool &&
+             data.consent is string &&
+             data.consent in ['accepted', 'refused', 'pending'] &&
+             data.actor is string &&
+             data.actor in ['visitor', 'admin'] &&
+             (data.actor != 'admin' || isAdmin()) &&
+             (data.type != 'admin_event' || isAdmin()) &&
+             (!('target' in data) || isCleanBoundedString(data.target, 1, 80)) &&
+             (!('app' in data) || (data.app is string && data.app in ['cycling', 'trail'])) &&
+             (!('discipline' in data) || (data.discipline is string && data.discipline in ['road', 'gravel', 'mtb', 'trail', 'hike', 'walk'])) &&
+             (!('previewId' in data) || isCleanBoundedString(data.previewId, 1, 128)) &&
+             (!('routeName' in data) || isCleanBoundedString(data.routeName, 1, 200)) &&
+             (!('filterValue' in data) || isCleanBoundedString(data.filterValue, 1, 64)) &&
+             (!('referrerCategory' in data) || (data.referrerCategory is string && data.referrerCategory in ['direct', 'search', 'trackpilot_app', 'social', 'other'])) &&
+             (!('resultsCount' in data) || isIntInRange(data.resultsCount, 0, 10000));
+    }
+
+    // Validate /hub_sync_history/{syncId} admin synchronization audit entry
+    function isValidSyncHistory(data) {
+      let requiredFields = [
+        'syncedAt',
+        'syncedAtIso',
+        'adminEmail',
+        'status',
+        'totalActiveCount',
+        'syncedCount',
+        'unchangedCount',
+        'deletedCount',
+        'skippedCount',
+        'durationMs',
+        'addedOrUpdatedIds',
+        'deletedIds'
+      ];
+      let allowedFields = [
+        'syncedAt',
+        'syncedAtIso',
+        'adminEmail',
+        'status',
+        'totalActiveCount',
+        'syncedCount',
+        'unchangedCount',
+        'deletedCount',
+        'skippedCount',
+        'durationMs',
+        'addedOrUpdatedIds',
+        'deletedIds',
+        'errorMessage'
+      ];
+
+      return hasRequiredFields(data, requiredFields) &&
+             hasOnlyAllowedFields(data, allowedFields) &&
+             data.syncedAt is timestamp &&
+             data.syncedAt == request.time &&
+             data.syncedAtIso is string &&
+             isValidDateValue(data.syncedAtIso) &&
+             data.adminEmail is string &&
+             data.adminEmail.size() >= 3 &&
+             data.adminEmail.size() <= 120 &&
+             data.adminEmail == request.auth.token.email &&
+             data.status is string &&
+             data.status in ['ok', 'error'] &&
+             isIntInRange(data.totalActiveCount, 0, 10000) &&
+             isIntInRange(data.syncedCount, 0, 10000) &&
+             isIntInRange(data.unchangedCount, 0, 10000) &&
+             isIntInRange(data.deletedCount, 0, 10000) &&
+             isIntInRange(data.skippedCount, 0, 10000) &&
+             isIntInRange(data.durationMs, 0, 600000) &&
+             data.addedOrUpdatedIds is list &&
+             data.addedOrUpdatedIds.size() <= 200 &&
+             data.deletedIds is list &&
+             data.deletedIds.size() <= 200 &&
+             (!('errorMessage' in data) ||
+               (data.errorMessage is string &&
+                data.errorMessage.size() >= 1 &&
+                data.errorMessage.size() <= 300));
+    }
+
     // ===============================================================
     // Collection Rules
     // ===============================================================
@@ -201,6 +405,20 @@ service cloud.firestore {
       allow create, update: if isAdmin() &&
                                isValidPublicPreview(request.resource.data, previewId);
       allow delete: if isAdmin();
+    }
+
+    // Anonymous, cookie-less, zero-PII append-only telemetry (readable/deletable only by admins)
+    match /hub_events/{eventId} {
+      allow create: if isValidHubEvent(request.resource.data);
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+
+    // Admin catalog synchronization audit trail (append-only, readable/deletable only by admins)
+    match /hub_sync_history/{syncId} {
+      allow read, delete: if isAdmin();
+      allow create: if isAdmin() && isValidSyncHistory(request.resource.data);
+      allow update: if false;
     }
 
     // Default deny for all other paths

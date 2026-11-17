@@ -12,9 +12,15 @@ import {
   ArrowUpRight,
   Clock
 } from 'lucide-react';
+import { recordHubEvent } from '../services/historyService';
 
 export const InstallSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'ios' | 'android' | 'desktop'>('ios');
+
+  const handleSelectTab = (tab: 'ios' | 'android' | 'desktop') => {
+    setActiveTab(tab);
+    recordHubEvent({ type: 'install_tab', target: tab });
+  };
 
   const ADVANTAGES = [
     {
@@ -97,7 +103,7 @@ export const InstallSection: React.FC = () => {
             <div className="flex items-center gap-1.5 p-1 rounded-xl bg-dark-950 border border-white/10 w-full md:w-auto">
               <button
                 type="button"
-                onClick={() => setActiveTab('ios')}
+                onClick={() => handleSelectTab('ios')}
                 className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'ios'
                     ? 'bg-brand-neon text-dark-950 shadow-sm'
@@ -110,7 +116,7 @@ export const InstallSection: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => setActiveTab('android')}
+                onClick={() => handleSelectTab('android')}
                 className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'android'
                     ? 'bg-brand-neon text-dark-950 shadow-sm'
@@ -123,7 +129,7 @@ export const InstallSection: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => setActiveTab('desktop')}
+                onClick={() => handleSelectTab('desktop')}
                 className={`flex-1 md:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   activeTab === 'desktop'
                     ? 'bg-brand-neon text-dark-950 shadow-sm'
@@ -278,6 +284,13 @@ export const InstallSection: React.FC = () => {
                 href="https://cycling.trackpilot.fit"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  recordHubEvent({
+                    type: 'app_launch',
+                    target: 'install_section',
+                    app: 'cycling',
+                  })
+                }
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-dark-950 bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 active:scale-[0.98] shadow-glow-sm transition-all duration-150"
               >
                 <span>Ouvrir TrackPilot Cycling</span>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Bike, Footprints, Mountain, ChevronDown, CheckCircle2, Clock, Wrench, Watch, Compass, ArrowRight, Smartphone, Navigation } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { ModuleInfo } from '../types';
+import { recordHubEvent } from '../services/historyService';
 
 interface ModulesHubProps {
   onOpenPlans?: () => void;
@@ -147,6 +148,12 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                   {isAvailable ? (
                     <a
                       href="#guide-installation"
+                      onClick={() =>
+                        recordHubEvent({
+                          type: 'cta_click',
+                          target: `modules_install_${module.id}`,
+                        })
+                      }
                       className="group flex items-center justify-center gap-2.5 w-full py-3 px-5 rounded-xl font-bold text-sm text-dark-950 bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 active:scale-[0.98] shadow-glow-sm transition-all duration-150"
                     >
                       <span>Installer {module.title}</span>
@@ -238,6 +245,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
           <a
             href="/plans"
             onClick={(e) => {
+              recordHubEvent({ type: 'cta_click', target: 'modules_open_plans' });
               if (onOpenPlans) {
                 e.preventDefault();
                 onOpenPlans();

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Compass, ArrowRight, GlobeCode } from 'lucide-react';
 import { SectionBackground } from './SectionBackground';
+import { recordHubEvent } from '../services/historyService';
 
 interface EcosystemVisionProps {
   onOpenContact?: () => void;
@@ -71,6 +72,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
             </p>
             <a
               href="#modules"
+              onClick={() => recordHubEvent({ type: 'cta_click', target: 'vision_choose_module' })}
               className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold text-dark-950 bg-brand-neon hover:bg-brand-400 active:scale-[0.98] shadow-glow-md transition-all duration-150"
             >
               <span>Choisir mon module</span>

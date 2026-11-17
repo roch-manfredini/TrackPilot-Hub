@@ -102,7 +102,7 @@
               { "text": "trackpilot.fit", "style": "mono" },
               { "text": ", la mesure d’audience Google Analytics (" },
               { "text": "G-BFYKSM6F66", "style": "mono" },
-              { "text": ") n’est activée qu’avec votre consentement explicite préalable. Les applications web embarquent également un stockage local technique (localStorage / IndexedDB) nécessaire au fonctionnement hors connexion de vos réglages et parcours." }
+              { "text": ") n’est activée qu’avec votre consentement explicite préalable. En parallèle, des statistiques techniques d’usage strictement anonymes (vues de pages, consultations de parcours publics, filtres utilisés et clics de navigation, sans cookie, sans adresse IP ni donnée personnelle) sont enregistrées dans Firebase Firestore afin d’améliorer la plateforme. Les applications web embarquent également un stockage local technique (localStorage / IndexedDB) nécessaire au fonctionnement hors connexion de vos réglages et parcours." }
             ]
           ],
           "hasCookieSettingsAction": true

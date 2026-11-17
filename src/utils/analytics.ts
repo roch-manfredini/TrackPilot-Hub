@@ -59,6 +59,35 @@ export function enableAnalytics(): void {
   }
 }
 
+export function trackGaPageView(pagePath: string, pageTitle?: string): void {
+  if (typeof window === 'undefined' || getCookieConsent() !== 'accepted') return;
+  if (typeof window.gtag !== 'function') return;
+
+  window.gtag('event', 'page_view', {
+    page_path: pagePath,
+    page_location: window.location.origin + pagePath,
+    ...(pageTitle ? { page_title: pageTitle } : {}),
+  });
+}
+
+export function trackGaEvent(
+  eventName: string,
+  params?: Record<string, string | number | boolean | undefined>
+): void {
+  if (typeof window === 'undefined' || getCookieConsent() !== 'accepted') return;
+  if (typeof window.gtag !== 'function') return;
+
+  const cleanParams: Record<string, string | number | boolean> = {};
+  if (params) {
+    for (const [k, v] of Object.entries(params)) {
+      if (v !== undefined) {
+        cleanParams[k] = v;
+      }
+    }
+  }
+  window.gtag('event', eventName, cleanParams);
+}
+
 export function disableAnalytics(): void {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 

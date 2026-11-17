@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ShieldCheck, X, AlertCircle, LogOut } from 'lucide-react';
+import { ShieldCheck, X, AlertCircle, LogOut, BarChart3 } from 'lucide-react';
 import { signInWithPopup, signOut, type User } from 'firebase/auth';
 import {
   createGoogleAuthProvider,
   getHubAuth,
   isAllowedAdminUser,
 } from '../config/firebase';
+import { recordHubEvent } from '../services/historyService';
 
 interface AdminLoginModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface AdminLoginModalProps {
   currentUser: User | null;
   onAuthenticated: (user: User) => void;
   onSignedOut: () => void;
+  onOpenStats?: () => void;
 }
 
 export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
@@ -21,6 +23,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
   currentUser,
   onAuthenticated,
   onSignedOut,
+  onOpenStats,
 }) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const backdropPressRef = useRef(false);
@@ -67,6 +70,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
       }
 
       onAuthenticated(result.user);
+      recordHubEvent({ type: 'admin_event', target: 'login' });
       handleClose();
     } catch (err: unknown) {
       const code =
@@ -87,6 +91,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
     setIsLoading(true);
     setErrorMsg(null);
     try {
+      recordHubEvent({ type: 'admin_event', target: 'logout' });
       await signOut(getHubAuth());
       onSignedOut();
       handleClose();
@@ -161,6 +166,17 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
                 </p>
                 <p className="font-medium text-white truncate">{currentUser.email}</p>
               </div>
+
+              {onOpenStats && (
+                <button
+                  type="button"
+                  onClick={onOpenStats}
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 transition-colors cursor-pointer"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  <span>Voir l'historique &amp; statistiques</span>
+                </button>
+              )}
 
               <button
                 type="button"

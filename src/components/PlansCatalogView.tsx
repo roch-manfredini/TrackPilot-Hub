@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import {
   ArrowLeft,
   ArrowUpRight,
+  BarChart3,
   Bike,
   ChevronDown,
   Compass,
@@ -39,11 +40,13 @@ import {
   type DecodedCoordinate,
 } from '../utils/trackGeometry';
 import { ElevationProfileChart } from './ElevationProfileChart';
+import { getSearchLengthBucket, recordHubEvent } from '../services/historyService';
 
 interface PlansCatalogViewProps {
   onBackHome: (sectionHash?: string) => void;
   currentUser: User | null;
   onAdminSignedOut: () => void;
+  onOpenAdminStats?: () => void;
 }
 
 type UniverseFilter = 'all' | CatalogApp;
@@ -68,6 +71,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
   onBackHome,
   currentUser,
   onAdminSignedOut,
+  onOpenAdminStats,
 }) => {
   const isAdmin = isAllowedAdminUser(currentUser);
 
@@ -126,6 +130,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
       setIndexError(
         'Impossible de charger le catalogue des plans publics pour le moment.'
       );
+      recordHubEvent({ type: 'client_error', target: 'catalog_load' });
     } finally {
       setIsLoadingIndex(false);
     }
@@ -189,6 +194,25 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
     setVisibleCount(PAGE_SIZE);
   }, [universe, disciplineFilter, distanceBucket, elevationBucket, searchQuery, sortMode]);
 
+  // Debounced anonymous search tracking (never logs raw search string)
+  const isFirstSearchEffectRef = useRef(true);
+  useEffect(() => {
+    if (isFirstSearchEffectRef.current) {
+      isFirstSearchEffectRef.current = false;
+      return;
+    }
+    const trimmed = searchQuery.trim();
+    if (!trimmed) return;
+    const timer = window.setTimeout(() => {
+      recordHubEvent({
+        type: 'catalog_search',
+        filterValue: getSearchLengthBucket(trimmed),
+        resultsCount: filteredItems.length,
+      });
+    }, 1200);
+    return () => window.clearTimeout(timer);
+  }, [searchQuery, filteredItems.length]);
+
   const visibleItems = useMemo(
     () => filteredItems.slice(0, visibleCount),
     [filteredItems, visibleCount]
@@ -234,6 +258,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
       .catch(() => {
         if (cancelled) return;
         setPreviewError("Impossible d'afficher le tracé de ce parcours.");
+        recordHubEvent({
+          type: 'client_error',
+          target: 'preview_load',
+          previewId: selectedId,
+        });
       })
       .finally(() => {
         if (!cancelled) setIsLoadingPreview(false);
@@ -387,6 +416,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
     ) {
       setDisciplineFilter('all');
     }
+    recordHubEvent({
+      type: 'catalog_filter',
+      target: 'universe',
+      filterValue: next,
+    });
   };
 
   const resetFilters = () => {
@@ -396,6 +430,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
     setElevationBucket('all');
     setSearchQuery('');
     setSortMode('recent');
+    recordHubEvent({
+      type: 'catalog_filter',
+      target: 'reset',
+      filterValue: 'all',
+    });
   };
 
   const hasActiveFilters =
@@ -506,7 +545,18 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
             <strong className="text-trail-300 font-semibold">TrackPilot Trail</strong>.
           </p>
 
-          <details className="faq-details mt-2.5">
+          <details
+            className="faq-details mt-2.5"
+            onToggle={(e) => {
+              if (e.currentTarget.open) {
+                recordHubEvent({
+                  type: 'faq_toggle',
+                  target: 'plans_visibility_info',
+                  filterValue: 'open',
+                });
+              }
+            }}
+          >
             <summary className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 text-xs font-medium text-slate-200 hover:text-white transition-all duration-150 active:scale-[0.98] cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
               <ChevronDown
                 className="w-3.5 h-3.5 text-brand-400 faq-chevron shrink-0"
@@ -526,6 +576,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                   href="/#contact"
                   onClick={(e) => {
                     e.preventDefault();
+                    recordHubEvent({
+                      type: 'contact_action',
+                      target: 'modal_open',
+                      filterValue: 'plans_banner',
+                    });
                     onBackHome('#contact');
                   }}
                   className="text-brand-300 hover:text-brand-neon font-semibold underline decoration-brand-400/60 underline-offset-4 transition-colors"
@@ -564,7 +619,18 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
             )}
           </div>
 
-          <div className="flex items-center gap-2.5 shrink-0">
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            {onOpenAdminStats && (
+              <button
+                type="button"
+                onClick={onOpenAdminStats}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-brand-300 bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/30 transition-all cursor-pointer"
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                <span>Statistiques</span>
+              </button>
+            )}
+
             <button
               type="button"
               onClick={handleAdminSync}
@@ -658,7 +724,15 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
             <select
               value={distanceBucket}
-              onChange={(e) => setDistanceBucket(e.target.value as DistanceBucket)}
+              onChange={(e) => {
+                const next = e.target.value as DistanceBucket;
+                setDistanceBucket(next);
+                recordHubEvent({
+                  type: 'catalog_filter',
+                  target: 'distance',
+                  filterValue: next,
+                });
+              }}
               aria-label="Filtrer par distance"
               className="px-3 py-1.5 rounded-xl bg-dark-950 border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-brand-400/60"
             >
@@ -670,7 +744,15 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
             <select
               value={elevationBucket}
-              onChange={(e) => setElevationBucket(e.target.value as ElevationBucket)}
+              onChange={(e) => {
+                const next = e.target.value as ElevationBucket;
+                setElevationBucket(next);
+                recordHubEvent({
+                  type: 'catalog_filter',
+                  target: 'elevation',
+                  filterValue: next,
+                });
+              }}
               aria-label="Filtrer par dénivelé positif"
               className="px-3 py-1.5 rounded-xl bg-dark-950 border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-brand-400/60"
             >
@@ -682,7 +764,15 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
             <select
               value={sortMode}
-              onChange={(e) => setSortMode(e.target.value as SortMode)}
+              onChange={(e) => {
+                const next = e.target.value as SortMode;
+                setSortMode(next);
+                recordHubEvent({
+                  type: 'catalog_filter',
+                  target: 'sort',
+                  filterValue: next,
+                });
+              }}
               aria-label="Trier les parcours"
               className="px-3 py-1.5 rounded-xl bg-dark-950 border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-brand-400/60"
             >
@@ -699,7 +789,14 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
           <div className="flex flex-wrap items-center gap-1.5">
             <button
               type="button"
-              onClick={() => setDisciplineFilter('all')}
+              onClick={() => {
+                setDisciplineFilter('all');
+                recordHubEvent({
+                  type: 'catalog_filter',
+                  target: 'discipline',
+                  filterValue: 'all',
+                });
+              }}
               className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors cursor-pointer ${
                 disciplineFilter === 'all'
                   ? 'bg-white/10 text-white border border-white/20'
@@ -714,7 +811,15 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                 <button
                   key={disc}
                   type="button"
-                  onClick={() => setDisciplineFilter(disc)}
+                  onClick={() => {
+                    setDisciplineFilter(disc);
+                    recordHubEvent({
+                      type: 'catalog_filter',
+                      target: 'discipline',
+                      discipline: disc,
+                      filterValue: disc,
+                    });
+                  }}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors cursor-pointer ${
                     disciplineFilter === disc
                       ? isTrailDisc
@@ -819,7 +924,17 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => setSelectedId(item.id)}
+                  onClick={() => {
+                    setSelectedId(item.id);
+                    recordHubEvent({
+                      type: 'route_preview',
+                      target: 'catalog_click',
+                      previewId: item.id,
+                      routeName: item.name,
+                      app: item.app,
+                      discipline: item.discipline,
+                    });
+                  }}
                   className={`w-full text-left px-3 py-2 rounded-xl border transition-all cursor-pointer ${
                     isSelected
                       ? isCycling
@@ -871,7 +986,15 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
             {visibleCount < filteredItems.length && (
               <button
                 type="button"
-                onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                onClick={() => {
+                  const nextCount = visibleCount + PAGE_SIZE;
+                  setVisibleCount(nextCount);
+                  recordHubEvent({
+                    type: 'catalog_filter',
+                    target: 'load_more',
+                    resultsCount: Math.min(nextCount, filteredItems.length),
+                  });
+                }}
                 className="w-full py-2.5 px-3 rounded-xl glass-panel border border-white/10 hover:border-brand-400/40 text-xs font-mono text-slate-300 hover:text-brand-300 transition-colors cursor-pointer"
               >
                 Afficher plus ({filteredItems.length - visibleCount} restant
@@ -918,6 +1041,16 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                     href={getAppLaunchUrl(activeSummary.app, activeSummary.id)}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() =>
+                      recordHubEvent({
+                        type: 'app_launch',
+                        target: 'plans_catalog',
+                        app: activeSummary.app,
+                        discipline: activeSummary.discipline,
+                        previewId: activeSummary.id,
+                        routeName: activeSummary.name,
+                      })
+                    }
                     className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-dark-950 transition-all shrink-0 shadow-lg ${
                       activeSummary.app === 'cycling'
                         ? 'bg-brand-400 hover:bg-brand-300 shadow-brand-500/15'

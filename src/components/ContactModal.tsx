@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Mail, Send, Copy, Check, X } from 'lucide-react';
+import { recordHubEvent } from '../services/historyService';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -30,6 +31,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
     navigator.clipboard.writeText(email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+    recordHubEvent({
+      type: 'contact_action',
+      target: 'email_copy',
+      filterValue: 'contact_modal',
+    });
   };
 
   return (
@@ -72,6 +78,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
               N'hésitez pas à contacter directement l'équipe TrackPilot :{' '}
               <a 
                 href={`mailto:${email}?subject=Retour%20TrackPilot`}
+                onClick={() =>
+                  recordHubEvent({
+                    type: 'contact_action',
+                    target: 'mailto_click',
+                    filterValue: 'contact_modal_inline',
+                  })
+                }
                 className="font-bold text-white hover:text-brand-300 underline decoration-brand-400/50 underline-offset-4 transition-colors font-mono"
               >
                 {email}
@@ -83,6 +96,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
               href={`mailto:${email}?subject=Retour%20d%27exp%C3%A9rience%20TrackPilot`}
+              onClick={() =>
+                recordHubEvent({
+                  type: 'contact_action',
+                  target: 'mailto_click',
+                  filterValue: 'contact_modal_button',
+                })
+              }
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 active:scale-[0.98] transition-all"
             >
               <Send className="w-4 h-4" />

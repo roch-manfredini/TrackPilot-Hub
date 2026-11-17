@@ -15,29 +15,50 @@ import { LegalModal, LegalTab } from './components/LegalModal';
 import { CookieBanner } from './components/CookieBanner';
 import { Footer } from './components/Footer';
 import { enableAnalytics, getCookieConsent, setCookieConsent } from './utils/analytics';
+import {
+  classifyReferrer,
+  recordHubEvent,
+  setTrackedView,
+} from './services/historyService';
 
 const PlansCatalogView = lazy(() => import('./components/PlansCatalogView'));
 const AdminLoginModal = lazy(() =>
   import('./components/AdminLoginModal').then((m) => ({ default: m.AdminLoginModal }))
+);
+const AdminStatsModal = lazy(() =>
+  import('./components/AdminStatsModal').then((m) => ({ default: m.AdminStatsModal }))
 );
 
 export const App: React.FC = () => {
   const [view, setView] = useState<'home' | 'plans'>('home');
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [isAdminStatsOpen, setIsAdminStatsOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [legalTab, setLegalTab] = useState<LegalTab | null>(null);
   const [showCookieBanner, setShowCookieBanner] = useState(false);
+
+  const prevSyncedViewRef = React.useRef<'home' | 'plans' | null>(null);
 
   const syncLocationState = useCallback(() => {
     const pathname = window.location.pathname.toLowerCase();
     const hash = window.location.hash.toLowerCase();
 
-    if (pathname === '/plans' || pathname.startsWith('/plans/') || hash === '#plans') {
-      setView('plans');
-    } else {
-      setView('home');
+    const nextView: 'home' | 'plans' =
+      pathname === '/plans' || pathname.startsWith('/plans/') || hash === '#plans'
+        ? 'plans'
+        : 'home';
+
+    setView(nextView);
+    setTrackedView(nextView);
+    if (prevSyncedViewRef.current !== null && prevSyncedViewRef.current !== nextView) {
+      recordHubEvent({
+        type: 'page_view',
+        view: nextView,
+        target: 'popstate',
+      });
     }
+    prevSyncedViewRef.current = nextView;
 
     if (hash === '#mentions') {
       setLegalTab('mentions');
@@ -80,7 +101,7 @@ export const App: React.FC = () => {
       }
     };
 
-    if (view === 'plans' || isAdminModalOpen) {
+    if (view === 'plans' || isAdminModalOpen || isAdminStatsOpen) {
       void attachAuthListener();
     }
 
@@ -88,22 +109,40 @@ export const App: React.FC = () => {
       cancelled = true;
       unsubscribe?.();
     };
-  }, [view, isAdminModalOpen]);
+  }, [view, isAdminModalOpen, isAdminStatsOpen]);
 
   const handleNavigatePlans = useCallback(() => {
-    if (window.location.pathname !== '/plans') {
+    const alreadyPlans = window.location.pathname === '/plans';
+    if (!alreadyPlans) {
       window.history.pushState(null, '', '/plans');
     }
     setView('plans');
+    setTrackedView('plans');
+    if (!alreadyPlans) {
+      recordHubEvent({
+        type: 'page_view',
+        view: 'plans',
+        target: 'spa',
+      });
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const handleNavigateHome = useCallback((sectionHash?: string) => {
+    const wasPlans = window.location.pathname === '/plans' || view === 'plans';
     const targetUrl = sectionHash ? `/${sectionHash}` : '/';
     if (window.location.pathname !== '/' || window.location.hash !== (sectionHash ?? '')) {
       window.history.pushState(null, '', targetUrl);
     }
     setView('home');
+    setTrackedView('home');
+    if (wasPlans) {
+      recordHubEvent({
+        type: 'page_view',
+        view: 'home',
+        target: 'spa',
+      });
+    }
     if (sectionHash && sectionHash.startsWith('#')) {
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
@@ -116,7 +155,7 @@ export const App: React.FC = () => {
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, []);
+  }, [view]);
 
   const handleCloseAdminModal = () => {
     setIsAdminModalOpen(false);
@@ -132,6 +171,70 @@ export const App: React.FC = () => {
     } else if (consent === null) {
       setShowCookieBanner(true);
     }
+
+    const pathname = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    const initialView: 'home' | 'plans' =
+      pathname === '/plans' || pathname.startsWith('/plans/') || hash === '#plans'
+        ? 'plans'
+        : 'home';
+    setTrackedView(initialView);
+    recordHubEvent({
+      type: 'page_view',
+      view: initialView,
+      target: 'initial',
+      referrerCategory: classifyReferrer(),
+      dedupeKey: `initial_page_view:${initialView}`,
+    });
+  }, []);
+
+  useEffect(() => {
+    setTrackedView(view);
+  }, [view]);
+
+  // Passive scroll-depth tracking across home sections (once per section per visit)
+  useEffect(() => {
+    if (view !== 'home' || typeof window === 'undefined') return;
+    if (!('IntersectionObserver' in window)) return;
+
+    const sectionIds = [
+      'modules',
+      'formats',
+      'pourquoi',
+      'tech',
+      'installation',
+      'vision',
+      'faq',
+      'contact',
+    ];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.target.id) {
+            recordHubEvent({
+              type: 'section_view',
+              view: 'home',
+              target: entry.target.id,
+              dedupeKey: `section:${entry.target.id}`,
+            });
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    }
+
+    return () => observer.disconnect();
+  }, [view]);
+
+  const handleOpenLegal = useCallback((tab: LegalTab) => {
+    setLegalTab(tab);
+    recordHubEvent({ type: 'legal_open', target: tab });
   }, []);
 
   const handleCloseLegal = () => {
@@ -145,12 +248,19 @@ export const App: React.FC = () => {
   const handleAcceptCookies = () => {
     setCookieConsent('accepted');
     setShowCookieBanner(false);
+    recordHubEvent({ type: 'cookie_choice', target: 'accepted' });
   };
 
   const handleRefuseCookies = () => {
     setCookieConsent('refused');
     setShowCookieBanner(false);
+    recordHubEvent({ type: 'cookie_choice', target: 'refused' });
   };
+
+  const handleReopenCookies = useCallback(() => {
+    setShowCookieBanner(true);
+    recordHubEvent({ type: 'cookie_choice', target: 'banner_reopened' });
+  }, []);
 
   return (
     <div id="top" className="min-h-screen bg-dark-950 text-slate-100 flex flex-col font-sans selection:bg-brand-500/20 selection:text-brand-300">
@@ -174,6 +284,7 @@ export const App: React.FC = () => {
               onBackHome={handleNavigateHome}
               currentUser={currentUser}
               onAdminSignedOut={() => setCurrentUser(null)}
+              onOpenAdminStats={() => setIsAdminStatsOpen(true)}
             />
           </Suspense>
         ) : (
@@ -184,15 +295,24 @@ export const App: React.FC = () => {
             <FieldResilience />
             <TechPillars />
             <InstallSection />
-            <EcosystemVision onOpenContact={() => setIsContactModalOpen(true)} />
+            <EcosystemVision
+              onOpenContact={() => {
+                setIsContactModalOpen(true);
+                recordHubEvent({
+                  type: 'contact_action',
+                  target: 'modal_open',
+                  filterValue: 'ecosystem_vision',
+                });
+              }}
+            />
             <FaqSection />
             <ContactSection />
           </>
         )}
       </main>
       <Footer
-        onOpenLegal={(tab) => setLegalTab(tab)}
-        onOpenCookies={() => setShowCookieBanner(true)}
+        onOpenLegal={handleOpenLegal}
+        onOpenCookies={handleReopenCookies}
         onOpenAdmin={() => setIsAdminModalOpen(true)}
       />
       <ContactModal 
@@ -207,20 +327,32 @@ export const App: React.FC = () => {
             currentUser={currentUser}
             onAuthenticated={(user) => setCurrentUser(user)}
             onSignedOut={() => setCurrentUser(null)}
+            onOpenStats={() => {
+              handleCloseAdminModal();
+              setIsAdminStatsOpen(true);
+            }}
+          />
+        </Suspense>
+      )}
+      {isAdminStatsOpen && currentUser && (
+        <Suspense fallback={null}>
+          <AdminStatsModal
+            isOpen={isAdminStatsOpen}
+            onClose={() => setIsAdminStatsOpen(false)}
           />
         </Suspense>
       )}
       <LegalModal
         activeTab={legalTab}
-        onSelectTab={(tab) => setLegalTab(tab)}
+        onSelectTab={handleOpenLegal}
         onClose={handleCloseLegal}
-        onOpenCookieSettings={() => setShowCookieBanner(true)}
+        onOpenCookieSettings={handleReopenCookies}
       />
       <CookieBanner
         isOpen={showCookieBanner}
         onAccept={handleAcceptCookies}
         onRefuse={handleRefuseCookies}
-        onOpenPrivacy={() => setLegalTab('privacy')}
+        onOpenPrivacy={() => handleOpenLegal('privacy')}
       />
     </div>
   );
