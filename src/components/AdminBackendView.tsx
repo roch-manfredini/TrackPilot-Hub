@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import {
   Activity,
   AlertCircle,
-  ArrowLeft,
   ArrowUpRight,
   BarChart3,
   Clock,
@@ -27,7 +26,6 @@ import type { CatalogDiscipline, CatalogSummaryItem } from '../types/catalog';
 import type { HubAnalyticsSummary, RankedCounterItem } from '../types/history';
 
 interface AdminBackendViewProps {
-  onBackHome: (sectionHash?: string) => void;
   currentUser: User | null;
   isAuthChecking: boolean;
   onAuthenticated: (user: User) => void;
@@ -134,7 +132,6 @@ const RankedBarList: React.FC<{
 };
 
 export const AdminBackendView: React.FC<AdminBackendViewProps> = ({
-  onBackHome,
   currentUser,
   isAuthChecking,
   onAuthenticated,
@@ -319,14 +316,6 @@ export const AdminBackendView: React.FC<AdminBackendViewProps> = ({
       {/* Top Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <button
-            type="button"
-            onClick={() => onBackHome()}
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-brand-300 transition-colors mb-3 cursor-pointer"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Retour à l'accueil TrackPilot</span>
-          </button>
           <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
             <ShieldCheck className="w-6 h-6 text-brand-400 shrink-0" />
             <span>Back-office TrackPilot Hub</span>

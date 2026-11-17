@@ -280,7 +280,6 @@ export const App: React.FC = () => {
             }
           >
             <AdminBackendView
-              onBackHome={handleNavigateHome}
               currentUser={currentUser}
               isAuthChecking={isAuthChecking}
               onAuthenticated={(user) => setCurrentUser(user)}
