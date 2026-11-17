@@ -4,13 +4,11 @@ import 'leaflet/dist/leaflet.css';
 import {
   ArrowLeft,
   ArrowUpRight,
-  BarChart3,
   Bike,
   ChevronDown,
   Compass,
   Footprints,
   Info,
-  LogOut,
   Mountain,
   RefreshCw,
   RotateCcw,
@@ -20,9 +18,6 @@ import {
   User as UserIcon,
   X,
 } from 'lucide-react';
-import type { User } from 'firebase/auth';
-import { signOut } from 'firebase/auth';
-import { getHubAuth, isAllowedAdminUser } from '../config/firebase';
 import {
   fetchCatalogIndex,
   fetchPublicPreview,
@@ -44,9 +39,6 @@ import { getSearchLengthBucket, recordHubEvent } from '../services/historyServic
 
 interface PlansCatalogViewProps {
   onBackHome: (sectionHash?: string) => void;
-  currentUser: User | null;
-  onAdminSignedOut: () => void;
-  onOpenAdminStats?: () => void;
 }
 
 type UniverseFilter = 'all' | CatalogApp;
@@ -69,15 +61,9 @@ const PAGE_SIZE = 40;
 
 export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
   onBackHome,
-  currentUser,
-  onAdminSignedOut,
-  onOpenAdminStats,
 }) => {
-  const isAdmin = isAllowedAdminUser(currentUser);
-
   // Catalog index state
   const [items, setItems] = useState<CatalogSummaryItem[]>([]);
-  const [indexUpdatedAt, setIndexUpdatedAt] = useState<string>('');
   const [isLoadingIndex, setIsLoadingIndex] = useState(true);
   const [indexError, setIndexError] = useState<string | null>(null);
 
@@ -97,12 +83,6 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
   const [sortMode, setSortMode] = useState<SortMode>('recent');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  // Admin sync state
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [syncFeedback, setSyncFeedback] = useState<{ type: 'ok' | 'err'; text: string } | null>(
-    null
-  );
-
   // Map refs
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -116,7 +96,6 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
     try {
       const idx = await fetchCatalogIndex();
       setItems(idx.items);
-      setIndexUpdatedAt(idx.updatedAt);
 
       if (idx.items.length > 0) {
         setSelectedId((prev) =>
@@ -451,50 +430,6 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
         ? TRAIL_DISCIPLINES
         : [...CYCLING_DISCIPLINES, ...TRAIL_DISCIPLINES];
 
-  const handleAdminSync = async () => {
-    setIsSyncing(true);
-    setSyncFeedback(null);
-    try {
-      const { syncPublicCatalogFromApps } = await import('../services/adminSyncService');
-      const report = await syncPublicCatalogFromApps();
-      previewCacheRef.current.clear();
-      await loadCatalog();
-      setSyncFeedback({
-        type: 'ok',
-        text: `Catalogue à jour : ${report.totalActiveCount} parcours (${
-          report.syncedCount > 0 ? `${report.syncedCount} mis à jour` : 'aucune écriture'
-        }, ${report.unchangedCount} inchangé${report.unchangedCount > 1 ? 's' : ''}${
-          report.deletedCount > 0 ? `, ${report.deletedCount} retiré(s)` : ''
-        }${report.skippedCount > 0 ? `, ${report.skippedCount} ignoré(s)` : ''}).`,
-      });
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error && err.message
-          ? err.message
-          : 'Erreur lors de la synchronisation.';
-      setSyncFeedback({ type: 'err', text: message });
-    } finally {
-      setIsSyncing(false);
-    }
-  };
-
-  const handleSignOut = async () => {
-    await signOut(getHubAuth());
-    onAdminSignedOut();
-  };
-
-  const formatSyncDate = (iso: string) => {
-    if (!iso) return null;
-    try {
-      return new Intl.DateTimeFormat('fr-FR', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      }).format(new Date(iso));
-    } catch {
-      return null;
-    }
-  };
-
   const activeSummary =
     items.find((i) => i.id === selectedId) ?? selectedPreview ?? null;
 
@@ -593,67 +528,6 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
           </details>
         </div>
       </div>
-
-      {/* Admin-Only Sync Toolbar (completely hidden for normal visitors) */}
-      {isAdmin && (
-        <div className="mb-6 p-4 rounded-2xl border border-brand-400/35 bg-dark-900/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-xs font-mono text-brand-300">
-              <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
-              <span>Mode Gestionnaire ({currentUser?.email})</span>
-            </div>
-            {syncFeedback ? (
-              <p
-                className={`text-xs ${
-                  syncFeedback.type === 'ok' ? 'text-emerald-300' : 'text-red-300'
-                }`}
-              >
-                {syncFeedback.text}
-              </p>
-            ) : (
-              indexUpdatedAt && (
-                <p className="text-xs text-slate-400">
-                  Dernière synchro catalogue : {formatSyncDate(indexUpdatedAt)}
-                </p>
-              )
-            )}
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            {onOpenAdminStats && (
-              <button
-                type="button"
-                onClick={onOpenAdminStats}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-brand-300 bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/30 transition-all cursor-pointer"
-              >
-                <BarChart3 className="w-3.5 h-3.5" />
-                <span>Statistiques</span>
-              </button>
-            )}
-
-            <button
-              type="button"
-              onClick={handleAdminSync}
-              disabled={isSyncing}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-dark-950 bg-brand-400 hover:bg-brand-300 transition-all disabled:opacity-60 cursor-pointer"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-              <span>{isSyncing ? 'Synchronisation...' : 'Synchroniser'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleSignOut}
-              disabled={isSyncing}
-              title="Quitter la session gestionnaire"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-white bg-dark-850 hover:bg-dark-800 border border-white/10 transition-colors cursor-pointer"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Déconnexion</span>
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Calibrated Filters Bar */}
       <div className="mb-6 p-4 rounded-2xl glass-panel border border-white/10 space-y-3.5">

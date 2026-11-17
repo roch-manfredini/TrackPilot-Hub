@@ -22,9 +22,6 @@ import {
 } from './services/historyService';
 
 const PlansCatalogView = lazy(() => import('./components/PlansCatalogView'));
-const AdminLoginModal = lazy(() =>
-  import('./components/AdminLoginModal').then((m) => ({ default: m.AdminLoginModal }))
-);
 const AdminStatsModal = lazy(() =>
   import('./components/AdminStatsModal').then((m) => ({ default: m.AdminStatsModal }))
 );
@@ -33,7 +30,7 @@ export const App: React.FC = () => {
   const [view, setView] = useState<'home' | 'plans'>('home');
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
-  const [isAdminStatsOpen, setIsAdminStatsOpen] = useState(false);
+  const [isAuthChecking, setIsAuthChecking] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [legalTab, setLegalTab] = useState<LegalTab | null>(null);
   const [showCookieBanner, setShowCookieBanner] = useState(false);
@@ -66,8 +63,6 @@ export const App: React.FC = () => {
       setLegalTab('privacy');
     } else if (hash === '#cgu' || hash === '#disclaimer') {
       setLegalTab('disclaimer');
-    } else if (hash === '#admin') {
-      setIsAdminModalOpen(true);
     }
   }, []);
 
@@ -86,6 +81,7 @@ export const App: React.FC = () => {
     let cancelled = false;
 
     const attachAuthListener = async () => {
+      setIsAuthChecking(true);
       try {
         const [{ onAuthStateChanged }, { getHubAuth, isAllowedAdminUser }] = await Promise.all([
           import('firebase/auth'),
@@ -93,15 +89,21 @@ export const App: React.FC = () => {
         ]);
         if (cancelled) return;
         const auth = getHubAuth();
+        if (typeof auth.authStateReady === 'function') {
+          await auth.authStateReady();
+        }
+        if (cancelled) return;
+        setCurrentUser(isAllowedAdminUser(auth.currentUser) ? auth.currentUser : null);
+        setIsAuthChecking(false);
         unsubscribe = onAuthStateChanged(auth, (user) => {
           setCurrentUser(isAllowedAdminUser(user) ? user : null);
         });
       } catch {
-        // Ignore if Firebase cannot initialize in restricted environments
+        setIsAuthChecking(false);
       }
     };
 
-    if (view === 'plans' || isAdminModalOpen || isAdminStatsOpen) {
+    if (isAdminModalOpen) {
       void attachAuthListener();
     }
 
@@ -109,7 +111,7 @@ export const App: React.FC = () => {
       cancelled = true;
       unsubscribe?.();
     };
-  }, [view, isAdminModalOpen, isAdminStatsOpen]);
+  }, [isAdminModalOpen]);
 
   const handleNavigatePlans = useCallback(() => {
     const alreadyPlans = window.location.pathname === '/plans';
@@ -159,9 +161,6 @@ export const App: React.FC = () => {
 
   const handleCloseAdminModal = () => {
     setIsAdminModalOpen(false);
-    if (window.location.hash.toLowerCase() === '#admin') {
-      window.history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
   };
 
   useEffect(() => {
@@ -282,9 +281,6 @@ export const App: React.FC = () => {
           >
             <PlansCatalogView
               onBackHome={handleNavigateHome}
-              currentUser={currentUser}
-              onAdminSignedOut={() => setCurrentUser(null)}
-              onOpenAdminStats={() => setIsAdminStatsOpen(true)}
             />
           </Suspense>
         ) : (
@@ -321,24 +317,13 @@ export const App: React.FC = () => {
       />
       {isAdminModalOpen && (
         <Suspense fallback={null}>
-          <AdminLoginModal
+          <AdminStatsModal
             isOpen={isAdminModalOpen}
             onClose={handleCloseAdminModal}
             currentUser={currentUser}
+            isAuthChecking={isAuthChecking}
             onAuthenticated={(user) => setCurrentUser(user)}
             onSignedOut={() => setCurrentUser(null)}
-            onOpenStats={() => {
-              handleCloseAdminModal();
-              setIsAdminStatsOpen(true);
-            }}
-          />
-        </Suspense>
-      )}
-      {isAdminStatsOpen && currentUser && (
-        <Suspense fallback={null}>
-          <AdminStatsModal
-            isOpen={isAdminStatsOpen}
-            onClose={() => setIsAdminStatsOpen(false)}
           />
         </Suspense>
       )}

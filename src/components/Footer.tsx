@@ -66,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-mono text-center sm:text-left">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:whitespace-nowrap">
             <span
-              onDoubleClick={onOpenAdmin}
+              onClick={onOpenAdmin}
               className="cursor-default select-none"
             >
               © {new Date().getFullYear()} TrackPilot.fit
