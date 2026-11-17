@@ -43,6 +43,12 @@ let flushScheduled = false;
 let isFlushing = false;
 let flushTimerId: number | null = null;
 
+// Client-side anti-spam guards (protect Spark write quota without blocking visitors)
+const MAX_VISITOR_EVENTS_PER_VISIT = 25;
+const MIN_EVENT_REPEAT_MS = 1000;
+let visitorEventsQueuedCount = 0;
+const recentSignatureTimestamps = new Map<string, number>();
+
 interface QueuedEvent {
   date: string;
   hour: number;
@@ -260,7 +266,27 @@ export function recordHubEvent(input: HubEventInput): void {
   // 1. Forward to GA4 if cookie consent was accepted
   forwardToGoogleAnalytics(input, view);
 
-  // 2. Queue strictly PII-free, cookie-less event for Firestore hub_events
+  // 2. Skip automated WebDriver crawlers and apply per-visit anti-spam cap for Firestore
+  if (typeof navigator !== 'undefined' && navigator.webdriver) {
+    return;
+  }
+
+  if (input.type !== 'admin_event') {
+    if (visitorEventsQueuedCount >= MAX_VISITOR_EVENTS_PER_VISIT) {
+      return;
+    }
+
+    const nowMs = Date.now();
+    const signature = `${input.type}|${input.target ?? ''}|${input.previewId ?? ''}|${input.filterValue ?? ''}`;
+    const lastMs = recentSignatureTimestamps.get(signature);
+    if (lastMs !== undefined && nowMs - lastMs < MIN_EVENT_REPEAT_MS) {
+      return;
+    }
+    recentSignatureTimestamps.set(signature, nowMs);
+    visitorEventsQueuedCount += 1;
+  }
+
+  // 3. Queue strictly PII-free, cookie-less event for Firestore hub_events
   const now = new Date();
   const date = now.toISOString().slice(0, 10);
   const hour = now.getUTCHours();
