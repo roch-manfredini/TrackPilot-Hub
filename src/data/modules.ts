@@ -4,11 +4,11 @@ export const MODULES: ModuleInfo[] = [
   {
     id: 'cycling',
     title: 'TrackPilot Cycling',
-    discipline: 'Cyclisme & Gravel',
+    discipline: 'Cyclisme',
     iconName: 'Bike',
     status: 'available',
     statusLabel: 'En ligne',
-    tagline: 'Un plan de route complet et interactif pour préparer vos sorties vélo et gravel.',
+    tagline: 'Préparez vos sorties vélo avec un plan de route complet et interactif.',
     description: 'Partez d’un simple fichier GPX ou FIT - ou tracez votre parcours - pour charger un véritable plan de route : vent prévu au fil des kilomètres, repères de rythme adaptés et points d’eau réunis en une vue globale.',
     url: 'https://cycling.trackpilot.fit',
     highlights: [

@@ -68,7 +68,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
               Prêt à préparer votre prochain plan de route ?
             </h3>
             <p className="text-sm sm:text-base text-slate-300 mb-8 max-w-xl mx-auto">
-              Vélo, gravel, trail ou randonnée à pied : choisissez l’application adaptée à votre pratique et glissez un simple fichier GPX pour démarrer.
+              Vélo, trail ou randonnée à pied : choisissez l’application adaptée à votre pratique et glissez un simple fichier GPX pour démarrer.
             </p>
             <a
               href="#modules"
