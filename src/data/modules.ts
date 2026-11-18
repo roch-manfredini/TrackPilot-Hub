@@ -12,9 +12,9 @@ export const MODULES: ModuleInfo[] = [
     description: 'Partez d’un simple fichier GPX ou FIT - ou tracez votre parcours - pour charger un véritable plan de route : vent prévu au fil des kilomètres, repères de rythme adaptés et points d’eau réunis en une vue globale.',
     url: 'https://cycling.trackpilot.fit',
     highlights: [
-      'Studio de traçage épuré cyclisme : routage magnétique instantané (route, gravel, voies douces) et profil altimétrique direct',
+      'Création facile de parcours en quelques clics : routage magnétique instantané (route, gravel, voies douces) et profil altimétrique direct',
       'Guidage cintre ultra-épuré : lisibilité immédiate à vitesse élevée, vent relatif, pente et mode éco OLED sans réseau',
-      'Plans de route stockés automatiquement en local pour une consultation et un guidage 100% hors-ligne',
+      'Synchronisation instantanée PC vers smartphone dans votre compte (avec mise en favoris) et accès 100% hors-ligne',
       'Visualisation du vent relatif (face, côté, dos) calculé selon votre horaire de passage',
       'Repérage des fontaines et points d’eau potable utiles (données libres OSM)',
       'Conseils personnalisés d’hydratation, d’énergie et export rapide vers vos compteurs'
@@ -55,14 +55,14 @@ export const TECH_PILLARS: TechPillar[] = [
     id: 'mapping',
     title: 'Tracé Support & Studio Vectoriel',
     subtitle: 'Dessiner la base de votre plan de route au mètre près',
-    description: 'Un atelier de dessin cartographique épuré dans votre navigateur. Épaulé par BRouter et son aimantation magnétique intelligente (Snap), tracez votre itinéraire en quelques clics : il devient aussitôt la base de votre plan de route avec profil altimétrique calculé en temps réel.',
+    description: 'Un atelier de dessin cartographique simple et rapide dans votre navigateur. Épaulé par BRouter et son aimantation magnétique intelligente (Snap), créez votre parcours en quelques clics : il devient aussitôt votre plan de route avec profil altimétrique en temps réel, disponible immédiatement sur votre smartphone.',
     iconName: 'Route',
     badge: 'Routage BRouter & Snap',
     technicalDetails: [
       'Aimantation magnétique adaptative : Route, Gravel, Sentiers de randonnée ou Tracé libre',
       'Profil altimétrique interactif et dénivelé cumulé (D+) calculés en direct à chaque point',
       'Fonctions d’atelier en 1 clic : rebouclage automatique, aller-retour, inversion et Undo/Redo infini',
-      'Passerelle instantanée vers le Cockpit de vol ou export GPX haute précision'
+      'Synchronisation instantanée dans votre compte : tracez sur PC, retrouvez aussitôt sur smartphone et épinglez en favoris'
     ]
   },
   {
@@ -75,7 +75,7 @@ export const TECH_PILLARS: TechPillar[] = [
     technicalDetails: [
       'Suppression automatique des métadonnées privées et des données biométriques (FC, watts, cadence)',
       'Conservation exclusive du tracé géographique utile et du profil altimétrique',
-      'Stockage sécurisé associé à votre compte et synchronisation locale automatique pour un accès hors-ligne',
+      'Stockage sécurisé dans votre compte avec mise en favoris, synchronisation instantanée PC/smartphone et accès hors-ligne',
       'Compatible avec les exports de tous vos appareils habituels (Garmin, Wahoo, Strava, Komoot...)'
     ]
   },

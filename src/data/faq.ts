@@ -30,6 +30,12 @@ export const FAQ_ITEMS: FaqItem[] = [
       'Oui. Vos plans de route sont stockés automatiquement en local. Inutile de télécharger la carte d’une région ou d’un pays entier avant de partir : les zones traversées se chargent au fur et à mesure, et dès que vous ouvrez un plan de route chez vous, un simple bouton dans le guidage permet de précharger provisoirement ses tuiles (en cache local IndexedDB) pour anticiper les passages sans réseau. Grâce à une architecture sans état (stateless), le guidage reprend en 1 seconde après un redémarrage imprévu du smartphone.',
   },
   {
+    id: 'sync-pc-smartphone',
+    question: 'Faut-il transférer ses parcours entre l’ordinateur et le smartphone ?',
+    answer:
+      'Non, tout se fait automatiquement sans rien toucher. Dès que vous créez ou enregistrez un parcours sur votre PC, vous le retrouvez instantanément sur votre smartphone dans votre compte, sans câble ni manipulation, avec la possibilité de le mettre en favoris pour y accéder en un geste.',
+  },
+  {
     id: 'cycling-vs-trail',
     question: 'Quelle est la différence entre TrackPilot Cycling et TrackPilot Trail ?',
     answer:

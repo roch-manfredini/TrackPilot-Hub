@@ -22,7 +22,7 @@ export const ScreenVersions: React.FC = () => {
           Une seule et même application : complète sur grand écran, épurée sur smartphone.
         </h2>
         <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-          Même lien, même compte, mêmes plans de route : l’affichage s’adapte automatiquement à votre situation.
+          Même lien, même compte, mêmes plans de route : créez un parcours sur ordinateur, retrouvez-le instantanément sur smartphone sans rien faire et épinglez vos favoris.
         </p>
       </div>
 
@@ -56,7 +56,7 @@ export const ScreenVersions: React.FC = () => {
           <ul className="space-y-2 pt-3.5 border-t border-white/[0.08] text-xs text-slate-300">
             <li className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 mt-0.5 text-brand-neon shrink-0" />
-              <span>Atelier complet de création, tracé et édition détaillée de parcours</span>
+              <span>Création facile et rapide de parcours en quelques clics, avec édition détaillée</span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 mt-0.5 text-brand-neon shrink-0" />
@@ -101,7 +101,7 @@ export const ScreenVersions: React.FC = () => {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 mt-0.5 text-brand-400 shrink-0" />
-              <span>Chargement d’un plan de route préparé (ou d’un simple GPX), consultation hors-ligne et guidage</span>
+              <span>Synchronisation instantanée sans manipulation : créez sur PC, retrouvez aussitôt dans votre compte (avec mise en favoris) et partez guidé hors-ligne</span>
             </li>
             <li className="flex items-start gap-2 text-slate-400">
               <Minus className="w-4 h-4 mt-0.5 text-slate-500 shrink-0" />
