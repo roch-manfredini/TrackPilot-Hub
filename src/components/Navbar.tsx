@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Compass, Mail } from 'lucide-react';
+import { Menu, X, Mail } from 'lucide-react';
 import { recordHubEvent } from '../services/historyService';
 
 interface NavbarProps {
@@ -98,12 +98,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={(e) => handleSectionClick(e, '')}
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-lg"
           >
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-dark-850 border border-brand-500/30 group-hover:border-brand-500/70 transition-colors shadow-glow-sm">
-              <Compass className="w-5 h-5 text-brand-400 group-hover:rotate-45 transition-transform duration-300" />
-              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-neon"></span>
-              </span>
+            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#08090d] border border-brand-500/30 group-hover:border-brand-500/70 transition-colors shadow-glow-sm overflow-hidden">
+              <svg viewBox="0 0 100 100" aria-hidden="true" className="w-full h-full transition-transform duration-200 group-hover:scale-105">
+                <rect width="100" height="100" fill="#08090d" />
+                <g transform="rotate(45 50 50)">
+                  <polygon points="50,6 71,44 50,40 29,44" fill="#10b981" stroke="#10b981" strokeWidth="8" strokeLinejoin="round" />
+                  <polygon points="50,94 71,56 50,60 29,56" fill="#f97316" stroke="#f97316" strokeWidth="8" strokeLinejoin="round" />
+                </g>
+              </svg>
             </div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-xl font-extrabold tracking-tight text-white">TrackPilot</span>
