@@ -1,27 +1,15 @@
 import React from 'react';
-import { Bike, Footprints, Mountain, ChevronDown, CheckCircle2, Clock, Wrench, Watch, Compass, ArrowRight, Smartphone, Navigation } from 'lucide-react';
+import { Bike, Footprints, ChevronDown, CheckCircle2, Clock, Wrench, Watch, Compass, ArrowRight, Smartphone, Navigation } from 'lucide-react';
 import { MODULES } from '../data/modules';
 import { ModuleInfo } from '../types';
 import { recordHubEvent } from '../services/historyService';
+import { BrandLogo } from './BrandLogo';
 
 interface ModulesHubProps {
   onOpenPlans?: () => void;
 }
 
 export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
-
-  const getDisciplineIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Bike':
-        return <Bike className="w-6 h-6" />;
-      case 'Footprints':
-        return <Footprints className="w-6 h-6" />;
-      case 'Mountain':
-        return <Mountain className="w-6 h-6" />;
-      default:
-        return <Bike className="w-6 h-6" />;
-    }
-  };
 
   const renderBadge = (module: ModuleInfo) => {
     switch (module.status) {
@@ -86,14 +74,14 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                 <div>
                   {/* Top Bar with Icon & Status Badge */}
                   <div className="flex items-center justify-between gap-4 mb-6">
-                    <div className={`p-3 rounded-xl border ${
+                    <div className={`w-12 h-12 rounded-xl border overflow-hidden shrink-0 bg-[#08090d] ${
                       isAvailable 
-                        ? 'bg-brand-500/15 border-brand-500/30 text-brand-400' 
+                        ? 'border-brand-500/30' 
                         : isTrail
-                        ? 'bg-trail-500/15 border-trail-500/35 text-trail-400'
-                        : 'bg-brand-500/10 border-brand-500/20 text-brand-400'
+                        ? 'border-trail-500/35'
+                        : 'border-brand-500/20'
                     }`}>
-                      {getDisciplineIcon(module.iconName)}
+                      <BrandLogo variant={isTrail ? 'trail' : 'cycling'} />
                     </div>
                     {renderBadge(module)}
                   </div>
