@@ -6,6 +6,12 @@ export interface FaqItem {
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
+    id: 'trackpilot-vs-autres-applis',
+    question: 'TrackPilot est-il mieux que les autres ?',
+    answer:
+      'Non, TrackPilot n’a pas vocation à être « meilleur » : son objectif est simplement différent. Les applications GPS tout-en-un sont excellentes si vous cherchez un outil complet pour enregistrer vos sorties, suivre vos statistiques, conserver votre historique et couvrir plusieurs sports sur votre smartphone. TrackPilot fait un autre choix : il n’enregistre aucune activité et laisse ce rôle à votre montre ou compteur GPS. En résumé : les applis tout-en-un servent à tout enregistrer et archiver ; TrackPilot intervient en complément pour préparer un plan de route complet (vent sur le parcours, points d’eau, effort) et offrir un guidage léger, immédiat et sans session sur le terrain.',
+  },
+  {
     id: 'vent-parcours-gpx',
     question: 'Comment TrackPilot calcule-t-il le vent le long d’une trace GPX ?',
     answer:
