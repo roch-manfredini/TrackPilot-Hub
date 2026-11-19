@@ -31,7 +31,7 @@ export const InstallSection: React.FC = () => {
     {
       icon: <HardDrive className="w-5 h-5 text-brand-400" />,
       title: "Ultra Légère (< 2 Mo)",
-      description: "Contrairement aux applications classiques qui pèsent 150 Mo ou plus, TrackPilot n'encombre jamais la mémoire de votre téléphone."
+      description: "Alors qu'une application native tout-en-un pèse souvent 150 Mo ou plus, TrackPilot reste très légère et préserve la mémoire de votre téléphone."
     },
     {
       icon: <CheckCircle2 className="w-5 h-5 text-emerald-400" />,

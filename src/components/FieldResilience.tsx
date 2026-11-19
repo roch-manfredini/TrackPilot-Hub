@@ -16,11 +16,11 @@ export const FieldResilience: React.FC = () => {
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
             Pourquoi TrackPilot existe :{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500">
-              revenir à un guidage simple, ciblé et serein.
+              proposer une autre approche du guidage.
             </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
-            Redémarrage imprévu du smartphone ou perte de réseau en pleine sortie : TrackPilot repose sur une projection spatiale sans état (stateless), sans historique chronologique.
+            Deux philosophies différentes, deux usages complémentaires : comparez le fonctionnement des applications GPS tout-en-un et le moteur sans état (stateless) de TrackPilot.
           </p>
         </div>
 

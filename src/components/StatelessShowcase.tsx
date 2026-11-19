@@ -1,9 +1,8 @@
 import React from 'react';
-import { 
-  CheckCircle2, 
-  XCircle, 
+import {
+  ChevronRight,
+  Layers,
   ShieldCheck,
-  AlertOctagon
 } from 'lucide-react';
 
 export const StatelessShowcase: React.FC = () => {
@@ -17,166 +16,163 @@ export const StatelessShowcase: React.FC = () => {
       {/* Side-by-side Comparative Grid */}
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         
-        {/* Left: Traditional Guidance Apps */}
-        <div className="rounded-2xl p-6 sm:p-7 bg-dark-950/70 border border-red-500/20 flex flex-col justify-between">
+        {/* Left: All-in-one GPS Apps */}
+        <div className="rounded-2xl p-6 sm:p-7 bg-dark-950/70 border border-white/15 flex flex-col justify-between">
           <div>
             {/* Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/[0.06] mb-5">
+            <div className="flex items-center justify-between gap-3 pb-4 border-b border-white/[0.08] mb-5">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
-                  <AlertOctagon className="w-5 h-5" />
+                <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/15 flex items-center justify-center text-slate-200 shrink-0">
+                  <Layers className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white">Applis de Guidage Classiques</h4>
-                  <span className="text-xs font-mono text-slate-400">Chronologie enregistrée</span>
+                  <h4 className="text-base font-bold text-white">Applis GPS Tout-en-Un</h4>
+                  <span className="text-xs font-mono text-slate-400">Enregistrement &amp; suivi complet</span>
                 </div>
               </div>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20 font-semibold">
-                Pilotage exigeant
+              <span className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-white/[0.06] text-slate-300 border border-white/15 font-semibold shrink-0">
+                Approche complète
               </span>
             </div>
 
-            {/* Problem explanation */}
+            {/* Philosophy explanation */}
             <p className="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
-              Le guidage est indissociable d'un fichier d'enregistrement chronologique continu seconde par seconde, car ces applis ont pour objectif de remplacer en partie les fonctions des montres et compteurs GPS, même quand vous les emportez déjà. Cette logique tout-en-un amène une complexité de fonctionnement et de redémarrage :
+              Véritables couteaux suisses du sport outdoor, ces applications sont remarquablement complètes : elles enregistrent votre trace seconde par seconde, gèrent vos capteurs, vos statistiques et vos souvenirs de sortie tout en assurant le guidage. C'est une solution idéale lorsque le smartphone remplace la montre ou le compteur GPS. En contrepartie, leur fonctionnement s'articule autour d'une session active :
             </p>
 
-            {/* Negative Bullet Points */}
+            {/* Characteristics */}
             <div className="space-y-3">
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Session interrompue :</strong> l'enregistrement en cours doit être restauré ou scindé en deux activités.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Suivi de session complet :</strong> chaque sortie est enregistrée comme une activité chronologique continue ; après un redémarrage, l'application propose de restaurer ou de poursuivre la session pour préserver vos données.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Chronomètre et moyennes modifiés :</strong> le temps d'arrêt lié au redémarrage influe sur les statistiques.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Statistiques et historique intégrés :</strong> vitesses moyennes, temps écoulé, records et carnet de sorties sont centralisés au même endroit (un arrêt lié à un redémarrage peut simplement demander un ajustement de pause).</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Écran de récupération :</strong> une fenêtre demande de restaurer l'activité en cours avant de repartir.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Reprise sécurisée d'activité :</strong> après une coupure, un écran de récupération permet de vérifier l'état de l'enregistrement en cours avant de repartir.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Recalcul de l'itinéraire :</strong> au redémarrage, le guidage cherche parfois à vous ramener vers le point de départ.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Recalcul dynamique d'itinéraire :</strong> si vous quittez le parcours ou relancez le guidage, le moteur peut proposer un recalcul pour rejoindre la trace ou le point de départ.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Changement de trace contraignant :</strong> modifier son itinéraire en cours de route demande souvent d'interrompre ou de gérer l'activité en cours.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Une activité à la fois :</strong> changer d'itinéraire en cours de sortie passe généralement par la mise en pause ou la clôture de l'activité active afin de garder un historique propre.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Sollicitation continue du smartphone :</strong> l'enregistrement continu de l'activité et la gestion des capteurs pèsent davantage sur la batterie lors des longues sorties.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Capteurs et enregistrement continu :</strong> le suivi permanent du GPS et des capteurs (fréquence cardiaque, puissance, cadence) offre une télémétrie riche, tout en sollicitant davantage la batterie sur les très longues sorties.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Préparation hors-ligne manuelle :</strong> il faut sélectionner et télécharger chaque trace à l'avance pour y accéder sans réseau.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Hors-ligne à la carte :</strong> vous sélectionnez précisément les traces à télécharger avant de partir, ce qui vous laisse le contrôle sur les fichiers stockés.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Cartes par zones étendues :</strong> le mode hors-ligne demande généralement de télécharger à l'avance la carte d'une région ou d'un pays entier.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Cartes régionales ou nationales :</strong> le téléchargement préalable d'une région ou d'un pays entier garantit une cartographie disponible partout dans la zone, même hors itinéraire prévu.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Logique « couteau suisse » :</strong> conçues pour répondre à tous les cas de figure, elles demandent souvent de décocher des options et de chercher dans les menus pour paramétrer le système.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Grande polyvalence multi-sports :</strong> conçues pour couvrir un maximum de pratiques et de profils, elles offrent de nombreux réglages et options de personnalisation dans leurs menus.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Installation via un store :</strong> nécessite de passer par l'App Store ou Google Play, de télécharger l'application et de gérer ses mises à jour.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Distribution via les stores :</strong> installées depuis l'App Store ou Google Play, elles s'intègrent de façon native au smartphone avec un suivi des versions géré par le store.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Place sur le smartphone :</strong> les applications natives classiques occupent souvent 150 Mo ou plus en mémoire, avant même d'y ajouter des cartes.</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Application native complète :</strong> leur richesse fonctionnelle et leurs moteurs embarqués occupent logiquement plus d'espace en mémoire (souvent 150 Mo ou plus avant ajout des cartes).</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-white/[0.06] text-xs font-mono text-red-400/90 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-red-500"></span>
-            <span>Résultat : usage plus complexe et plus stressant en cas d'imprévu</span>
+          <div className="mt-6 pt-4 border-t border-white/[0.08] text-xs font-mono text-slate-300 leading-relaxed">
+            <span className="text-white font-semibold">Idéal si :</span> vous souhaitez une seule application complète pour tout enregistrer, analyser et archiver sur votre smartphone.
           </div>
         </div>
 
         {/* Right: TrackPilot Stateless Engine */}
-        <div className="rounded-2xl p-6 sm:p-7 bg-gradient-to-b from-dark-900 to-dark-950 border border-brand-500/50 shadow-glow-sm flex flex-col justify-between">
+        <div className="rounded-2xl p-6 sm:p-7 bg-gradient-to-b from-dark-900 to-dark-950 border border-brand-500/45 shadow-glow-sm flex flex-col justify-between">
           <div>
             {/* Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-5">
+            <div className="flex items-center justify-between gap-3 pb-4 border-b border-white/[0.08] mb-5">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-neon">
+                <div className="w-9 h-9 rounded-xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-neon shrink-0">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-white">TrackPilot (Moteur Stateless)</h4>
-                  <span className="text-xs font-mono text-brand-400">Projection Spatiale Pure</span>
+                  <span className="text-xs font-mono text-brand-400">Guidage dédié &amp; projection spatiale</span>
                 </div>
               </div>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30 font-semibold flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-brand-neon" />
-                Pilotage serein
+              <span className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30 font-semibold shrink-0">
+                Approche épurée
               </span>
             </div>
 
-            {/* Solution explanation */}
+            {/* Philosophy explanation */}
             <p className="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
-              Le guidage n'enregistre pas de fichier chronologique continu seconde par seconde, car il reste entièrement dédié au suivi de votre itinéraire. Cette logique épurée permet de redémarrer très rapidement, de lancer votre plan de route en un seul clic et de le suivre sereinement sur la carte :
+              TrackPilot fait un choix différent et complémentaire : le guidage n'enregistre aucun fichier chronologique et laisse l'enregistrement d'activité à votre montre ou compteur GPS. Entièrement dédié à la lecture du plan de route, il privilégie la légèreté, la reprise immédiate et la simplicité sur le terrain :
             </p>
 
-            {/* Positive Bullet Points */}
+            {/* Characteristics */}
             <div className="space-y-3">
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Reprise en 1 seconde :</strong> scan instantané du plan de route pour vous replacer à l'endroit exact où vous vous trouvez.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Reprise en 1 seconde :</strong> projection instantanée sur le plan de route pour vous replacer à l'endroit exact où vous vous trouvez, sans session à restaurer.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Calculs mis à jour en direct :</strong> distance, profil altimétrique et dénivelé D+ restants recalculés instantanément.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Calculs mis à jour en direct :</strong> distance, profil altimétrique et dénivelé D+ restants recalculés en temps réel depuis votre position actuelle.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Zéro session à récupérer, zéro stress :</strong> aucun chrono bloqué, aucun écran de récupération. Vous reprenez la route instantanément.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Zéro session à gérer :</strong> aucun chrono à mettre en pause ni écran de récupération après un redémarrage : vous ouvrez l'outil et vous reprenez la route.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Guidage vers l'aval et eau ciblée :</strong> la projection ne vous renvoie jamais au départ, ignore le passé et cible la prochaine fontaine devant vous.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Guidage vers l'aval et eau ciblée :</strong> la projection ignore le chemin déjà parcouru, ne renvoie jamais au départ et pointe vers la prochaine fontaine devant vous.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Changement de plan à la volée :</strong> passez en 1 clic sur une variante ou sur l'étape suivante, sans jamais interrompre quoi que ce soit.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Changement de plan à la volée :</strong> passez en 1 clic sur une variante ou sur l'étape suivante, sans aucune activité en cours à interrompre.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Guidage direct si vous êtes égaré :</strong> en cas de stress ou sans trace chargée, touchez simplement un point précis sur la carte et choisissez votre mode de déplacement pour y être ramené en toute simplicité (option disponible uniquement avec du réseau).</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Guidage direct à la demande :</strong> besoin de rejoindre un point précis sans trace chargée ? Touchez la carte et choisissez votre mode de déplacement pour y être ramené (option disponible avec connexion réseau).</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
                 <span><strong className="text-white font-medium">Autonomie préservée :</strong> sans enregistrement en boucle ni capteurs à maintenir en tâche de fond, et avec le mode éco OLED, le smartphone chauffe moins et tient plus longtemps.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Plans de route hors-ligne :</strong> ils sont stockés automatiquement en local (comme un Drive, sans synchronisation manuelle).</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Plans de route hors-ligne automatiques :</strong> vos parcours personnels sont stockés automatiquement en local (comme un Drive, sans manipulation manuelle).</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Cartes chargées au besoin :</strong> inutile de télécharger la carte d'une région ou d'un pays entier. Les zones traversées se chargent au fur et à mesure, et un simple bouton dans le guidage permet de précharger provisoirement les tuiles du plan de route ouvert avant de partir en zone sans réseau.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Cartes chargées au besoin :</strong> les zones traversées se chargent au fur et à mesure, et un bouton dans le guidage permet de précharger provisoirement les tuiles du plan de route ouvert avant une zone sans réseau.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Ciblé cyclisme ou marche à pied :</strong> réparti en deux applications distinctes, TrackPilot propose exactement ce dont chaque pratique a besoin, sans avoir à désactiver d'options, décocher de menus ni chercher pour paramétrer le système.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Ciblé vélo ou marche à pied :</strong> réparti en deux applications distinctes, TrackPilot affiche directement l'essentiel de chaque discipline, prêt à l'emploi sans réglages multiples.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Aucune installation requise :</strong> tout fonctionne directement sur votre smartphone via un simple raccourci sur l'écran d'accueil, sans passer par un store et toujours à jour.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Accès direct sans store (PWA) :</strong> fonctionne depuis un simple raccourci sur l'écran d'accueil, toujours à jour automatiquement à chaque ouverture.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Empreinte ultra-légère (&lt; 2 Mo) :</strong> n'encombre pas le stockage de votre smartphone, tout en offrant l'expérience complète d'une application mobile.</span>
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Empreinte ultra-légère (&lt; 2 Mo) :</strong> préserve le stockage de votre smartphone tout en offrant une expérience mobile plein écran.</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-white/[0.08] text-xs font-mono text-emerald-400 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-brand-neon animate-pulse"></span>
-            <span>Résultat : usage simple, immédiat et sans stress</span>
+          <div className="mt-6 pt-4 border-t border-white/[0.08] text-xs font-mono text-emerald-300 leading-relaxed">
+            <span className="text-brand-neon font-semibold">Idéal si :</span> vous enregistrez déjà vos sorties sur montre ou compteur GPS et cherchez un plan de route léger, rapide et dédié au guidage.
           </div>
         </div>
 
