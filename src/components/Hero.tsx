@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDown, MonitorSmartphone, Sparkles } from 'lucide-react';
+import { ChevronDown, Lightbulb, MonitorSmartphone, Sparkles } from 'lucide-react';
 import { SectionBackground } from './SectionBackground';
 import { recordHubEvent } from '../services/historyService';
 
@@ -49,12 +49,13 @@ export const Hero: React.FC = () => {
           {/* Action CTAs */}
           <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="#modules"
-              onClick={() => recordHubEvent({ type: 'cta_click', target: 'hero_modules' })}
+              href="#pourquoi"
+              onClick={() => recordHubEvent({ type: 'cta_click', target: 'hero_pourquoi' })}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-base font-bold text-dark-950 bg-gradient-to-r from-brand-neon via-brand-400 to-brand-500 hover:brightness-110 active:scale-[0.98] rounded-xl shadow-glow-md transition-all duration-150"
             >
-              <span>Explorer les modules</span>
-              <ChevronDown className="w-5 h-5" />
+              <Lightbulb className="w-4 h-4" />
+              <span>Pourquoi TrackPilot ?</span>
+              <ChevronDown className="w-4 h-4" />
             </a>
 
             <a
