@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useId, useMemo, useRef, useState } from 'react';
 import { unpackElevationSamples } from '../utils/trackGeometry';
 
 interface ElevationProfileChartProps {
@@ -6,6 +6,7 @@ interface ElevationProfileChartProps {
   totalDistanceKm: number;
   minAltitude: number;
   maxAltitude: number;
+  accent?: 'cycling' | 'trail';
   onHoverDistanceKm?: (distKm: number | null) => void;
 }
 
@@ -21,8 +22,13 @@ export const ElevationProfileChart: React.FC<ElevationProfileChartProps> = ({
   totalDistanceKm,
   minAltitude,
   maxAltitude,
+  accent = 'cycling',
   onHoverDistanceKm,
 }) => {
+  const gradientId = useId();
+  const isTrail = accent === 'trail';
+  const strokeColor = isTrail ? '#f97316' : '#34d399';
+  const crosshairColor = isTrail ? 'rgba(249, 115, 22, 0.55)' : 'rgba(52, 211, 153, 0.55)';
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
 
@@ -134,12 +140,19 @@ export const ElevationProfileChart: React.FC<ElevationProfileChartProps> = ({
           Profil altimétrique
         </span>
         {hovered ? (
-          <div className="inline-flex items-center gap-3 text-xs font-mono tabular-nums text-slate-200 bg-dark-900/90 border border-brand-500/30 px-2.5 py-0.5 rounded-md">
+          <div
+            className={`inline-flex items-center gap-3 text-xs font-mono tabular-nums text-slate-200 bg-dark-900/90 border px-2.5 py-0.5 rounded-md ${
+              isTrail ? 'border-trail-500/35' : 'border-brand-500/30'
+            }`}
+          >
             <span>
               {hovered.d.toFixed(1)} <span className="text-[10px] text-slate-400">km</span>
             </span>
-            <span className="text-brand-400 font-semibold">
-              {Math.round(hovered.e)} <span className="text-[10px] text-brand-300/70">m</span>
+            <span className={`font-semibold ${isTrail ? 'text-trail-400' : 'text-brand-400'}`}>
+              {Math.round(hovered.e)}{' '}
+              <span className={`text-[10px] ${isTrail ? 'text-trail-300/70' : 'text-brand-300/70'}`}>
+                m
+              </span>
             </span>
             <span className="text-slate-300">
               {hovered.grade >= 0 ? '+' : ''}
@@ -149,7 +162,7 @@ export const ElevationProfileChart: React.FC<ElevationProfileChartProps> = ({
           </div>
         ) : (
           <span className="text-[11px] font-mono tabular-nums text-slate-500">
-            Alt. {Math.round(minAltitude)}–{Math.round(maxAltitude)}{' '}
+            Alt. {Math.round(minAltitude)}-{Math.round(maxAltitude)}{' '}
             <span className="text-[10px]">m</span>
           </span>
         )}
@@ -165,10 +178,10 @@ export const ElevationProfileChart: React.FC<ElevationProfileChartProps> = ({
         aria-label="Profil altimétrique du parcours"
       >
         <defs>
-          <linearGradient id="hubElevationFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#34d399" stopOpacity="0.34" />
-            <stop offset="85%" stopColor="#34d399" stopOpacity="0.04" />
-            <stop offset="100%" stopColor="#34d399" stopOpacity="0" />
+          <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={strokeColor} stopOpacity="0.34" />
+            <stop offset="85%" stopColor={strokeColor} stopOpacity="0.04" />
+            <stop offset="100%" stopColor={strokeColor} stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -209,11 +222,11 @@ export const ElevationProfileChart: React.FC<ElevationProfileChartProps> = ({
         ))}
 
         {/* Area & trace curve */}
-        <path d={plot.areaPath} fill="url(#hubElevationFill)" />
+        <path d={plot.areaPath} fill={`url(#${gradientId})`} />
         <path
           d={plot.linePath}
           fill="none"
-          stroke="#34d399"
+          stroke={strokeColor}
           strokeWidth="2.2"
           strokeLinejoin="round"
           strokeLinecap="round"
@@ -227,7 +240,7 @@ export const ElevationProfileChart: React.FC<ElevationProfileChartProps> = ({
               x2={hovered.x}
               y1={PAD_TOP}
               y2={plot.baseLineY}
-              stroke="rgba(52, 211, 153, 0.55)"
+              stroke={crosshairColor}
               strokeWidth="1"
               strokeDasharray="3 3"
             />
@@ -236,7 +249,7 @@ export const ElevationProfileChart: React.FC<ElevationProfileChartProps> = ({
               cy={hovered.y}
               r="5"
               fill="#07080b"
-              stroke="#34d399"
+              stroke={strokeColor}
               strokeWidth="2.5"
             />
           </g>

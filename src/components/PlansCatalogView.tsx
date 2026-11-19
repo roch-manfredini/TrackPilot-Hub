@@ -304,7 +304,11 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
 
     const latLngs: L.LatLngExpression[] = coords.map((c) => [c.lat, c.lng]);
 
-    // Dark obsidian casing + vibrant emerald line for crisp contrast on topo relief
+    const isTrailPreview = selectedPreview.app === 'trail';
+    const routeColor = isTrailPreview ? '#f97316' : '#10b981';
+    const startColor = isTrailPreview ? '#fb923c' : '#34d399';
+
+    // Dark obsidian casing + vibrant route line (emerald for cycling, orange for trail)
     L.polyline(latLngs, {
       color: '#07080b',
       weight: 7,
@@ -314,20 +318,20 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
     }).addTo(layerGroup);
 
     const mainLine = L.polyline(latLngs, {
-      color: '#10b981',
+      color: routeColor,
       weight: 3.5,
       opacity: 1,
       lineCap: 'round',
       lineJoin: 'round',
     }).addTo(layerGroup);
 
-    // Start marker (emerald) & Finish marker (cyan/white)
+    // Start marker (emerald/orange) & Finish marker (white)
     const startPt = coords[0];
     const endPt = coords[coords.length - 1];
 
     L.circleMarker([startPt.lat, startPt.lng], {
       radius: 6,
-      fillColor: '#34d399',
+      fillColor: startColor,
       color: '#07080b',
       weight: 2,
       fillOpacity: 1,
@@ -370,15 +374,18 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
       );
       if (!pos) return;
 
+      const hoverColor = selectedPreview.app === 'trail' ? '#f97316' : '#10b981';
+
       if (!hoverMarkerRef.current) {
         hoverMarkerRef.current = L.circleMarker([pos.lat, pos.lng], {
           radius: 7,
           fillColor: '#ffffff',
-          color: '#10b981',
+          color: hoverColor,
           weight: 3,
           fillOpacity: 1,
         }).addTo(layerGroup);
       } else {
+        hoverMarkerRef.current.setStyle({ color: hoverColor });
         hoverMarkerRef.current.setLatLng([pos.lat, pos.lng]);
       }
     },
@@ -849,7 +856,9 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                     </span>
 
                     <span className="inline-flex items-center gap-1 shrink-0">
-                      <Mountain className="w-3 h-3 text-brand-400/80" />
+                      <Mountain
+                        className={`w-3 h-3 ${isCycling ? 'text-brand-400/80' : 'text-trail-400/80'}`}
+                      />
                       <span>+{Math.round(item.totalElevationGain)}</span>
                       <span className="text-[10px] text-slate-500">m</span>
                     </span>
@@ -1005,6 +1014,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                   totalDistanceKm={selectedPreview.totalDistanceKm}
                   minAltitude={selectedPreview.minAltitude}
                   maxAltitude={selectedPreview.maxAltitude}
+                  accent={selectedPreview.app}
                   onHoverDistanceKm={handleElevationHover}
                 />
               </div>
