@@ -14,12 +14,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
   const renderBadge = (module: ModuleInfo) => {
     switch (module.status) {
       case 'available':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-500/15 text-brand-300 border border-brand-500/30">
-            <span className="w-2 h-2 rounded-full bg-brand-neon animate-pulse"></span>
-            {module.statusLabel}
-          </span>
-        );
+        return null;
       case 'soon':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-trail-500/15 text-trail-300 border border-trail-500/35">
