@@ -80,6 +80,10 @@ export const StatelessShowcase: React.FC = () => {
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Interface mobile dense :</strong> pensée pour réunir suivi d'activité, statistiques et réglages sur un même écran ; sur le terrain, cette richesse amène souvent à laisser le smartphone dans la poche ou le sac et à ne le sortir que ponctuellement.</span>
+              </div>
+              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                 <span><strong className="text-white font-medium">Distribution via les stores :</strong> installées depuis l'App Store ou Google Play, elles s'intègrent de façon native au smartphone avec un suivi des versions géré par le store.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
@@ -159,6 +163,10 @@ export const StatelessShowcase: React.FC = () => {
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
                 <span><strong className="text-white font-medium">Ciblé vélo ou marche à pied :</strong> réparti en deux applications distinctes, TrackPilot affiche directement l'essentiel de chaque discipline, prêt à l'emploi sans réglages multiples.</span>
+              </div>
+              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
+                <span><strong className="text-white font-medium">Ergonomie mobile pensée pour le cintre et la main :</strong> l'interface smartphone est épurée au maximum pour rester lisible d'un coup d'œil en mouvement, afin que le téléphone vive vraiment sur le guidon ou à la main plutôt que de rester dans la poche ou le sac.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
