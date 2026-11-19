@@ -102,10 +102,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#08090d] border border-brand-500/30 group-hover:border-brand-500/70 transition-colors shadow-glow-sm overflow-hidden">
               <BrandLogo variant="hub" className="w-full h-full transition-transform duration-200 group-hover:scale-105" />
             </div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-xl font-extrabold tracking-tight text-white">TrackPilot</span>
-              <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-brand-500/10 text-brand-400 border border-brand-500/20 font-mono">
-                .fit
+            <div className="flex flex-col">
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-extrabold tracking-tight text-white leading-none">TrackPilot</span>
+                <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-brand-500/10 text-brand-400 border border-brand-500/20 font-mono leading-none">
+                  .fit
+                </span>
+              </div>
+              <span className="md:hidden text-[10px] font-mono text-brand-300/90 tracking-tight leading-tight mt-0.5">
+                Pensée pour le cintre et la main
               </span>
             </div>
           </a>

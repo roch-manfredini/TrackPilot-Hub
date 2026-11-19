@@ -13,6 +13,7 @@ import { ContactSection } from './components/ContactSection';
 import { ContactModal } from './components/ContactModal';
 import { LegalModal, LegalTab } from './components/LegalModal';
 import { CookieBanner } from './components/CookieBanner';
+import { SloganBadge } from './components/SloganBadge';
 import { Footer } from './components/Footer';
 import { enableAnalytics, getCookieConsent, setCookieConsent } from './utils/analytics';
 import {
@@ -337,6 +338,10 @@ export const App: React.FC = () => {
         onSelectTab={handleOpenLegal}
         onClose={handleCloseLegal}
         onOpenCookieSettings={handleReopenCookies}
+      />
+      <SloganBadge
+        activeView={view}
+        onNavigateHome={handleNavigateHome}
       />
       <CookieBanner
         isOpen={showCookieBanner}
