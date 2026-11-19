@@ -32,15 +32,16 @@ export const MODULES: ModuleInfo[] = [
     iconName: 'Mountain',
     status: 'available',
     statusLabel: 'En ligne',
-    tagline: 'Pour le trail, la randonnée et la marche : dompter le dénivelé et les sentiers.',
-    description: 'Pensé pour transformer un simple GPX en plan de route pour toutes vos sorties à pied : allure ajustée au dénivelé (GAP), temps de marche (Tobler), gestion de l’eau et autonomie.',
+    tagline: 'Préparez vos sorties trail, randonnée et marche avec un plan de route complet et interactif.',
+    description: 'Partez d’un simple fichier GPX ou FIT - ou tracez votre parcours - pour charger un véritable plan de route : météo prévue au fil des kilomètres, allure ajustée au dénivelé (GAP), temps de marche (Tobler) et points d’eau réunis en une vue globale.',
     url: 'https://trail.trackpilot.fit',
     highlights: [
-      'Outil de traçage épuré sentiers : tracé adapté aux chemins de montagne, courbes de niveau et calcul du relief D+/D-',
-      'Guidage outdoor épuré : orientation immédiate aux intersections, D+ restant, refuges et zéro gigue GPS à la marche',
-      'Double mode d’effort : Trail & Course (allure ajustée GAP) ou Randonnée & Marche (calcul Tobler & sac)',
-      'Aide à l’estimation des temps de parcours et suivi des barrières horaires',
-      'Repérage des sources naturelles, fontaines, refuges et abris en pleine nature'
+      'Création facile de parcours en quelques clics : routage magnétique instantané (sentiers, chemins, montagne) et profil altimétrique direct',
+      'Guidage outdoor ultra-épuré : lisibilité immédiate en main, D+ restant, zéro gigue GPS et mode éco OLED sans réseau',
+      'Synchronisation instantanée PC vers smartphone dans votre compte (avec mise en favoris) et accès 100% hors-ligne',
+      'Double mode d’effort : Trail & Course (allure ajustée GAP) ou Randonnée & Marche (calcul Tobler & poids du sac)',
+      'Repérage des sources, fontaines et points d’eau potable utiles (données libres OSM)',
+      'Conseils personnalisés d’hydratation, d’énergie et export rapide vers vos montres GPS'
     ],
     metrics: [
       { label: 'Météo', value: 'Sur le parcours' },
