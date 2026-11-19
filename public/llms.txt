@@ -1,6 +1,6 @@
 # TrackPilot
 
-> Suite web gratuite, indépendante et sans abonnement pour transformer un simple fichier GPX ou FIT en plan de route complet pour les sports d'endurance et l'outdoor.
+> Suite web gratuite et sans abonnement pour transformer un simple fichier GPX ou FIT en plan de route complet pour les sports d'endurance et l'outdoor.
 
 ## Modules de l'écosystème
 

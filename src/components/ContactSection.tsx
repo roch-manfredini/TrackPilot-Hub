@@ -43,7 +43,7 @@ export const ContactSection: React.FC = () => {
             Une question, une idée ou un retour de sortie ?
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-300">
-            TrackPilot est un projet indépendant qui évolue au fil des sorties et des retours sur le terrain. Écrivez à l'auteur en toute simplicité !
+            TrackPilot est un projet personnel qui évolue au fil des sorties et des retours sur le terrain. Écrivez à l'auteur en toute simplicité !
           </p>
         </div>
 

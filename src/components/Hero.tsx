@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
           {/* Tag Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-850/90 border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-glow-sm">
             <Sparkles className="w-3.5 h-3.5 text-brand-neon" />
-            <span>Projet indépendant</span>
+            <span>Préparation de sorties</span>
           </div>
 
           {/* Headline */}
