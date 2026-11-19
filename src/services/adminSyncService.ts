@@ -30,6 +30,32 @@ const CYCLING_SOURCE_CONFIG: FirebaseOptions = {
   appId: '1:1035620019013:web:5a9a0dc33a86263a85ac2c',
 };
 
+const TRAIL_SOURCE_CONFIG: FirebaseOptions = {
+  apiKey: 'AIzaSyAMwqVOFjUO4nqvz-77YsCIZYLNWt9_H0Y',
+  authDomain: 'trackpilot-trail.firebaseapp.com',
+  projectId: 'trackpilot-trail',
+  storageBucket: 'trackpilot-trail.firebasestorage.app',
+  messagingSenderId: '281456852477',
+  appId: '1:281456852477:web:5232ab5b6a3b1a15296d94',
+};
+
+const SYNC_SOURCES: Array<{
+  app: CatalogApp;
+  appName: string;
+  config: FirebaseOptions;
+}> = [
+  {
+    app: 'cycling',
+    appName: 'trackpilot-cycling-readonly',
+    config: CYCLING_SOURCE_CONFIG,
+  },
+  {
+    app: 'trail',
+    appName: 'trackpilot-trail-readonly',
+    config: TRAIL_SOURCE_CONFIG,
+  },
+];
+
 export interface SyncReport {
   totalActiveCount: number;
   syncedCount: number;
@@ -72,6 +98,19 @@ function mapCyclingDiscipline(raw: DocumentData): CatalogDiscipline {
   if (bikeType === 'gravel') return 'gravel';
   if (bikeType === 'mtb') return 'mtb';
   return 'road';
+}
+
+function mapTrailDiscipline(raw: DocumentData): CatalogDiscipline {
+  const activityType =
+    raw?.tactics?.activityType ?? raw?.activityType ?? raw?.preferredActivityType;
+  if (activityType === 'hike') return 'hike';
+  if (activityType === 'walk') return 'walk';
+  // 'trail', 'running', or unspecified default to 'trail'
+  return 'trail';
+}
+
+function mapDiscipline(app: CatalogApp, raw: DocumentData): CatalogDiscipline {
+  return app === 'cycling' ? mapCyclingDiscipline(raw) : mapTrailDiscipline(raw);
 }
 
 function formatAuthorName(rawName?: string | null): string {
@@ -146,8 +185,7 @@ function buildSanitizedPreview(
       : summary.maxAltitude;
 
   const previewId = `${app}_${docId}`.slice(0, 128);
-  const discipline: CatalogDiscipline =
-    app === 'cycling' ? mapCyclingDiscipline(raw) : 'trail';
+  const discipline: CatalogDiscipline = mapDiscipline(app, raw);
   const authorName = resolveRideAuthorName(raw);
 
   const createdAt = toIsoDateString(raw.createdAt, nowIso);
@@ -201,7 +239,7 @@ function isUnchangedRide(
   }
   const rawName = (typeof raw.name === 'string' ? raw.name.trim() : '') || 'Parcours sans titre';
   const safeName = rawName.slice(0, 200);
-  const discipline: CatalogDiscipline = app === 'cycling' ? mapCyclingDiscipline(raw) : 'trail';
+  const discipline: CatalogDiscipline = mapDiscipline(app, raw);
   const authorName = resolveRideAuthorName(raw);
   const createdAt = toIsoDateString(raw.createdAt, nowIso);
   const updatedAt = toIsoDateString(raw.updatedAt, createdAt);
@@ -257,35 +295,40 @@ export async function syncPublicCatalogFromApps(): Promise<SyncReport> {
     let unchangedCount = 0;
     let skippedCount = 0;
 
-    // Source 1: TrackPilot-Cycling
-    const cyclingApp = getSecondaryApp('trackpilot-cycling-readonly', CYCLING_SOURCE_CONFIG);
-    const cyclingDb = getFirestore(cyclingApp);
-    const cyclingQuery = query(collection(cyclingDb, 'rides'), where('isPublic', '==', true));
-    const cyclingSnap = await getDocs(cyclingQuery);
+    // Fetch public rides from all connected TrackPilot apps (Cycling + Trail) in parallel
+    const sourceSnapshots = await Promise.all(
+      SYNC_SOURCES.map(async (source) => {
+        const secondaryApp = getSecondaryApp(source.appName, source.config);
+        const sourceDb = getFirestore(secondaryApp);
+        const sourceQuery = query(collection(sourceDb, 'rides'), where('isPublic', '==', true));
+        const snapshot = await getDocs(sourceQuery);
+        return { app: source.app, snapshot };
+      })
+    );
 
-    cyclingSnap.forEach((docSnap) => {
-      const previewId = `cycling_${docSnap.id}`.slice(0, 128);
-      const raw = docSnap.data();
-      const existing = existingById.get(previewId);
+    for (const { app, snapshot } of sourceSnapshots) {
+      snapshot.forEach((docSnap) => {
+        const previewId = `${app}_${docSnap.id}`.slice(0, 128);
+        const raw = docSnap.data();
+        const existing = existingById.get(previewId);
 
-      if (isUnchangedRide(existing, raw, 'cycling', nowIso) && existing) {
-        activeIds.add(previewId);
-        summaryItems.push(existing);
-        unchangedCount += 1;
-        return;
-      }
+        if (isUnchangedRide(existing, raw, app, nowIso) && existing) {
+          activeIds.add(previewId);
+          summaryItems.push(existing);
+          unchangedCount += 1;
+          return;
+        }
 
-      const preview = buildSanitizedPreview('cycling', docSnap.id, raw, nowIso);
-      if (preview) {
-        activeIds.add(preview.id);
-        previewsToWrite.push(preview);
-        summaryItems.push(toSummaryItem(preview));
-      } else {
-        skippedCount += 1;
-      }
-    });
-
-    // Source 2: TrackPilot-Trail will be plugged in here when ready (public rides enabled).
+        const preview = buildSanitizedPreview(app, docSnap.id, raw, nowIso);
+        if (preview) {
+          activeIds.add(preview.id);
+          previewsToWrite.push(preview);
+          summaryItems.push(toSummaryItem(preview));
+        } else {
+          skippedCount += 1;
+        }
+      });
+    }
 
     // Sort most recently updated first (with deterministic tie-break)
     summaryItems.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
