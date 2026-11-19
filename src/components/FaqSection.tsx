@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import { FAQ_ITEMS } from '../data/faq';
 import { recordHubEvent } from '../services/historyService';
 
 export const FaqSection: React.FC = () => {
+  useEffect(() => {
+    const openFaqFromHash = () => {
+      const id = window.location.hash.replace(/^#/, '');
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el instanceof HTMLDetailsElement) {
+        el.open = true;
+      }
+    };
+
+    openFaqFromHash();
+    window.addEventListener('hashchange', openFaqFromHash);
+    return () => window.removeEventListener('hashchange', openFaqFromHash);
+  }, []);
+
   return (
     <section
       id="faq"
@@ -38,7 +53,7 @@ export const FaqSection: React.FC = () => {
                   });
                 }
               }}
-              className="faq-details group rounded-xl glass-panel border border-white/[0.09] hover:border-brand-500/35 open:border-brand-500/40 transition-colors duration-150"
+              className="faq-details group scroll-mt-28 rounded-xl glass-panel border border-white/[0.09] hover:border-brand-500/35 open:border-brand-500/40 transition-colors duration-150"
             >
               <summary className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5 cursor-pointer select-none text-left text-sm sm:text-base font-semibold text-white rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
                 <span>{item.question}</span>
