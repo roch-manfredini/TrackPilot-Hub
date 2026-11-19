@@ -9,8 +9,7 @@ import {
   Zap, 
   WifiOff, 
   HardDrive,
-  ArrowUpRight,
-  Clock
+  ArrowUpRight
 } from 'lucide-react';
 import { recordHubEvent } from '../services/historyService';
 
@@ -153,7 +152,7 @@ export const InstallSection: React.FC = () => {
                     </div>
                     <h4 className="text-base font-bold text-white mb-2">Ouvrir dans Safari</h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Rendez-vous sur votre application TrackPilot (ex. <span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span>) depuis le navigateur <strong className="text-white">Safari</strong> de votre iPhone ou iPad.
+                      Rendez-vous sur votre application TrackPilot (<span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span> ou <span className="font-mono text-trail-300 font-semibold">trail.trackpilot.fit</span>) depuis le navigateur <strong className="text-white">Safari</strong> de votre iPhone ou iPad.
                     </p>
                   </div>
                 </div>
@@ -196,7 +195,7 @@ export const InstallSection: React.FC = () => {
                     </div>
                     <h4 className="text-base font-bold text-white mb-2">Ouvrir dans Chrome</h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Ouvrez votre application TrackPilot (ex. <span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span>) dans le navigateur <strong className="text-white">Google Chrome</strong> de votre smartphone.
+                      Ouvrez votre application TrackPilot (<span className="font-mono text-emerald-400 font-semibold">cycling.trackpilot.fit</span> ou <span className="font-mono text-trail-300 font-semibold">trail.trackpilot.fit</span>) dans le navigateur <strong className="text-white">Google Chrome</strong> de votre smartphone.
                     </p>
                   </div>
                 </div>
@@ -297,16 +296,22 @@ export const InstallSection: React.FC = () => {
                 <ArrowUpRight className="w-4 h-4" />
               </a>
 
-              <div
-                aria-disabled="true"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl text-sm font-semibold text-trail-300 bg-dark-950/70 border border-trail-500/25 select-none cursor-not-allowed"
+              <a
+                href="https://trail.trackpilot.fit"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  recordHubEvent({
+                    type: 'app_launch',
+                    target: 'install_section',
+                    app: 'trail',
+                  })
+                }
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-dark-950 bg-gradient-to-r from-trail-400 to-trail-300 hover:from-trail-300 hover:to-trail-200 active:scale-[0.98] transition-all duration-150"
               >
                 <span>Ouvrir TrackPilot Trail</span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-trail-500/15 text-trail-300 border border-trail-500/30">
-                  <Clock className="w-3 h-3" />
-                  Bientôt
-                </span>
-              </div>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
             </div>
           </div>
 

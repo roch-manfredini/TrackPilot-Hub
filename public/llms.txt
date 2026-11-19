@@ -6,7 +6,7 @@
 
 - [TrackPilot Hub](https://trackpilot.fit/): Vitrine centrale présentant les fonctionnalités, le modèle gratuit sans abonnement et la FAQ de l'écosystème.
 - [TrackPilot Cycling](https://cycling.trackpilot.fit/): En ligne. Plan de route interactif pour préparer vos sorties vélo - studio de traçage magnétique BRouter, calcul du vent relatif kilomètre par kilomètre, fontaines et points d'eau OpenStreetMap, repères nutritionnels et cockpit de guidage cintre 100 % hors-ligne.
-- [TrackPilot Trail](https://trail.trackpilot.fit/): Bientôt disponible. Outil outdoor pour le trail, la randonnée et la marche - allure ajustée au dénivelé (GAP), estimation des temps de marche (Tobler), refuges, sources et barrières horaires.
+- [TrackPilot Trail](https://trail.trackpilot.fit/): En ligne. Outil outdoor pour le trail, la randonnée et la marche - allure ajustée au dénivelé (GAP), estimation des temps de marche (Tobler), refuges, sources et barrières horaires.
 
 ## Principes techniques et données
 

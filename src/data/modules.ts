@@ -30,8 +30,8 @@ export const MODULES: ModuleInfo[] = [
     title: 'TrackPilot Trail',
     discipline: 'Trail, Randonnée & Marche',
     iconName: 'Mountain',
-    status: 'soon',
-    statusLabel: 'Bientôt',
+    status: 'available',
+    statusLabel: 'En ligne',
     tagline: 'Pour le trail, la randonnée et la marche : dompter le dénivelé et les sentiers.',
     description: 'Pensé pour transformer un simple GPX en plan de route pour toutes vos sorties à pied : allure ajustée au dénivelé (GAP), temps de marche (Tobler), gestion de l’eau et autonomie.',
     url: 'https://trail.trackpilot.fit',
@@ -43,9 +43,9 @@ export const MODULES: ModuleInfo[] = [
       'Repérage des sources naturelles, fontaines, refuges et abris en pleine nature'
     ],
     metrics: [
-      { label: 'Discipline', value: 'Trail & Rando' },
-      { label: 'Projet', value: 'En construction' },
-      { label: 'Accès', value: 'Bientôt disponible' }
+      { label: 'Météo', value: 'Sur le parcours' },
+      { label: 'Format', value: 'GPX & FIT' },
+      { label: 'Accès', value: 'Libre & Gratuit' }
     ]
   }
 ];

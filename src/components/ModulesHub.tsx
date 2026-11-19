@@ -64,10 +64,12 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
               <div 
                 key={module.id} 
                 className={`relative flex flex-col justify-between rounded-2xl glass-panel p-6 sm:p-8 transition-all duration-200 ${
-                  isAvailable 
-                    ? 'border-brand-500/40 shadow-glow-sm hover:border-brand-500/70 hover:bg-dark-850/90' 
-                    : isTrail
-                    ? 'border-trail-500/35 hover:border-trail-400/55 hover:bg-dark-850/90'
+                  isTrail
+                    ? isAvailable
+                      ? 'border-trail-500/40 hover:border-trail-400/70 hover:bg-dark-850/90'
+                      : 'border-trail-500/35 hover:border-trail-400/55 hover:bg-dark-850/90'
+                    : isAvailable
+                    ? 'border-brand-500/40 shadow-glow-sm hover:border-brand-500/70 hover:bg-dark-850/90'
                     : 'border-white/10 hover:border-white/20'
                 }`}
               >
@@ -75,10 +77,10 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                   {/* Top Bar with Icon & Status Badge */}
                   <div className="flex items-center justify-between gap-4 mb-6">
                     <div className={`w-12 h-12 rounded-xl border overflow-hidden shrink-0 bg-[#08090d] ${
-                      isAvailable 
-                        ? 'border-brand-500/30' 
-                        : isTrail
+                      isTrail
                         ? 'border-trail-500/35'
+                        : isAvailable
+                        ? 'border-brand-500/30'
                         : 'border-brand-500/20'
                     }`}>
                       <BrandLogo variant={isTrail ? 'trail' : 'cycling'} />
@@ -113,7 +115,7 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                     {module.highlights.map((feat, idx) => (
                       <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
                         <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${
-                          isAvailable ? 'text-brand-400' : isTrail ? 'text-trail-400' : 'text-slate-500'
+                          isTrail ? 'text-trail-400' : isAvailable ? 'text-brand-400' : 'text-slate-500'
                         }`} />
                         <span>{feat}</span>
                       </div>
@@ -142,7 +144,11 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
                           target: `modules_install_${module.id}`,
                         })
                       }
-                      className="group flex items-center justify-center gap-2.5 w-full py-3 px-5 rounded-xl font-bold text-sm text-dark-950 bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 active:scale-[0.98] shadow-glow-sm transition-all duration-150"
+                      className={`group flex items-center justify-center gap-2.5 w-full py-3 px-5 rounded-xl font-bold text-sm text-dark-950 active:scale-[0.98] transition-all duration-150 ${
+                        isTrail
+                          ? 'bg-gradient-to-r from-trail-400 to-trail-300 hover:from-trail-300 hover:to-trail-200'
+                          : 'bg-gradient-to-r from-brand-neon to-brand-400 hover:from-brand-400 hover:to-brand-300 shadow-glow-sm'
+                      }`}
                     >
                       <span>Installer {module.title}</span>
                       <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />

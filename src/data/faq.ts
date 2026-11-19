@@ -51,7 +51,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 'cycling-vs-trail',
     question: 'Quelle est la différence entre TrackPilot Cycling et TrackPilot Trail ?',
     answer:
-      'TrackPilot Cycling (en ligne sur cycling.trackpilot.fit) est conçu pour préparer vos sorties vélo, avec guidage cintre haute lisibilité et vent relatif. TrackPilot Trail (bientôt sur trail.trackpilot.fit) est dédié au trail, à la randonnée et à la marche, avec allure ajustée au dénivelé (GAP), temps de marche Tobler, refuges et barrières horaires.',
+      'TrackPilot Cycling (en ligne sur cycling.trackpilot.fit) est conçu pour préparer vos sorties vélo, avec guidage cintre haute lisibilité et vent relatif. TrackPilot Trail (en ligne sur trail.trackpilot.fit) est dédié au trail, à la randonnée et à la marche, avec allure ajustée au dénivelé (GAP), temps de marche Tobler, refuges et barrières horaires.',
   },
   {
     id: 'compteur-gps-complementaire',
