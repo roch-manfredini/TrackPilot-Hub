@@ -37,7 +37,7 @@ export const StatelessShowcase: React.FC = () => {
 
             {/* Philosophy explanation */}
             <p className="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
-              Véritables couteaux suisses du sport outdoor, ces applications sont remarquablement complètes : elles enregistrent votre trace seconde par seconde, gèrent vos capteurs, vos statistiques et vos souvenirs de sortie tout en assurant le guidage. C'est une solution idéale lorsque le smartphone remplace la montre ou le compteur GPS. En contrepartie, leur fonctionnement s'articule autour d'une session active :
+              Véritables couteaux suisses du sport outdoor, ces applications sont remarquablement complètes : elles enregistrent votre trace seconde par seconde, gèrent vos statistiques et vos souvenirs de sortie tout en assurant le guidage. C'est une solution idéale lorsque le smartphone remplace la montre ou le compteur GPS. En contrepartie, leur fonctionnement s'articule autour d'une session active :
             </p>
 
             {/* Characteristics */}
@@ -64,7 +64,7 @@ export const StatelessShowcase: React.FC = () => {
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Capteurs et enregistrement continu :</strong> le suivi permanent du GPS et des capteurs (fréquence cardiaque, puissance, cadence) offre une télémétrie riche, tout en sollicitant davantage la batterie sur les très longues sorties.</span>
+                <span><strong className="text-white font-medium">Enregistrement GPS continu :</strong> le suivi permanent de la trace en arrière-plan et l'enregistrement de l'activité assurent un historique fidèle, tout en sollicitant davantage la batterie sur les très longues sorties.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <ChevronRight className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
@@ -146,7 +146,7 @@ export const StatelessShowcase: React.FC = () => {
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
-                <span><strong className="text-white font-medium">Autonomie préservée :</strong> sans enregistrement en boucle ni capteurs à maintenir en tâche de fond, et avec le mode éco OLED, le smartphone chauffe moins et tient plus longtemps.</span>
+                <span><strong className="text-white font-medium">Autonomie préservée :</strong> sans enregistrement continu en tâche de fond et grâce au mode éco OLED, le smartphone chauffe moins et tient plus longtemps.</span>
               </div>
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
                 <ChevronRight className="w-4 h-4 text-brand-neon mt-0.5 shrink-0" />
