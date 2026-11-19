@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   .fit
                 </span>
               </div>
-              <span className="md:hidden text-[10px] font-mono text-brand-300/90 tracking-tight leading-tight mt-0.5">
+              <span className="text-[10px] font-mono text-brand-300/90 tracking-tight leading-tight mt-0.5 whitespace-nowrap">
                 Pensée pour le cintre et la main
               </span>
             </div>

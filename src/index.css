@@ -193,33 +193,3 @@ dialog::backdrop {
 .leaflet-control-attribution a {
   color: #94a3b8 !important;
 }
-
-/* Sticky slogan circular seal: static by default (WCAG 2.2.2), compositor-only hover motion when permitted */
-.slogan-badge {
-  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .slogan-badge {
-    transition:
-      transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 0.2s ease-out,
-      box-shadow 0.2s ease-out;
-  }
-
-  .slogan-badge:hover {
-    transform: translateY(-2px) scale(1.04);
-  }
-
-  .slogan-badge:active {
-    transform: scale(0.97);
-  }
-
-  .slogan-badge-emblem {
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .slogan-badge:hover .slogan-badge-emblem {
-    transform: rotate(15deg);
-  }
-}
