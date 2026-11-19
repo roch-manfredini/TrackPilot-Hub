@@ -44,7 +44,7 @@ export const MODULES: ModuleInfo[] = [
     ],
     metrics: [
       { label: 'Discipline', value: 'Trail & Rando' },
-      { label: 'Projet', value: 'En co-création' },
+      { label: 'Projet', value: 'En construction' },
       { label: 'Accès', value: 'Bientôt disponible' }
     ]
   }
@@ -109,7 +109,7 @@ export const TECH_PILLARS: TechPillar[] = [
   },
   {
     id: 'water',
-    title: 'Points d’Eau & Fontaines Collaboratives',
+    title: 'Points d’Eau & Fontaines OSM',
     subtitle: 'Savoir où faire le plein sereinement',
     description: 'Pour partir l’esprit tranquille sans craindre les bidons ou gourdes à sec, TrackPilot s’appuie sur les données ouvertes et collaboratives d’OpenStreetMap pour signaler les fontaines, sources et points d’eau proches de votre itinéraire.',
     iconName: 'Droplets',

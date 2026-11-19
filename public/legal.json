@@ -11,7 +11,7 @@
             [
               { "text": "Le site " },
               { "text": "trackpilot.fit", "style": "mono" },
-              { "text": " et l’écosystème associé sont édités à titre personnel, bénévole et non professionnel par l’équipe " },
+              { "text": " et l’écosystème associé sont édités à titre personnel, bénévole et non professionnel par l’auteur de " },
               { "text": "TrackPilot.fit", "style": "strong" },
               { "text": ". Conformément à l’article 6 III-2 de la loi pour la confiance dans l’économie numérique (LCEN), les coordonnées d’identification personnelle de l’éditeur ont été communiquées à l’hébergeur." }
             ]
@@ -64,7 +64,7 @@
               { "text": " ne collecte aucune donnée personnelle via formulaire (le champ d’aperçu « alerte bêta » de TrackPilot Trail reste strictement local tant que le module n’est pas lancé)." }
             ],
             [
-              { "text": "Dans nos applications (comme " },
+              { "text": "Dans les applications TrackPilot (comme " },
               { "text": "cycling.trackpilot.fit", "style": "mono" },
               { "text": "), la création volontaire d’un compte nécessite votre " },
               { "text": "adresse e-mail", "style": "strong" },

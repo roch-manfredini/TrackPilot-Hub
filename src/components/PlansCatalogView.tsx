@@ -505,7 +505,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                 Dans le menu <strong className="text-white font-semibold">Ajustements</strong> de
                 votre plan de route, décochez la case{' '}
                 <strong className="text-white font-semibold">Partager</strong> pour qu’il reste
-                privé. Cette liste est synchronisée régulièrement par l’équipe (et non en direct) :
+                privé. Cette liste est synchronisée régulièrement par l’auteur (et non en direct) :
                 si votre parcours public n’apparaît pas encore, patientez ou{' '}
                 <a
                   href="/#contact"
@@ -520,7 +520,7 @@ export const PlansCatalogView: React.FC<PlansCatalogViewProps> = ({
                   }}
                   className="text-brand-300 hover:text-brand-neon font-semibold underline decoration-brand-400/60 underline-offset-4 transition-colors"
                 >
-                  contactez l’équipe
+                  contactez l’auteur
                 </a>
                 .
               </p>

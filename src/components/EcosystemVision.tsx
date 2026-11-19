@@ -28,7 +28,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
             <span>Esprit du Projet</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Développé par des passionnés, partagé avec tous.
+            Développé par un passionné, accessible à tous.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
             TrackPilot est né d’une idée simple : ne plus partir avec une trace muette, mais avec un plan de route complet - vent réel, points d’eau et gestion de l’énergie réunis au même endroit. Un projet indépendant, construit à l’écoute des pratiquants sur le terrain.
@@ -52,7 +52,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                 TrackPilot (dont le code source reste privé pour l’instant) repose en grande majorité sur des outils open source et des bases de données collaboratives créées par la communauté (OpenStreetMap, BRouter, données météo ouvertes).
               </p>
               <p className="text-sm text-white leading-relaxed font-normal">
-                Parce que nous bénéficions gratuitement de ce travail collectif, les 2 applications TrackPilot sont gratuites et sans publicité.
+                Parce que TrackPilot bénéficie gratuitement de cet écosystème ouvert, les 2 applications sont gratuites et sans publicité.
               </p>
               <p className="text-sm text-white leading-relaxed font-normal">
                 En toute transparence : si la communauté grandit fortement et que les frais d’hébergement ou d’infrastructure deviennent importants, un financement pourra être ajouté (un café symbolique facultatif ou un bandeau publicitaire), sur ce site web (le Hub).
@@ -85,7 +85,7 @@ export const EcosystemVision: React.FC<EcosystemVisionProps> = ({ onOpenContact 
                 onClick={onOpenContact}
                 className="text-xs text-slate-400 hover:text-brand-300 transition-colors inline-flex items-center gap-1.5 font-mono cursor-pointer"
               >
-                <span>Une idée, une remarque ou envie d'échanger ? Contactez l'équipe</span>
+                <span>Une idée, une remarque ou envie d'échanger ? Contactez l'auteur</span>
                 <ArrowRight className="w-3 h-3 text-brand-400" />
               </button>
             </div>

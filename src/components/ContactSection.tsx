@@ -37,13 +37,13 @@ export const ContactSection: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto mb-12 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-400 mb-3 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>Échange & Projet Ouvert</span>
+            <span>Contact & Retours</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Une question, une idée ou un retour de sortie ?
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-300">
-            TrackPilot est un projet partagé : nous pratiquons et faisons évoluer ces outils grâce aux retours de chacun sur le terrain. Écrivez-nous en toute simplicité !
+            TrackPilot est un projet indépendant qui évolue au fil des sorties et des retours sur le terrain. Écrivez à l'auteur en toute simplicité !
           </p>
         </div>
 
@@ -54,13 +54,13 @@ export const ContactSection: React.FC = () => {
           <div className="flex items-center gap-2.5 text-brand-400 mb-4">
             <Mail className="w-5 h-5 flex-shrink-0" />
             <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider font-mono">
-              CONTACTER L'ÉQUIPE
+              CONTACTER L'AUTEUR
             </h3>
           </div>
 
           {/* Description text */}
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Écrivez directement à l'équipe sur{' '}
+            Écrivez directement à l'auteur sur{' '}
             <a
               href={`mailto:${email}?subject=Retour%20TrackPilot`}
               onClick={() =>
@@ -119,7 +119,7 @@ export const ContactSection: React.FC = () => {
             {/* Direct human response guarantee */}
             <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
               <Sparkles className="w-3.5 h-3.5 text-brand-400" />
-              <span>Échanges directs entre sportifs et développeurs</span>
+              <span>Échange direct avec l'auteur du projet</span>
             </div>
 
           </div>

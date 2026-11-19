@@ -151,8 +151,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               href="#contact"
               onClick={(e) => handleSectionClick(e, '#contact')}
-              aria-label="Contacter l'équipe"
-              title="Contacter l'équipe"
+              aria-label="Contacter l'auteur"
+              title="Contacter l'auteur"
               className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-brand-500/15 hover:bg-brand-500/25 text-brand-400 hover:text-brand-300 border border-brand-500/35 hover:border-brand-400/60 shadow-glow-sm transition-all duration-150 ease-out active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
             >
               <Mail className="w-4 h-4" aria-hidden="true" />

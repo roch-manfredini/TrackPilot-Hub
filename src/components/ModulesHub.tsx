@@ -47,10 +47,10 @@ export const ModulesHub: React.FC<ModulesHubProps> = ({ onOpenPlans }) => {
             <span>Disciplines & Pratiques</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            À chaque pratique ses repères, construits avec vous.
+            À chaque pratique ses repères sur le terrain.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            Sur deux roues ou sur deux jambes, chaque pratique a ses exigences propres. Nous adaptons ces outils en échangeant directement avec les sportifs sur le terrain, pour apporter des aides simples et concrètes.
+            Sur deux roues ou sur deux jambes, chaque pratique a ses exigences propres. Chaque outil est adapté aux réalités du terrain pour apporter des aides simples et concrètes.
           </p>
         </div>
 
