@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'hover:text-white'
               }`}
             >
-              Plans publics
+              Plans de route
             </a>
             {SECTION_LINKS_AFTER_PLANS.map((link) => (
               <a
@@ -203,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'text-slate-100 hover:text-white hover:bg-dark-800 active:bg-dark-750'
               }`}
             >
-              Plans publics
+              Plans de route
             </a>
             {SECTION_LINKS_AFTER_PLANS.map((link) => (
               <a
