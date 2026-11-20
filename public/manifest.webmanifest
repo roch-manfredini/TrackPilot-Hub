@@ -1,0 +1,38 @@
+{
+  "id": "trackpilot-hub-v1-0",
+  "name": "TrackPilot-Hub",
+  "short_name": "TrackPilot-Hub",
+  "description": "Portail GPX vélo & trail : plans de route interactifs, relief, vent, points d'eau et repères d'effort",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07080b",
+  "theme_color": "#07080b",
+  "orientation": "any",
+  "categories": ["sports", "health", "weather", "navigation"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
