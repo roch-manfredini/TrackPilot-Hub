@@ -22,6 +22,7 @@ import {
 } from '../config/firebase';
 import { fetchCatalogIndex, getAppLaunchUrl } from '../services/catalogService';
 import { fetchHubAnalyticsSummary, recordHubEvent } from '../services/historyService';
+import { isChunkLoadError, triggerChunkReloadOnce } from '../utils/lazyWithRetry';
 import type { CatalogDiscipline, CatalogSummaryItem } from '../types/catalog';
 import type { HubAnalyticsSummary, RankedCounterItem } from '../types/history';
 
@@ -228,6 +229,10 @@ export const AdminBackendView: React.FC<AdminBackendViewProps> = ({
           : '';
       if (code === 'auth/popup-closed-by-user') {
         setAuthError('Connexion annulée.');
+      } else if (code === 'auth/popup-blocked') {
+        setAuthError(
+          'La fenêtre de connexion Google a été bloquée par le navigateur. Autorisez les popups pour ce site puis réessayez.'
+        );
       } else {
         setAuthError('Impossible de finaliser la connexion Google pour le moment.');
       }
@@ -268,6 +273,9 @@ export const AdminBackendView: React.FC<AdminBackendViewProps> = ({
       });
       await loadBackendData();
     } catch (err: unknown) {
+      if (isChunkLoadError(err) && triggerChunkReloadOnce('admin')) {
+        return;
+      }
       const message =
         err instanceof Error && err.message
           ? err.message
@@ -298,7 +306,7 @@ export const AdminBackendView: React.FC<AdminBackendViewProps> = ({
       (item) =>
         item.name.toLowerCase().includes(q) ||
         (item.authorName && item.authorName.toLowerCase().includes(q)) ||
-        DISCIPLINE_LABELS[item.discipline].toLowerCase().includes(q) ||
+        (DISCIPLINE_LABELS[item.discipline] ?? item.discipline ?? '').toLowerCase().includes(q) ||
         item.app.toLowerCase().includes(q)
     );
   }, [catalogItems, catalogFilter]);
@@ -642,13 +650,13 @@ export const AdminBackendView: React.FC<AdminBackendViewProps> = ({
                             </span>
                           </td>
                           <td className="py-2.5 px-2 font-mono text-slate-300">
-                            {DISCIPLINE_LABELS[item.discipline]}
+                            {DISCIPLINE_LABELS[item.discipline] ?? item.discipline}
                           </td>
                           <td className="py-2.5 px-2 text-slate-300 max-w-[140px] truncate">
                             {item.authorName || '-'}
                           </td>
                           <td className="py-2.5 px-2 text-right font-mono tabular-nums whitespace-nowrap">
-                            {item.totalDistanceKm.toFixed(1)}{' '}
+                            {Number(item.totalDistanceKm ?? 0).toFixed(1)}{' '}
                             <span className="text-slate-500">km</span>
                           </td>
                           <td className="py-2.5 px-2 text-right font-mono tabular-nums whitespace-nowrap text-brand-300">

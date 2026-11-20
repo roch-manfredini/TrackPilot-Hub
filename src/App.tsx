@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import type { User } from 'firebase/auth';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -14,15 +14,23 @@ import { ContactModal } from './components/ContactModal';
 import { LegalModal, LegalTab } from './components/LegalModal';
 import { CookieBanner } from './components/CookieBanner';
 import { Footer } from './components/Footer';
+import { ViewErrorBoundary } from './components/ViewErrorBoundary';
 import { enableAnalytics, getCookieConsent, setCookieConsent } from './utils/analytics';
+import {
+  consumePendingView,
+  isChunkLoadError,
+  lazyWithRetry,
+  setRecoveryTargetView,
+  triggerChunkReloadOnce,
+} from './utils/lazyWithRetry';
 import {
   classifyReferrer,
   recordHubEvent,
   setTrackedView,
 } from './services/historyService';
 
-const PlansCatalogView = lazy(() => import('./components/PlansCatalogView'));
-const AdminBackendView = lazy(() => import('./components/AdminBackendView'));
+const PlansCatalogView = lazyWithRetry(() => import('./components/PlansCatalogView'), 'plans');
+const AdminBackendView = lazyWithRetry(() => import('./components/AdminBackendView'), 'admin');
 
 export const App: React.FC = () => {
   const [view, setView] = useState<'home' | 'plans' | 'admin'>('home');
@@ -64,7 +72,14 @@ export const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    syncLocationState();
+    const pendingView = consumePendingView();
+    if (pendingView === 'admin') {
+      setRecoveryTargetView('admin');
+      setView('admin');
+      prevSyncedViewRef.current = 'home';
+    } else {
+      syncLocationState();
+    }
     window.addEventListener('hashchange', syncLocationState);
     window.addEventListener('popstate', syncLocationState);
     return () => {
@@ -87,7 +102,10 @@ export const App: React.FC = () => {
         if (cancelled) return;
         const auth = getHubAuth();
         if (typeof auth.authStateReady === 'function') {
-          await auth.authStateReady();
+          await Promise.race([
+            auth.authStateReady(),
+            new Promise<void>((resolve) => window.setTimeout(resolve, 4000)),
+          ]);
         }
         if (cancelled) return;
         setCurrentUser(isAllowedAdminUser(auth.currentUser) ? auth.currentUser : null);
@@ -95,13 +113,19 @@ export const App: React.FC = () => {
         unsubscribe = onAuthStateChanged(auth, (user) => {
           setCurrentUser(isAllowedAdminUser(user) ? user : null);
         });
-      } catch {
+      } catch (err) {
+        if (cancelled) return;
+        if (isChunkLoadError(err) && triggerChunkReloadOnce('admin')) {
+          return;
+        }
         setIsAuthChecking(false);
       }
     };
 
     if (view === 'admin') {
       void attachAuthListener();
+    } else {
+      setIsAuthChecking(false);
     }
 
     return () => {
@@ -115,6 +139,7 @@ export const App: React.FC = () => {
     if (!alreadyPlans) {
       window.history.pushState(null, '', '/plans');
     }
+    setRecoveryTargetView('plans');
     setView('plans');
     setTrackedView('plans');
     if (!alreadyPlans) {
@@ -133,6 +158,7 @@ export const App: React.FC = () => {
     if (window.location.pathname !== '/' || window.location.hash !== (sectionHash ?? '')) {
       window.history.pushState(null, '', targetUrl);
     }
+    setRecoveryTargetView(undefined);
     setView('home');
     setTrackedView('home');
     if (wasPlans) {
@@ -157,6 +183,7 @@ export const App: React.FC = () => {
   }, [view]);
 
   const handleOpenAdminBackend = useCallback(() => {
+    setRecoveryTargetView('admin');
     setView('admin');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -269,59 +296,61 @@ export const App: React.FC = () => {
         onNavigatePlans={handleNavigatePlans}
       />
       <main className="flex-1">
-        {view === 'admin' ? (
-          <Suspense
-            fallback={
-              <div className="pt-28 pb-20 px-4 max-w-7xl mx-auto min-h-[80vh]">
-                <div className="h-10 w-64 rounded-xl bg-dark-900/70 animate-pulse mb-6" />
-                <div className="h-24 rounded-2xl bg-dark-900/60 animate-pulse mb-6" />
-                <div className="h-[420px] rounded-2xl bg-dark-900/60 animate-pulse" />
-              </div>
-            }
-          >
-            <AdminBackendView
-              currentUser={currentUser}
-              isAuthChecking={isAuthChecking}
-              onAuthenticated={(user) => setCurrentUser(user)}
-              onSignedOut={() => setCurrentUser(null)}
-            />
-          </Suspense>
-        ) : view === 'plans' ? (
-          <Suspense
-            fallback={
-              <div className="pt-28 pb-20 px-4 max-w-7xl mx-auto min-h-[80vh]">
-                <div className="h-10 w-64 rounded-xl bg-dark-900/70 animate-pulse mb-6" />
-                <div className="h-20 rounded-2xl bg-dark-900/60 animate-pulse mb-6" />
-                <div className="h-[460px] rounded-2xl bg-dark-900/60 animate-pulse" />
-              </div>
-            }
-          >
-            <PlansCatalogView
-              onBackHome={handleNavigateHome}
-            />
-          </Suspense>
-        ) : (
-          <>
-            <Hero />
-            <ModulesHub onOpenPlans={handleNavigatePlans} />
-            <ScreenVersions />
-            <FieldResilience />
-            <TechPillars />
-            <InstallSection />
-            <EcosystemVision
-              onOpenContact={() => {
-                setIsContactModalOpen(true);
-                recordHubEvent({
-                  type: 'contact_action',
-                  target: 'modal_open',
-                  filterValue: 'ecosystem_vision',
-                });
-              }}
-            />
-            <FaqSection />
-            <ContactSection />
-          </>
-        )}
+        <ViewErrorBoundary resetKey={view} onGoHome={() => handleNavigateHome()}>
+          {view === 'admin' ? (
+            <Suspense
+              fallback={
+                <div className="pt-28 pb-20 px-4 max-w-7xl mx-auto min-h-[80vh]">
+                  <div className="h-10 w-64 rounded-xl bg-dark-900/70 animate-pulse mb-6" />
+                  <div className="h-24 rounded-2xl bg-dark-900/60 animate-pulse mb-6" />
+                  <div className="h-[420px] rounded-2xl bg-dark-900/60 animate-pulse" />
+                </div>
+              }
+            >
+              <AdminBackendView
+                currentUser={currentUser}
+                isAuthChecking={isAuthChecking}
+                onAuthenticated={(user) => setCurrentUser(user)}
+                onSignedOut={() => setCurrentUser(null)}
+              />
+            </Suspense>
+          ) : view === 'plans' ? (
+            <Suspense
+              fallback={
+                <div className="pt-28 pb-20 px-4 max-w-7xl mx-auto min-h-[80vh]">
+                  <div className="h-10 w-64 rounded-xl bg-dark-900/70 animate-pulse mb-6" />
+                  <div className="h-20 rounded-2xl bg-dark-900/60 animate-pulse mb-6" />
+                  <div className="h-[460px] rounded-2xl bg-dark-900/60 animate-pulse" />
+                </div>
+              }
+            >
+              <PlansCatalogView
+                onBackHome={handleNavigateHome}
+              />
+            </Suspense>
+          ) : (
+            <>
+              <Hero />
+              <ModulesHub onOpenPlans={handleNavigatePlans} />
+              <ScreenVersions />
+              <FieldResilience />
+              <TechPillars />
+              <InstallSection />
+              <EcosystemVision
+                onOpenContact={() => {
+                  setIsContactModalOpen(true);
+                  recordHubEvent({
+                    type: 'contact_action',
+                    target: 'modal_open',
+                    filterValue: 'ecosystem_vision',
+                  });
+                }}
+              />
+              <FaqSection />
+              <ContactSection />
+            </>
+          )}
+        </ViewErrorBoundary>
       </main>
       <Footer
         onOpenLegal={handleOpenLegal}
