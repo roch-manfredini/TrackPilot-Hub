@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Mail } from 'lucide-react';
+import { Menu, X, Mail, Lightbulb } from 'lucide-react';
 import { recordHubEvent } from '../services/historyService';
 import { BrandLogo } from './BrandLogo';
 
@@ -11,14 +11,14 @@ interface NavbarProps {
 
 const SECTION_LINKS_BEFORE_PLANS = [
   { href: '#pourquoi', label: 'Pourquoi ?' },
-  { href: '#modules', label: 'Modules' },
-  { href: '#formats', label: 'Profil & Cockpit' },
-  { href: '#tech', label: 'Fonctionnalités' },
-  { href: '#installation', label: 'Installation' },
 ] as const;
 
 const SECTION_LINKS_AFTER_PLANS = [
+  { href: '#modules', label: 'Modules' },
+  { href: '#formats', label: 'Profil & Cockpit' },
+  { href: '#tech', label: 'Fonctionnalités' },
   { href: '#vision', label: 'Esprit du Projet' },
+  { href: '#installation', label: 'Installation' },
   { href: '#faq', label: 'FAQ' },
 ] as const;
 
@@ -117,16 +117,24 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Desktop Nav Links */}
           <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-3 lg:gap-5 xl:gap-6 text-[13px] lg:text-sm font-medium text-slate-300 whitespace-nowrap">
-            {SECTION_LINKS_BEFORE_PLANS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleSectionClick(e, link.href)}
-                className="hover:text-white transition-colors duration-150 py-1"
-              >
-                {link.label}
-              </a>
-            ))}
+            {SECTION_LINKS_BEFORE_PLANS.map((link) => {
+              const isHighlighted = link.href === '#pourquoi';
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleSectionClick(e, link.href)}
+                  className={
+                    isHighlighted
+                      ? 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-brand-500/15 hover:bg-brand-500/25 text-brand-300 hover:text-white border border-brand-500/35 hover:border-brand-400/60 font-semibold shadow-glow-sm transition-all duration-150'
+                      : 'hover:text-white transition-colors duration-150 py-1'
+                  }
+                >
+                  {isHighlighted && <Lightbulb className="w-3.5 h-3.5 text-brand-neon shrink-0" aria-hidden="true" />}
+                  <span>{link.label}</span>
+                </a>
+              );
+            })}
             <a
               href="/plans"
               onClick={handlePlansClick}
@@ -183,16 +191,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label="Navigation mobile"
             className="md:hidden mt-3 rounded-2xl bg-dark-900 border border-white/10 p-3 shadow-card max-h-[calc(100dvh-5.5rem)] overflow-y-auto space-y-1"
           >
-            {SECTION_LINKS_BEFORE_PLANS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleSectionClick(e, link.href)}
-                className="block px-3.5 py-2.5 rounded-xl text-base font-medium text-slate-100 hover:text-white hover:bg-dark-800 active:bg-dark-750 transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+            {SECTION_LINKS_BEFORE_PLANS.map((link) => {
+              const isHighlighted = link.href === '#pourquoi';
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleSectionClick(e, link.href)}
+                  className={
+                    isHighlighted
+                      ? 'flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-base font-semibold text-brand-300 bg-brand-500/15 border border-brand-500/30 hover:bg-brand-500/25 hover:text-white transition-colors'
+                      : 'block px-3.5 py-2.5 rounded-xl text-base font-medium text-slate-100 hover:text-white hover:bg-dark-800 active:bg-dark-750 transition-colors'
+                  }
+                >
+                  {isHighlighted && <Lightbulb className="w-4 h-4 text-brand-neon shrink-0" aria-hidden="true" />}
+                  <span>{link.label}</span>
+                </a>
+              );
+            })}
             <a
               href="/plans"
               onClick={handlePlansClick}

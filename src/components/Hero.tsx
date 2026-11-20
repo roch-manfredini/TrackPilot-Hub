@@ -4,25 +4,6 @@ import { SectionBackground } from './SectionBackground';
 import { recordHubEvent } from '../services/historyService';
 
 export const Hero: React.FC = () => {
-  const handleSloganClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    recordHubEvent({ type: 'cta_click', target: 'hero_slogan_pill' });
-    const targetEl = document.getElementById('trackpilot-vs-autres-applis');
-    if (targetEl instanceof HTMLDetailsElement) {
-      e.preventDefault();
-      targetEl.open = true;
-      const prefersReducedMotion =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      targetEl.scrollIntoView({
-        behavior: prefersReducedMotion ? 'auto' : 'smooth',
-        block: 'start',
-      });
-      if (typeof window !== 'undefined' && window.history?.replaceState) {
-        window.history.replaceState(null, '', '#trackpilot-vs-autres-applis');
-      }
-    }
-  };
-
   return (
     <section className="relative min-h-[76vh] sm:min-h-[82vh] flex items-center pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden">
       
@@ -47,8 +28,8 @@ export const Hero: React.FC = () => {
           
           {/* Tag Pill */}
           <a
-            href="#trackpilot-vs-autres-applis"
-            onClick={handleSloganClick}
+            href="#pourquoi"
+            onClick={() => recordHubEvent({ type: 'cta_click', target: 'hero_slogan_pill' })}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-850/90 hover:bg-dark-800 border border-brand-500/35 hover:border-brand-400/70 text-brand-300 hover:text-brand-200 text-xs font-semibold uppercase tracking-wider mb-6 shadow-glow-sm transition-all duration-150 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-brand-neon" />

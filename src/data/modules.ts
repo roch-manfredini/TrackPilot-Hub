@@ -13,7 +13,7 @@ export const MODULES: ModuleInfo[] = [
     url: 'https://cycling.trackpilot.fit',
     highlights: [
       'Création facile de parcours en quelques clics : routage magnétique instantané (route, gravel, voies douces) et profil altimétrique direct',
-      'Guidage cintre ultra-épuré : lisibilité immédiate à vitesse élevée, vent relatif, pente et mode éco OLED sans réseau',
+      'Guidage cintre ultra-épuré : lisibilité immédiate à vitesse élevée, vent relatif, pente et mode fil d’Ariane sans réseau',
       'Synchronisation instantanée PC vers smartphone dans votre compte (avec mise en favoris) et accès 100% hors-ligne',
       'Visualisation du vent relatif (face, côté, dos) calculé selon votre horaire de passage',
       'Repérage des fontaines et points d’eau potable utiles (données libres OSM)',
@@ -37,7 +37,7 @@ export const MODULES: ModuleInfo[] = [
     url: 'https://trail.trackpilot.fit',
     highlights: [
       'Création facile de parcours en quelques clics : routage magnétique instantané (sentiers, chemins, montagne) et profil altimétrique direct',
-      'Guidage outdoor ultra-épuré : lisibilité immédiate en main, D+ restant, zéro gigue GPS et mode éco OLED sans réseau',
+      'Guidage outdoor ultra-épuré : lisibilité immédiate en main, D+ restant, zéro gigue GPS et mode fil d’Ariane sans réseau',
       'Synchronisation instantanée PC vers smartphone dans votre compte (avec mise en favoris) et accès 100% hors-ligne',
       'Double mode d’effort : Trail & Course (allure ajustée GAP) ou Randonnée & Marche (calcul Tobler & poids du sac)',
       'Repérage des sources, fontaines et points d’eau potable utiles (données libres OSM)',
@@ -105,7 +105,7 @@ export const TECH_PILLARS: TechPillar[] = [
       'Stockage local automatique de vos plans de route pour un accès 100% hors-ligne',
       'Recalcul en direct de la distance restante, du D+ et des fontaines en aval',
       'Chargement des cartes au fil de l’avancée ou préchargement provisoire du plan de route via un bouton dans le guidage (IndexedDB)',
-      'Maintien d’écran allumé automatique (Screen WakeLock API) et mode Fil d’Ariane éco-batterie OLED'
+      'Maintien d’écran allumé automatique (Screen WakeLock API) et mode de guidage fil d’Ariane éco-batterie'
     ]
   },
   {
