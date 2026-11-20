@@ -94,6 +94,10 @@ function toIsoDateString(val: unknown, fallbackIso: string): string {
 }
 
 function mapCyclingDiscipline(raw: DocumentData): CatalogDiscipline {
+  const discipline = raw?.tactics?.discipline ?? raw?.discipline;
+  if (discipline === 'road' || discipline === 'gravel' || discipline === 'mtb') {
+    return discipline;
+  }
   const bikeType = raw?.tactics?.bikeType;
   if (bikeType === 'gravel') return 'gravel';
   if (bikeType === 'mtb') return 'mtb';
@@ -101,11 +105,14 @@ function mapCyclingDiscipline(raw: DocumentData): CatalogDiscipline {
 }
 
 function mapTrailDiscipline(raw: DocumentData): CatalogDiscipline {
-  const activityType =
-    raw?.tactics?.activityType ?? raw?.activityType ?? raw?.preferredActivityType;
-  if (activityType === 'hike') return 'hike';
-  if (activityType === 'walk') return 'walk';
-  // 'trail', 'running', or unspecified default to 'trail'
+  const discipline =
+    raw?.tactics?.discipline ??
+    raw?.discipline ??
+    raw?.tactics?.activityType ??
+    raw?.activityType ??
+    raw?.preferredActivityType;
+  if (discipline === 'hike') return 'hike';
+  if (discipline === 'walk') return 'walk';
   return 'trail';
 }
 
